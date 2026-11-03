@@ -49,6 +49,8 @@ const slots2 = (rows) => `
     ],`;
 
 function patchInterior() {
+  // 0. the driver camera comes from the seat occupant in 0.40; vanilla comments out the dashboard's own
+  lines[findIn('pickup_interior_kodiak', /^\s*\["dash",/)] = lines[findIn('pickup_interior_kodiak', /^\s*\["dash",/)].replace(/^(\s*)/, '$1//');
   // 1. the dashboard hosts the front seats in 0.40; default to Kodiak buckets, as the Kodiak configs intend
   insertAfter(findIn('pickup_interior_kodiak', /\["kodiak_gauges"/), `
         ["pickup_seat_F","pickup_seat_F_bucket_kodiak","Front Seats"],`);

@@ -65,6 +65,12 @@ These dashboards have it commented out the same way:
     vehicles/us_semi/EFC V8/us_semi_interior_V8.jbeam
 - ra66_tseries.zip: the SBA dashboard
     vehicles/us_semi/sba/us_semi_conventional_interior_sba.jbeam
+- D-Series: the Kodiak, Truck Pulling Parts Pack and Quadrasteer dashboards (in their files above),
+  and RLS Career Overhaul's junk D-Series dashboards (e.g. Joe's Junk "Broken Buster"):
+    vehicles/pickup/pickup_junk_interior_early.jbeam
+    vehicles/pickup/pickup_junk_interior_facelift.jbeam
+  These two are copies of RLS's files, so regenerate them when RLS updates (RLS updates often, and
+  an outdated copy would hide its changes to those parts).
 
 Smaller fixes:
 - Bella's Semi Add-on (bella_semipack.zip): its vintage seats (long nose and cabover, both sides)
@@ -90,7 +96,7 @@ updated for 0.40.
 Regenerating after a brodbattletruck update (if it still needs the fix):
   node tools/patch_kodiak.js <extracted brodbattletruck dir> .
 Regenerating after a D-Series pulling pack, Quadrasteer, semi pulling pack, Bella's, Drivetrain
-Expansion or ra66_tseries update (run once per extracted mod):
+Expansion, ra66_tseries or RLS update (run once per extracted mod):
   node tools/patch_seats.js <extracted mod dir> .
 
 Releasing: push a semver tag without a v prefix (e.g. 1.0.0). GitHub Actions builds

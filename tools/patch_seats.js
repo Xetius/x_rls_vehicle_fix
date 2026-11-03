@@ -21,6 +21,9 @@
 //                           vehicles/us_semi/EFC Edison/us_semi_edison_interior.jbeam
 //                           vehicles/us_semi/EFC V8/us_semi_interior_V8.jbeam
 //       ra66_tseries.zip:   vehicles/us_semi/sba/us_semi_conventional_interior_sba.jbeam
+//       rls_career_overhaul_*.zip (RLS junk D-Series): vehicles/pickup/pickup_junk_interior_early.jbeam
+//                                                      vehicles/pickup/pickup_junk_interior_facelift.jbeam
+//     (the D-Series pulling and Quadrasteer files above get the same)
 const fs = require('fs');
 const path = require('path');
 const [srcDir, outDir] = process.argv.slice(2);
@@ -59,6 +62,7 @@ function patchPulling() {
   for (const name of ['pickup_seat_F', 'pickup_seat_F_bucket', 'pickup_seat_R', 'pickup_seat_R_short',
     'pickup_interiorpanel_R_short', 'pickup_shifter_M', 'pickup_shifter_M_sport', 'pickup_shifter_A',
     'pickup_shifter_T']) removePart(name);
+  disableLegacyDriverCameras();
 }
 
 function patchQuadrasteer() {
@@ -67,6 +71,7 @@ function patchQuadrasteer() {
   addFrontSeats('pickup_Quadrasteer_interior', 'pickup_seat_F');
   addFrontSeats('pickup_interior_Quadrasteer_facelift', 'pickup_seat_F_facelift');
   addFrontSeats('pickup_Quadrasteer_interior_alt_facelift', 'pickup_seat_F_facelift');
+  disableLegacyDriverCameras();
 }
 
 function patchSemiPulling() {
@@ -137,6 +142,8 @@ const files = {
   'vehicles/us_semi/EFC Edison/us_semi_edison_interior.jbeam': disableLegacyDriverCameras,
   'vehicles/us_semi/EFC V8/us_semi_interior_V8.jbeam': disableLegacyDriverCameras,
   'vehicles/us_semi/sba/us_semi_conventional_interior_sba.jbeam': disableLegacyDriverCameras,
+  'vehicles/pickup/pickup_junk_interior_early.jbeam': disableLegacyDriverCameras,
+  'vehicles/pickup/pickup_junk_interior_facelift.jbeam': disableLegacyDriverCameras,
 };
 let found = 0;
 for (const [rel, patch] of Object.entries(files)) {
