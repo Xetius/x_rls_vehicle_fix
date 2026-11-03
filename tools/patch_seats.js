@@ -10,6 +10,9 @@
 //   - bella_semipack.zip (Bella's Semi Add-on), seat highlight only:
 //       vehicles/us_semi/interior_stuff/us_semi_conventional_seatss.jbeam
 //       vehicles/us_semi/interior_stuff/us_semi_cabover_seatss.jbeam
+//   - bella_semipack.zip, driver seat ($isDriver) for the custom and chopped interiors:
+//       vehicles/us_semi/interior_stuff/us_semi_custom_conventional_interiors.jbeam
+//       vehicles/us_semi/chopped_semi/chopped_conventional_interior.jbeam (also its legacy camera)
 //   - legacy driver cameras only:
 //       bella_semipack.zip: vehicles/us_semi/chopped_semi/chopped_conventional_interior.jbeam
 //                           vehicles/us_semi/interior_stuff/custom_interior_accessories.jbeam
@@ -94,6 +97,23 @@ const disableLegacyDriverCameras = () => {
   if (!n) throw new Error('no legacy driver camera found');
 };
 
+// The occupant in the driver's seat is only the driver when the interior passes $isDriver to the seat
+// slot, as vanilla's conventional interiors do. Without it no seat is the driver's.
+const markDriverSeats = () => {
+  let n = 0;
+  lines = lines.map((l) => {
+    if (!/^\s*\["us_semi_conventional_seat_L",.*"Driver Seat"\],\s*$/.test(l)) return l;
+    n++;
+    return l.replace(/"Driver Seat"\],/, '"Driver Seat",    {"variables":{"$isDriver":"LHD"}}],');
+  });
+  if (!n) throw new Error('no driver seat slot without $isDriver found');
+};
+
+function patchBellaChopped() {
+  markDriverSeats();
+  disableLegacyDriverCameras();
+}
+
 function patchBellaSeats() {
   // Bella's vintage seats (long nose and cabover) still name the vanilla seat meshes
   for (const cab of ['longnose', 'cabover']) {
@@ -110,7 +130,8 @@ const files = {
   'vehicles/us_semi/us_semi_conventional_interior_yb_empty.jbeam': patchSemiPulling,
   'vehicles/us_semi/interior_stuff/us_semi_conventional_seatss.jbeam': patchBellaSeats,
   'vehicles/us_semi/interior_stuff/us_semi_cabover_seatss.jbeam': patchBellaSeats,
-  'vehicles/us_semi/chopped_semi/chopped_conventional_interior.jbeam': disableLegacyDriverCameras,
+  'vehicles/us_semi/interior_stuff/us_semi_custom_conventional_interiors.jbeam': markDriverSeats,
+  'vehicles/us_semi/chopped_semi/chopped_conventional_interior.jbeam': patchBellaChopped,
   'vehicles/us_semi/interior_stuff/custom_interior_accessories.jbeam': disableLegacyDriverCameras,
   'vehicles/us_semi/EFC 60 Series/us_semi_shunt_dashboard.jbeam': disableLegacyDriverCameras,
   'vehicles/us_semi/EFC Edison/us_semi_edison_interior.jbeam': disableLegacyDriverCameras,

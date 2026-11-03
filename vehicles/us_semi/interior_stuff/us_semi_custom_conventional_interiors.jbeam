@@ -1,0 +1,52 @@
+{
+"us_semi_custom_conventional_interior_daycab": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Custom Interior",
+        "value":1000,
+    },
+    "slotType" : "us_semi_conventional_interior_daycab",
+    "slots2": [
+        ["name",                           "allowTypes",                       "denyTypes", "default",                           "description"],
+        ["skin_longnose_interior",         ["skin_longnose_interior"],         [],          "skin_longnose_interior",            "Interior Color", {"coreSlot":true}],
+        ["us_semi_conventional_dashboard", ["us_semi_conventional_dashboard"], [],          "us_semi_conventional_dashboard",    "Dashboard",      {"coreSlot":true}],
+        ["us_semi_conventional_shifter",   ["us_semi_conventional_shifter"],   [],          "us_semi_conventional_shifter_twin", "Shifter"],
+        ["us_semi_conventional_seat_L",    ["us_semi_conventional_seat_L"],    [],          "us_semi_conventional_seat_L",       "Driver Seat",    {"variables":{"$isDriver":"LHD"}}],
+        ["us_semi_conventional_seat_R",    ["us_semi_conventional_seat_R"],    [],          "us_semi_conventional_seat_R",       "Passenger Seat"],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.08
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["longnose_custom_daycab_interior", ["us_semi_cab"], [],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         ["longnose_custom_daycab_interior_panel", ["us_semi_cab"], [],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         ["longnose_sunvisors_a", ["us_semi_cab"], [],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+    ],
+},
+"us_semi_conventional_custom_interior_sleepercab": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Custom Interior",
+        "value":1000,
+    },
+    "slotType" : "us_semi_conventional_interior_sleepercab",
+    "slots2": [
+        ["name",                           "allowTypes",                       "denyTypes", "default",                           "description"],
+        ["skin_longnose_interior",         ["skin_longnose_interior"],         [],          "skin_longnose_interior",            "Interior Color", {"coreSlot":true}],
+        ["us_semi_conventional_dashboard", ["us_semi_conventional_dashboard"], [],          "us_semi_conventional_dashboard",    "Dashboard",      {"coreSlot":true}],
+        ["us_semi_conventional_shifter",   ["us_semi_conventional_shifter"],   [],          "us_semi_conventional_shifter_twin", "Shifter"],
+        ["us_semi_conventional_seat_L",    ["us_semi_conventional_seat_L"],    [],          "us_semi_conventional_seat_L",       "Driver Seat",    {"variables":{"$isDriver":"LHD"}}],
+        ["us_semi_conventional_seat_R",    ["us_semi_conventional_seat_R"],    [],          "us_semi_conventional_seat_R",       "Passenger Seat"],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.08
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["longnose_custom_daycab_interior", ["us_semi_cab"], [],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         ["longnose_custom_daycab_interior_panel_cut", ["us_semi_cab"], [],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         ["longnose_sunvisors_a", ["us_semi_cab"], [],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+    ],
+},
+}

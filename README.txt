@@ -72,6 +72,11 @@ Smaller fixes:
   was no seat highlight. They now highlight their own meshes:
     vehicles/us_semi/interior_stuff/us_semi_conventional_seatss.jbeam
     vehicles/us_semi/interior_stuff/us_semi_cabover_seatss.jbeam
+  Its custom and chopped long nose interiors (e.g. the T83 Stretched Daycab "Longboi") fitted the
+  driver seat without telling it that it's the driver's ($isDriver, which vanilla's interiors pass),
+  so the truck had seats but no driver seat. They now pass it like vanilla:
+    vehicles/us_semi/interior_stuff/us_semi_custom_conventional_interiors.jbeam
+    vehicles/us_semi/chopped_semi/chopped_conventional_interior.jbeam
 - NBPD D-Series (NBPD_D-Series.zip): its 5.9 diesel engine mesh uses a material,
   belasco_diesel.004, that no mod defines, so the engine had missing textures.
     vehicles/common/pickup/x_rls_vehicle_fix.materials.json

@@ -11,7 +11,7 @@
         ["skin_longnose_interior",         ["skin_longnose_interior"],         [],          "skin_longnose_interior",            "Interior Color", {"coreSlot":true}],
         ["chopped_conventional_dashboard", ["chopped_conventional_dashboard"], [],          "chopped_conventional_dashboard",    "Dashboard",      {"coreSlot":true}],
         ["us_semi_conventional_shifter",   ["us_semi_conventional_shifter"],   [],          "us_semi_conventional_shifter_twin", "Shifter"],
-        ["us_semi_conventional_seat_L",    ["us_semi_conventional_seat_L"],    [],          "us_semi_conventional_seat_L",       "Driver Seat"],
+        ["us_semi_conventional_seat_L",    ["us_semi_conventional_seat_L"],    [],          "us_semi_conventional_seat_L",       "Driver Seat",    {"variables":{"$isDriver":"LHD"}}],
         ["us_semi_conventional_seat_R",    ["us_semi_conventional_seat_R"],    [],          "us_semi_conventional_seat_R",       "Passenger Seat"],
     ],
     "sounds": {
