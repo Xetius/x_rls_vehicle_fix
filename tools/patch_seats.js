@@ -1,9 +1,12 @@
-// Adds the BeamNG 0.40 Front Seats slot to D-Series dashboards from other mods.
-// Usage: node patch_dashboards.js <extracted mod dir> <output dir>
+// Fixes BeamNG 0.40 seats in D-Series and T-Series parts from other mods: adds the Front Seats slot
+// pre-0.40 dashboards lack, and drops pre-0.40 copies of vanilla seat parts that replace the real ones.
+// Usage: node patch_seats.js <extracted mod dir> <output dir>
 //   patches whichever of the known files below exist in the extracted mod (run it once per mod) and
 //   writes the patched copies to the same paths under <output dir>
 //   - dseries_pulling_v1.zip (Truck Pulling Parts Pack): vehicles/pickup/yb_propull_pickup_interior.jbeam
 //   - Gavril_4WS.zip (Quadrasteer):                      vehicles/common/Gavril_4WS.jbeam
+//   - semi_pulling_v1.zip (Hot Rod Semi Pulling Parts Pack):
+//       vehicles/us_semi/us_semi_conventional_interior_yb_empty.jbeam
 const fs = require('fs');
 const path = require('path');
 const [srcDir, outDir] = process.argv.slice(2);
@@ -52,9 +55,18 @@ function patchQuadrasteer() {
   addFrontSeats('pickup_Quadrasteer_interior_alt_facelift', 'pickup_seat_F_facelift');
 }
 
+function patchSemiPulling() {
+  // the semi pack's empty dashboard file redefines the vanilla conventional (long nose) seats with
+  // pre-0.40 copies that have no occupants, and the game uses them for every T-Series, vanilla
+  // included. They're the old vanilla seats otherwise, so drop them and let vanilla's be used.
+  removePart('us_semi_conventional_seat_L');
+  removePart('us_semi_conventional_seat_R');
+}
+
 const files = {
   'vehicles/pickup/yb_propull_pickup_interior.jbeam': patchPulling,
   'vehicles/common/Gavril_4WS.jbeam': patchQuadrasteer,
+  'vehicles/us_semi/us_semi_conventional_interior_yb_empty.jbeam': patchSemiPulling,
 };
 let found = 0;
 for (const [rel, patch] of Object.entries(files)) {

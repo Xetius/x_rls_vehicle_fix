@@ -35,14 +35,24 @@ the player) because their dashboards have no Front Seats slot:
     vehicles/common/Gavril_4WS.jbeam
   The three D-Series Quadrasteer dashboards get the Front Seats slot, with the same defaults as the
   vanilla dashboards they're based on. The Roamer Quadrasteer needs nothing.
+
+And the T-Series (us_semi): with the Hot Rod Semi Pulling Parts Pack (semi_pulling_v1.zip)
+installed, every conventional (long nose) T-Series spawned "Unseated", vanilla ones included (137
+configs across vanilla and a dozen mods):
+    vehicles/us_semi/us_semi_conventional_interior_yb_empty.jbeam
+  That file redefines the vanilla driver and passenger seats (us_semi_conventional_seat_L/_R) with
+  pre-0.40 copies that have no seat occupants, and the game used them for every T-Series. They're
+  removed, so vanilla's are used. The pack's Empty Dashboard is unchanged.
+
 These are whole-file overrides at the same paths, so they also rely on the x_ prefix to mount after
 the originals. They're meant to be used with those mods installed. Drop each file once its mod is
 updated for 0.40.
 
 Regenerating after a brodbattletruck update (if it still needs the fix):
   node tools/patch_kodiak.js <extracted brodbattletruck dir> .
-Regenerating after a pulling pack or Quadrasteer update (run once per extracted mod):
-  node tools/patch_dashboards.js <extracted mod dir> .
+Regenerating after a D-Series pulling pack, Quadrasteer or semi pulling pack update (run once per
+extracted mod):
+  node tools/patch_seats.js <extracted mod dir> .
 
 Releasing: push a semver tag without a v prefix (e.g. 1.0.0). GitHub Actions builds
 x_rls_dseries_fix_<version>.zip and publishes it as a release.
