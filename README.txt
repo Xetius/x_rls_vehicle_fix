@@ -2,7 +2,9 @@ x_rls_vehicle_fix
 
 Fixes vehicles from pre-0.40 repo mods that spawn with no seats (or "Unseated") in BeamNG 0.40+:
 the Kodiak D-Series, the Truck Pulling Parts Pack and Quadrasteer D-Series, and every conventional
-T-Series when the Hot Rod Semi Pulling Parts Pack is installed. Formerly x_rls_dseries_fix.
+T-Series when the Hot Rod Semi Pulling Parts Pack is installed. Also fixes seat highlights on
+Bella's Semi Add-on vintage seats and the NBPD D-Series diesel engine's textures. Formerly
+x_rls_dseries_fix.
 
 Kodiak D-Series (Gavril D-Series with the Kodiak dashboard, e.g. the "Kodiak Dually Diesel")
 spawned with no front seats.
@@ -48,13 +50,25 @@ configs across vanilla and a dozen mods):
   pre-0.40 copies that have no seat occupants, and the game used them for every T-Series. They're
   removed, so vanilla's are used. The pack's Empty Dashboard is unchanged.
 
+Smaller fixes:
+- Bella's Semi Add-on (bella_semipack.zip): its vintage seats (long nose and cabover, both sides)
+  had 0.40 occupants but highlighted the vanilla seat meshes, which aren't on the truck, so there
+  was no seat highlight. They now highlight their own meshes:
+    vehicles/us_semi/interior_stuff/us_semi_conventional_seatss.jbeam
+    vehicles/us_semi/interior_stuff/us_semi_cabover_seatss.jbeam
+- NBPD D-Series (NBPD_D-Series.zip): its 5.9 diesel engine mesh uses a material,
+  belasco_diesel.004, that no mod defines, so the engine had missing textures.
+    vehicles/common/pickup/x_rls_vehicle_fix.materials.json
+  defines it with the belasco_diesel textures from the Classic Engine Expansion Pack
+  (classic_engine_expansion_pack.zip), which must be installed.
+
 These are whole-file overrides at the same paths, so they also rely on the x_ prefix to mount after
 the originals. They're meant to be used with those mods installed. Drop each file once its mod is
 updated for 0.40.
 
 Regenerating after a brodbattletruck update (if it still needs the fix):
   node tools/patch_kodiak.js <extracted brodbattletruck dir> .
-Regenerating after a D-Series pulling pack, Quadrasteer or semi pulling pack update (run once per
+Regenerating after a D-Series pulling pack, Quadrasteer, semi pulling pack or Bella's update (run once per
 extracted mod):
   node tools/patch_seats.js <extracted mod dir> .
 

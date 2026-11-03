@@ -7,6 +7,9 @@
 //   - Gavril_4WS.zip (Quadrasteer):                      vehicles/common/Gavril_4WS.jbeam
 //   - semi_pulling_v1.zip (Hot Rod Semi Pulling Parts Pack):
 //       vehicles/us_semi/us_semi_conventional_interior_yb_empty.jbeam
+//   - bella_semipack.zip (Bella's Semi Add-on), seat highlight only:
+//       vehicles/us_semi/interior_stuff/us_semi_conventional_seatss.jbeam
+//       vehicles/us_semi/interior_stuff/us_semi_cabover_seatss.jbeam
 const fs = require('fs');
 const path = require('path');
 const [srcDir, outDir] = process.argv.slice(2);
@@ -63,10 +66,32 @@ function patchSemiPulling() {
   removePart('us_semi_conventional_seat_R');
 }
 
+// The seat highlight (the outline shown when you look at a seat to get in) is drawn on the mesh named
+// by the occupant's $TriggerHighlightMesh. Seats copied from vanilla keep vanilla's mesh name, which
+// isn't on the vehicle when the seat uses its own mesh, so nothing gets highlighted.
+const setHighlightMesh = (name, mesh) => {
+  const s = partStart(name), e = partEnd(s);
+  const i = lines.findIndex((l, j) => j > s && j < e && /"\$TriggerHighlightMesh"/.test(l));
+  if (i < 0) throw new Error(`$TriggerHighlightMesh not found in ${name}`);
+  lines[i] = lines[i].replace(/("\$TriggerHighlightMesh"\s*:\s*")[^"]*"/, `$1${mesh}"`);
+};
+
+function patchBellaSeats() {
+  // Bella's vintage seats (long nose and cabover) still name the vanilla seat meshes
+  for (const cab of ['longnose', 'cabover']) {
+    for (const side of ['L', 'R']) {
+      const name = `${cab}_vintageseat_${side}`;
+      if (lines.some((l) => l.startsWith(`"${name}"`))) setHighlightMesh(name, name);
+    }
+  }
+}
+
 const files = {
   'vehicles/pickup/yb_propull_pickup_interior.jbeam': patchPulling,
   'vehicles/common/Gavril_4WS.jbeam': patchQuadrasteer,
   'vehicles/us_semi/us_semi_conventional_interior_yb_empty.jbeam': patchSemiPulling,
+  'vehicles/us_semi/interior_stuff/us_semi_conventional_seatss.jbeam': patchBellaSeats,
+  'vehicles/us_semi/interior_stuff/us_semi_cabover_seatss.jbeam': patchBellaSeats,
 };
 let found = 0;
 for (const [rel, patch] of Object.entries(files)) {

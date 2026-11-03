@@ -1,0 +1,30 @@
+{
+  "belasco_diesel.004": {
+    "name": "belasco_diesel.004",
+    "mapTo": "belasco_diesel.004",
+    "class": "material",
+    "persistentId": "6ebbfbd8-54fa-422a-8ffb-64616d23a7c7",
+    "Stages": [
+      {
+        "ambientOcclusionMap": "/vehicles/common/belasco_diesel/belasco_diesel_ao.data.png",
+        "baseColorMap": "/vehicles/common/belasco_diesel/belasco_diesel_b.color.png",
+        "metallicFactor": 1,
+        "metallicMap": "/vehicles/common/belasco_diesel/belasco_diesel_m.data.png",
+        "normalMap": "/vehicles/common/belasco_diesel/belasco_diesel_nm.normal.png",
+        "roughnessMap": "/vehicles/common/belasco_diesel/belasco_diesel_r.data.png"
+      },
+      {
+        "metallicFactor": null
+      },
+      {
+        "metallicFactor": null
+      },
+      {
+        "metallicFactor": null
+      }
+    ],
+    "dynamicCubemap": true,
+    "translucentBlendOp": "None",
+    "version": 1.5
+  }
+}

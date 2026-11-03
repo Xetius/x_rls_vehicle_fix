@@ -1,0 +1,294 @@
+{
+"cabover_vintageseat_L": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Vintage Driver Seat",
+        "value":400,
+    },
+    "slotType" : "us_semi_cabover_seat_L",
+    "slots2": [
+        ["name", "allowTypes", "denyTypes", "default", "description"],
+        //nodeMove/nodeRotate use index 1/2: the frame already slots the cab with nodeMove (index 0)
+        ["seat_occupant_FL", ["seat_occupant"], [], "occupant_generic", "Front Left Seat Occupant", {
+            "coreSlot":true,
+            "nodeMove1":{"x":0.786,"y":-1.30,"z":1.72},
+            "nodeRotate2":{"x":-15, "y":0, "z":0},
+            "variables": {
+                "$seatID": "FL",
+                "$TriggerHighlightMesh": "cabover_vintageseat_L",
+                "$occupant_camPitch": 15,
+                "$occupantDragCoef": 1,
+                "$seatAttachmentStrength": 150000,
+                "$occupant_attachnodeFL": "sf1ll",
+                "$occupant_attachnodeFR": "sf1l",
+                "$occupant_attachnodeRL": "sf2ll",
+                "$occupant_attachnodeRR": "sf2l",
+                "$occupant_attachnodeTL": "sf3ll",
+                "$occupant_attachnodeTR": "sf3l",
+                "$occupant_attachnodeRigifier": "sf4l"
+            }
+        }],
+    ],
+    "sounds": {
+        "$+cabinFilterCoef": 0.005
+    },
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //interior
+        ["cabover_vintageseat_L", ["us_semi_cabover_seat_L"]],
+		["cabover_vintageseat_L_headrest", ["us_semi_cabover_seat_L"]],
+        ["cabover_seat_L_base", ["us_semi_cab"]],
+    ],
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        {"collision":true},
+        {"selfCollision":false},
+        {"nodeWeight":1.41},
+        {"frictionCoef":0.5},
+        {"nodeMaterial":"|NM_METAL"},
+        //seats flexbody
+        {"group":"us_semi_cabover_seat_L"},
+        {"collision":true},
+        {"selfCollision":true},
+        {"nodeWeight":1.88},
+        ["sf1l", 0.5096, -1.62, 1.6349],
+        ["sf1ll", 1.0596, -1.62, 1.6349],
+        ["sf2l", 0.5096, -1.12, 1.5849],
+        ["sf2ll", 1.0596, -1.12, 1.5849],
+        ["sf3l", 0.6596, -0.97, 2.4349],
+        ["sf3ll", 0.9096, -0.97, 2.4349],
+        //seat back rigifier for the occupant
+        ["sf4l", 0.786, -0.608, 2.222, {"collision":false, "selfCollision":false, "group":"", "nodeWeight":1}],
+        {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":2350940,"beamDamp":82},
+        {"beamDeform":17000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.2},
+        ["sf1l", "sf1ll"],
+        ["sf2l", "sf2ll"],
+        ["sf3l", "sf3ll"],
+        ["sf1l", "sf2l"],
+        ["sf2l", "sf3l"],
+        ["sf1ll", "sf2ll"],
+        ["sf2ll", "sf3ll"],
+        //crossing
+        {"beamDeform":12000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":""},
+        ["sf1ll", "sf2l"],
+        ["sf2ll", "sf1l"],
+        ["sf2l", "sf3ll"],
+        ["sf3l", "sf2ll"],
+        //corners
+        ["sf3l", "sf1l"],
+        ["sf3l", "sf1ll"],
+        ["sf3ll", "sf1ll"],
+        ["sf3ll", "sf1l"],
+
+        //damper
+        {"beamSpring":0,"beamDamp":752},
+        ["sf3ll", "cab53ll"],
+        ["sf3l", "cab53l"],
+
+        //attach
+        {"beamSpring":2350940,"beamDamp":82},
+        {"beamDeform":12000,"beamStrength":"FLT_MAX"},
+        ["sf3l", "cab32ll"],
+        ["sf3l", "cab32l"],
+        ["sf3l", "cab52l"],
+        ["sf3l", "cab42ll"],
+        ["sf3ll", "cab32ll"],
+        ["sf3ll", "cab32l"],
+        ["sf3ll", "cab42ll"],
+        ["sf3ll", "cab52l"],
+
+        ["sf2l", "cab32ll"],
+        ["sf2l", "cab32l"],
+        ["sf2l", "cab52l"],
+        ["sf2l", "cab42ll"],
+        ["sf2ll", "cab32ll"],
+        ["sf2ll", "cab32l"],
+        ["sf2ll", "cab42ll"],
+        ["sf2ll", "cab52l"],
+
+        ["sf1l", "cab32ll"],
+        ["sf1l", "cab32l"],
+        ["sf1l", "cab52l"],
+        ["sf1l", "cab42ll"],
+        ["sf1ll", "cab32ll"],
+        ["sf1ll", "cab32l"],
+        ["sf1ll", "cab42ll"],
+        ["sf1ll", "cab52l"],
+
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":""},
+        //seat back rigifier beams: only to seat back nodes
+        {"beamSpring":400000,"beamDamp":282},
+        {"beamDeform":20000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.2},
+        ["sf4l", "sf2ll"],
+        ["sf4l", "sf2l"],
+        ["sf4l", "sf3ll"],
+        ["sf4l", "sf3l"],
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"metal"},
+        {"dragCoef":0},
+        //front seat
+        ["sf2l",  "sf1l",  "sf1ll"],
+        ["sf1ll", "sf2ll", "sf2l"],
+        ["sf3l",  "sf2l",  "sf2ll"],
+        ["sf2ll", "sf3ll", "sf3l"],
+    ],
+},
+"cabover_vintageseat_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Vintage Passenger Seat",
+        "value":400,
+    },
+    "slotType" : "us_semi_cabover_seat_R",
+    "sounds": {
+        "$+cabinFilterCoef": 0.005
+    },
+    "slots2": [
+        ["name", "allowTypes", "denyTypes", "default", "description"],
+        //nodeMove/nodeRotate use index 1/2: the frame already slots the cab with nodeMove (index 0)
+        ["seat_occupant_FR", ["seat_occupant"], [], "occupant_generic", "Front Right Seat Occupant", {
+            "coreSlot":true,
+            "nodeMove1":{"x":-0.786,"y":-1.30,"z":1.72},
+            "nodeRotate2":{"x":-15, "y":0, "z":0},
+            "variables": {
+                "$seatID": "FR",
+                "$TriggerHighlightMesh": "cabover_vintageseat_R",
+                "$occupant_camPitch": 15,
+                "$occupantDragCoef": 1,
+                "$seatAttachmentStrength": 150000,
+                "$occupant_attachnodeFL": "sf1r",
+                "$occupant_attachnodeFR": "sf1rr",
+                "$occupant_attachnodeRL": "sf2r",
+                "$occupant_attachnodeRR": "sf2rr",
+                "$occupant_attachnodeTL": "sf3r",
+                "$occupant_attachnodeTR": "sf3rr",
+                "$occupant_attachnodeRigifier": "sf4r"
+            }
+        }],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //interior
+        ["cabover_vintageseat_R", ["us_semi_cabover_seat_R"]],
+		["cabover_vintageseat_R_headrest", ["us_semi_cabover_seat_R"]],
+        ["cabover_seat_R_base", ["us_semi_cab"]],
+    ],
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        {"collision":true},
+        {"selfCollision":false},
+        {"nodeWeight":1.41},
+        {"frictionCoef":0.5},
+        {"nodeMaterial":"|NM_METAL"},
+        //seats flexbody
+        {"group":"us_semi_cabover_seat_R"},
+        {"collision":true},
+        {"selfCollision":true},
+        {"nodeWeight":1.88},
+        ["sf1r", -0.5096, -1.62, 1.6349],
+        ["sf1rr", -1.0596, -1.62, 1.6349],
+        ["sf2r", -0.5096, -1.12, 1.5849],
+        ["sf2rr", -1.0596, -1.12, 1.5849],
+        ["sf3r", -0.6596, -0.97, 2.4349],
+        ["sf3rr", -0.9096, -0.97, 2.4349],
+        //seat back rigifier for the occupant
+        ["sf4r", -0.786, -0.608, 2.222, {"collision":false, "selfCollision":false, "group":"", "nodeWeight":1}],
+        {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":2350940,"beamDamp":82},
+        {"beamDeform":17000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.2},
+        ["sf1r", "sf1rr"],
+        ["sf2r", "sf2rr"],
+        ["sf3r", "sf3rr"],
+        ["sf1r", "sf2r"],
+        ["sf2r", "sf3r"],
+        ["sf1rr", "sf2rr"],
+        ["sf2rr", "sf3rr"],
+        //crossing
+        {"beamDeform":12000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":""},
+        ["sf1rr", "sf2r"],
+        ["sf2rr", "sf1r"],
+        ["sf2r", "sf3rr"],
+        ["sf3r", "sf2rr"],
+        //corners
+        ["sf3r", "sf1r"],
+        ["sf3r", "sf1rr"],
+        ["sf3rr", "sf1rr"],
+        ["sf3rr", "sf1r"],
+
+        //damper
+        {"beamSpring":0,"beamDamp":752},
+        ["sf3rr", "cab53rr"],
+        ["sf3r", "cab53r"],
+
+        //attach
+        {"beamSpring":2350940,"beamDamp":82},
+        {"beamDeform":12000,"beamStrength":"FLT_MAX"},
+        ["sf3r", "cab32rr"],
+        ["sf3r", "cab32r"],
+        ["sf3r", "cab52r"],
+        ["sf3r", "cab42rr"],
+        ["sf3rr", "cab32rr"],
+        ["sf3rr", "cab32r"],
+        ["sf3rr", "cab42rr"],
+        ["sf3rr", "cab52r"],
+
+        ["sf2r", "cab32rr"],
+        ["sf2r", "cab32r"],
+        ["sf2r", "cab52r"],
+        ["sf2r", "cab42rr"],
+        ["sf2rr", "cab32rr"],
+        ["sf2rr", "cab32r"],
+        ["sf2rr", "cab42rr"],
+        ["sf2rr", "cab52r"],
+
+        ["sf1r", "cab32rr"],
+        ["sf1r", "cab32r"],
+        ["sf1r", "cab52r"],
+        ["sf1r", "cab42rr"],
+        ["sf1rr", "cab32rr"],
+        ["sf1rr", "cab32r"],
+        ["sf1rr", "cab42rr"],
+        ["sf1rr", "cab52r"],
+
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":""},
+        //seat back rigifier beams: only to seat back nodes
+        {"beamSpring":400000,"beamDamp":282},
+        {"beamDeform":20000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.2},
+        ["sf4r", "sf2r"],
+        ["sf4r", "sf2rr"],
+        ["sf4r", "sf3r"],
+        ["sf4r", "sf3rr"],
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"metal"},
+        {"dragCoef":0},
+        //front seat
+        ["sf1r", "sf2r", "sf1rr"],
+        ["sf2rr", "sf1rr", "sf2r"],
+        ["sf2r", "sf3r", "sf2rr"],
+        ["sf3rr", "sf2rr", "sf3r"],
+    ],
+},
+}
