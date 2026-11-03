@@ -23,8 +23,26 @@ Changes:
 
 Requires brodbattletruck.zip. Remove this mod once brodbattletruck is updated for 0.40.
 
+Also fixes D-Series configs from two more pre-0.40 repo mods that spawn "Unseated" (no seats for
+the player) because their dashboards have no Front Seats slot:
+- Truck Pulling Parts Pack (dseries_pulling_v1.zip), all its pulling trucks:
+    vehicles/pickup/yb_propull_pickup_interior.jbeam
+  The Empty Dashboard gets the Front Seats slot. The file's old copies of vanilla parts
+  (pickup_seat_F, pickup_seat_F_bucket, pickup_seat_R, pickup_seat_R_short,
+  pickup_interiorpanel_R_short, pickup_shifter_M/_M_sport/_A/_T) are removed. They were pre-0.40
+  versions of the same vanilla parts, with no seat occupants, so vanilla's are used instead.
+- Quadrasteer (Gavril_4WS.zip), Quadrasteer (A) and Quadrasteer Late (A):
+    vehicles/common/Gavril_4WS.jbeam
+  The three D-Series Quadrasteer dashboards get the Front Seats slot, with the same defaults as the
+  vanilla dashboards they're based on. The Roamer Quadrasteer needs nothing.
+These are whole-file overrides at the same paths, so they also rely on the x_ prefix to mount after
+the originals. They're meant to be used with those mods installed. Drop each file once its mod is
+updated for 0.40.
+
 Regenerating after a brodbattletruck update (if it still needs the fix):
   node tools/patch_kodiak.js <extracted brodbattletruck dir> .
+Regenerating after a pulling pack or Quadrasteer update (run once per extracted mod):
+  node tools/patch_dashboards.js <extracted mod dir> .
 
 Releasing: push a semver tag without a v prefix (e.g. 1.0.0). GitHub Actions builds
 x_rls_dseries_fix_<version>.zip and publishes it as a release.

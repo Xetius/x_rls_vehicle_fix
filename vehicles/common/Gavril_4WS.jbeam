@@ -1,0 +1,1168 @@
+{
+"pickup_4ws_R": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Quadrasteer Suspension",
+        "value":1250,
+    },
+    "slotType" : "pickup_suspension_R",
+    "slots": [
+        ["type", "default", "description"],
+        ["pickup_rearsteering","pickup_rearsteering","Rear Steer"],
+        ["pickup_hub_R","pickup_hub_R_6","Rear Wheel Hubs"],
+        ["pickup_spring_R","pickup_spring_R","Rear Springs"],
+        ["pickup_shock_R","pickup_shock_R","Rear Shocks"],
+        ["pickup_swaybar_R","","Rear Sway Bar"],
+        ["pickup_differential_R","pickup_differential_R","Rear Differential"],
+    ],
+    "variables": [
+        ["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+        ["$trackoffset_R", "range", "+m", "Wheels", 0.0,-0.02, 0.05, "Wheel Offset", "Spacing of the wheel from the hub", {"stepDis":0.001,"subCategory":"Rear"}],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //rear axle
+         ["pickup_axle_R", ["pickup_axle_R"],[],{"pos":{"x":0.0, "y":0.0, "z":0.0}}],
+         ["pickup_leafmounts_R", ["pickup_frame", "pickup_leaftop"]],
+    ],
+    "glowMap":{
+            "pickup_Quadrasteer":{"simpleFunction":{"ignition":0.5}, "off":"pickup_Quadrasteer_OFF", "on":"pickup_Quadrasteer_ON"},
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--REAR LIVE AXLE SUSPENSION--
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"nodeWeight":5.888},
+         {"collision":true},
+         {"group":"pickup_axle_R"},
+         {"selfCollision":false},
+         //can be overwritten by Off-Road leaf spring
+         ["ax2r", -0.66, 1.49, 0.56, {"group":["pickup_axle_R","pickup_leafbottom"]}],
+         ["ax2l", 0.66, 1.49, 0.56, {"group":["pickup_axle_R","pickup_leafbottom"]}],
+         {"selfCollision":true},
+         ["ax3r", -0.74, 1.30, 0.33],
+         ["ax3l", 0.74, 1.30, 0.33],
+         ["ax4r", -0.74, 1.66, 0.33],
+         ["ax4l", 0.74, 1.66, 0.33],
+         ["ax1", 0.0, 1.6, 0.30, {"nodeWeight":14.1}],
+         ["ax3", 0.0, 1.13, 0.39, {"nodeWeight":14.1,"selfCollision":false}],
+         ["ax2", 0.0, 1.54, 0.55, {"nodeWeight":9.4,"selfCollision":false}],
+         {"nodeWeight":4.888},
+         //can be overwritten by Off-Road leaf spring
+         ["axsr", -0.66, 1.49, 0.37, {"group":"pickup_leafbottom"}],
+         ["axsl", 0.66, 1.49, 0.37, {"group":"pickup_leafbottom"}],
+         {"group":"pickup_rearshockbottom"},
+         {"nodeWeight":5.64},
+         //shock mounting nodes
+         ["axshr", -0.45, 1.56, 0.29],
+         ["axshl", 0.45, 1.56, 0.29],
+
+         //--REAR RUNNING GEAR
+
+         //shock mount
+         {"nodeWeight":7.52},
+         {"group":"pickup_rearshocktop"}
+         {"collision":false},
+         {"selfCollision":false},
+         ["rs1r", -0.43, 1.51, 0.63],
+         ["rs1l", 0.43, 1.51, 0.63],
+
+         //leaf mounts
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":4.7},
+         {"group":"pickup_leaftop"},
+         ["le1r", -0.64, 0.9, 0.41],
+         ["le1l", 0.64, 0.9, 0.41],
+         //shackle mounts
+         ["le2r", -0.64, 2.06, 0.52],
+         ["le2l", 0.64, 2.06, 0.52],
+         {"group":""},
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //live axle suspension
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":11280940,"beamDamp":141},
+          {"beamDeform":84000,"beamStrength":2050000},
+          {"deformLimitExpansion":1.2},
+          ["ax1","ax2"],
+          ["ax1","ax3"],
+          ["ax2","ax3"],
+          ["ax2","ax2r"],
+          ["ax2","ax2l"],
+          //
+          ["ax2l","ax3l"],
+          ["ax2r","ax3r"],
+          ["ax4l","ax3l"],
+          ["ax4r","ax3r"],
+          ["ax4l","ax2l"],
+          ["ax4r","ax2r"],
+
+          //crossing
+          {"deformLimitExpansion":""},
+          ["ax2r","ax1"],
+          ["ax2l","ax1"],
+          ["ax2r","ax3"],
+          ["ax2l","ax3"],
+
+          ["ax2l","ax2r"],
+
+          //shock mounts
+          {"beamSpring":2820940,"beamDamp":141},
+          {"beamDeform":35000,"beamStrength":437500},
+          ["axshr","ax2r"],
+          ["axshr","ax1"],
+          ["axshr","ax2"],
+          ["axshr","ax3"],
+          ["axshl","ax2l"],
+          ["axshl","ax1"],
+          ["axshl","ax2"],
+          ["axshl","ax3"],
+          //spring mounts
+          {"beamSpring":5640940,"beamDamp":141},
+          ["axsl","ax2l"],
+          ["axsl","ax3l"],
+          ["axsl","ax4l"],
+          ["axsl","ax1"],
+          ["axsl","ax2"],
+          ["axsl","ax3"],
+
+          ["axsr","ax2r"],
+          ["axsr","ax3r"],
+          ["axsr","ax4r"],
+          ["axsr","ax1"],
+          ["axsr","ax2"],
+          ["axsr","ax3"],
+
+          //rear limiters
+          {"deformLimitExpansion":""},
+          {"beamPrecompression":0.55, "beamType":"|SUPPORT", "beamLongBound":6},
+          {"beamSpring":0,"beamDamp":0,"beamDeform":52500,"beamStrength":700000},
+          {"beamLimitSpring":5001000,"beamLimitDamp":500},
+          {"optional":true},
+          ["rw1r", "f6r"],
+          ["rw1r", "f16r"],
+          ["rw1r", "f10r"],
+          ["rw1r", "f20r"],
+          ["rw1r", "f18r", {"beamPrecompression":0.2, "beamLongBound":12}],
+
+          ["rw1l", "f6l"],
+          ["rw1l", "f16l"],
+          ["rw1l", "f10l"],
+          ["rw1l", "f20l"],
+          ["rw1l", "f18l", {"beamPrecompression":0.2, "beamLongBound":12}],
+          {"optional":false},
+
+          //pinion damper
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":0,"beamDamp":3290},
+          {"beamDeform":21000,"beamStrength":35000},
+          {"breakGroup":"driveshaft"},
+          ["ax2","tra1", {"dampCutoffHz":500, "optional":true}],
+          ["ax1","tra1", {"dampCutoffHz":500, "optional":true}],
+
+          //hub dampers
+          {"beamSpring":0,"beamDamp":1200},
+          {"beamLimitSpring":0,"beamLimitDamp":1200},
+          {"beamType":"|BOUNDED" "beamLongBound":2, "beamShortBound":1},
+          {"optional":true},
+          ["rw1ll","f6l",  {"breakGroupType":1, "breakGroup":"wheel_RL","beamDampVelocitySplit":0.05,"beamDampFast":2000,"beamDampReboundFast":2000,"beamDamp":100,"beamDampRebound":100, "dampCutoffHz":500}],
+          ["rw1rr","f6r",  {"breakGroupType":1, "breakGroup":"wheel_RR","beamDampVelocitySplit":0.05,"beamDampFast":2000,"beamDampReboundFast":2000,"beamDamp":100,"beamDampRebound":100, "dampCutoffHz":500}],
+          ["rw1ll","f10l", {"breakGroupType":1, "breakGroup":"wheel_RL","beamDampVelocitySplit":0.05,"beamDampFast":2000,"beamDampReboundFast":2000,"beamDamp":100,"beamDampRebound":100, "dampCutoffHz":500}],
+          ["rw1rr","f10r", {"breakGroupType":1, "breakGroup":"wheel_RR","beamDampVelocitySplit":0.05,"beamDampFast":2000,"beamDampReboundFast":2000,"beamDamp":100,"beamDampRebound":100, "dampCutoffHz":500}],
+          {"beamType":"|NORMAL" "beamLongBound":2, "beamShortBound":1},
+          {"breakGroup":""},
+
+          //extension/compression limit
+          {"beamPrecompression":1, "beamType":"|BOUNDED","beamLongBound":1,"beamShortBound":1},
+          {"beamSpring":0,"beamDamp":0,"beamDeform":24500,"beamStrength":245000},
+          {"beamLimitSpring":2001000,"beamLimitDamp":1000},
+          ["ax4r","f18r", {"longBoundRange":0.35,"shortBoundRange":0.06,"boundZone":0.025,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          ["ax4l","f18l", {"longBoundRange":0.35,"shortBoundRange":0.06,"boundZone":0.025,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          ["ax3r","f18r", {"longBoundRange":0.35,"shortBoundRange":0.06,"boundZone":0.025,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          ["ax3l","f18l", {"longBoundRange":0.35,"shortBoundRange":0.06,"boundZone":0.025,"beamLimitDampRebound":0,"dampCutoffHz":500}],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.2},
+
+        //ADDED BEAMS BY EDITOR//
+        ["axshl","axsl"],
+        ["axshr","axsr"],
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //axle shape
+            {"triangleType":"NONCOLLIDABLE"},
+            {"dragCoef":0},
+            ["ax1", "ax3", "axshr"],
+            ["ax3r", "ax4r", "axsr"],
+            ["ax4r", "ax3r", "ax2r"],
+
+            ["ax3", "ax1", "axshl"],
+            ["ax4l", "ax3l", "axsl"],
+            ["ax3l", "ax4l", "ax2l"],
+            {"triangleType":"NORMALTYPE"},
+    ],
+    "pressureWheels": [
+            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+            //cancel out brake properties
+            {"brakeTorque":0},
+            {"parkingTorque":0},
+            {"enableBrakeThermals":false},
+            {"brakeDiameter":false},
+            {"brakeMass":false},
+            {"brakeType":false},
+            {"rotorMaterial":false},
+            {"brakeVentingCoef":false},
+    ],
+},
+
+"pickup_rearsteering": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Rear Steering",
+        "value":200,
+    },
+    "slotType" : "pickup_rearsteering",
+    "rails": {
+        "rearsteeringrack":{
+            "links:":["rws6r", "rws6l"], "broken:":[], "looped":false, "capped":true,
+        },
+    },
+    "slidenodes": [
+        ["id:", "railName", "attached", "fixToRail", "tolerance", "spring", "strength", "capStrength"],
+        ["rst1r", "rearsteeringrack", true, true, 0.0, 18001000, "FLT_MAX", "FLT_MAX"],
+        ["rst1l", "rearsteeringrack", true, true, 0.0, 18001000, "FLT_MAX", "FLT_MAX"],
+    ],
+    "variables": [
+        ["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+        ["$steer_angle", "range", "", "Steering Angle", 0.05, 0.05, 0.3, "Increase Steer Angle", "Increase rear steering angle.", {"stepDis":0.05, "subCategory":" Rear"}]
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         //--steering rod--
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"pickup_reartierod_F"},
+         {"nodeWeight":5.64},
+         ["rws6r", -0.22, 1.6, 0.433],
+         ["rws6l", 0.22, 1.6, 0.433],
+         {"group":""},
+		 
+		 //steering rack
+         {"nodeWeight":6.58},
+         {"collision":true},
+         {"selfCollision":false},
+         {"group":"pickup_rearsteeringrack"},
+         ["rst1r", -0.11, 1.6, 0.433],
+         ["rst1l", 0.11, 1.6, 0.433],
+         {"group":""},
+		 
+    ],
+    "beams": [
+            ["id1:","id2:"],
+            {"beamPrecompression":1.0, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+            {"beamSpring":9400940,"beamDamp":141,"beamDeform":87500,"beamStrength":192500},
+            ["rws6r","rws6l"],
+            //
+            {"beamSpring":20680940,"beamDamp":141,"beamDeform":101500,"beamStrength":227500},
+            ["ax4r","rws6r", {"beamPrecompression":"$=$toe_RR-$steer_center_RS","beamPrecompressionTime":0.5}],
+            ["ax4l","rws6l", {"beamPrecompression":"$=$toe_RR+$steer_center_RS","beamPrecompressionTime":0.5}],
+            //steering damper
+            {"beamPrecompression":1.0, "beamType":"|BOUNDED", "beamLongBound":1.0, "beamShortBound":1.0},
+            {"beamSpring":0,"beamDeform":58800,"beamStrength":104664},
+            {"beamLimitSpring":0,"beamLimitDamp":0},
+            {"beamDamp":150},
+            ["fh4r","fx1r", {"beamDampVelocitySplit":0.1,"beamDampFast":1000,"dampCutoffHz":1000}],
+            ["fh4l","fx1l", {"beamDampVelocitySplit":0.1,"beamDampFast":1000,"dampCutoffHz":1000}],
+            ["fh1r","fx2r", {"beamDampVelocitySplit":0.1,"beamDampFast":1000,"dampCutoffHz":1000}],
+            ["fh1l","fx2l", {"beamDampVelocitySplit":0.1,"beamDampFast":1000,"dampCutoffHz":1000}],
+            {"beamPrecompression":1.0, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+			
+		//steering rack
+          {"deformLimitExpansion":1.2},
+          {"beamSpring":9400940,"beamDamp":235},
+          {"beamDeform":94500,"beamStrength":"FLT_MAX"},
+          ["rst1r", "rst1l"],
+          {"beamDeform":43250},
+          ["rst1l", "axshl"],
+          ["rst1r", "axshr"],
+          ["rst1r", "ax1"],
+          ["rst1l", "ax1"],
+          {"deformLimitExpansion":""},
+          ["rst1l", "ax1"],
+          ["rst1r", "ax1"],
+          ["rst1r", "axshl"],
+          ["rst1l", "axshr"],
+          
+          ["rst1l", "ax2l"],
+          ["rst1l", "ax2"],
+          ["rst1r", "ax2"],
+          ["rst1r", "ax2r"],
+		  
+    ],
+    "hydros": [
+            ["id1:","id2:"],
+            {"beamPrecompression":1.0, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+            {"beamSpring":14001000,"beamDamp":50,"beamDeform":"FLT_MAX","beamStrength":105000},
+            ["rws6r","rst1l", {"factor":"$steer_angle","steeringWheelLock":720,"inRate":1.25,"outRate":1.25}],
+            ["rws6l","rst1r", {"factor":"$=-$steer_angle","steeringWheelLock":720,"inRate":1.25,"outRate":1.25}],
+            {"beamPrecompression":1.0, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+    ],
+    "input": {
+        "FFBcoef":"$=$ffbstrength*8",
+    },
+},
+    "pickup_Quadrasteer_interior": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Quadrasteer Dashboard",
+        "value":1000,
+    },
+    "slotType" : "pickup_interior",
+    "slots2": [
+        ["name",                      "allowTypes",                  "denyTypes", "default",          "description"],
+        ["pickup_shifter",            ["pickup_shifter"],            [],          "pickup_shifter_A", "Shifter"],
+        ["pickup_shifter_T",          ["pickup_shifter_T"],          [],          "",                 "Range Selector"],
+        ["pickup_steer",              ["pickup_steer"],              [],          "pickup_steer",     "Steering Wheel"],
+        ["pickup_interior_accessory", ["pickup_interior_accessory"], [],          "",                 "Interior Accessories"],
+        ["pickup_seat_F", ["pickup_seat_F"], [], "pickup_seat_F", "Front Seats"],
+    ],
+    "camerasInternal":[
+        ["type", "x", "y", "z", "fov", "id1:", "id2:", "id3:", "id4:", "id5:", "id6:"],
+        {"nodeWeight":2.35},
+        {"beamSpring":846, "beamDamp":94},
+        {"selfCollision":true},
+        {"collision":true},
+        //dash cam
+        ["dash", 0.462, 0.1, 1.53, 55, "b1rr","b1ll","b3rr","b3ll","b6rr","b6ll", {"beamDeform":2800560,"beamStrength":"FLT_MAX"}],
+    ],
+    "soundscape": [
+        ["name", "src"],
+        //indicator7
+        {"node:":"int_strw"},
+        ["indicatorStart", "event:>Vehicle>Interior>Indicator>POL_On"],
+        ["indicatorStop", "event:>Vehicle>Interior>Indicator>POL_Off"],
+        ["indLoop1", "event:>Vehicle>Interior>Indicator>FIPA_Click"],
+        ["indLoop2", "event:>Vehicle>Interior>Indicator>FIPA_Clack"],
+        //lights3
+        ["LightOn", "event:>Vehicle>Interior>Light>AU5_Light_On"],
+        ["LightOff", "event:>Vehicle>Interior>Light>AU5_Light_Off"],
+        //handbrake2
+        {"node:":"int_pbrk"},
+        ["handbrakeDisengaged","event:>Vehicle>Interior>Handbrake_Pedal>Pedal_04_Unlock"],
+        ["handbrakeEngaging","event:>Vehicle>Interior>Handbrake_Pedal>Pedal_04_Lock"],
+        //affects horn location because horn soundscape is loaded after
+        {"node:":"b6l"},
+    ],
+    "props": [
+        ["func",         "mesh",                 "idRef:","idX:","idY:", "baseRotation",           "rotation",                  "translation",           "min", "max", "offset", "multiplier"],
+        //speedometer
+        ["wheelspeed",   "pickup_needle_speedo", "dshl","dsh","int_strw",       {"x":160 "y":180, "z":0}, {"x":0, "y":0, "z":-4.15},   {"x":0, "y":0, "z":0},   0, 52, -26.1, 1],
+        //tachometer
+        ["rpm",          "pickup_needle_tacho",  "dshl","dsh","int_strw",       {"x":160 "y":180, "z":0}, {"x":0, "y":0, "z":-0.0305}, {"x":0, "y":0, "z":0},   0, 6000, -3950, 1],
+        //fuel gauge
+        ["fuel",         "pickup_needle_fuel",   "dshl","dsh","int_strw",       {"x":160 "y":180, "z":0}, {"x":0, "y":0, "z":-70},     {"x":0, "y":0, "z":0},   0, 1, -1, 1],
+        //water temp
+        ["watertemp",    "pickup_needle_water",   "dshl","dsh","int_strw",       {"x":160 "y":180, "z":0}, {"x":0, "y":0, "z":1.5},     {"x":0, "y":0, "z":0},   60, 120, 90, 1],
+        //oil temp
+        ["oiltemp",    "pickup_needle_oil",   "dshl","dsh","int_strw",       {"x":160 "y":180, "z":0}, {"x":0, "y":0, "z":1.5},     {"x":0, "y":0, "z":0},   60, 120, 90, 1],
+        //pedals
+        ["brake",        "pickup_pedal_brake",         "b1l","b1r","b5l",    {"x":154, "y":180, "z":0},   {"x":-25, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        ["throttle",     "pickup_pedal_gas",           "b1l","b1r","b5l",    {"x":154, "y":180, "z":0},   {"x":-23, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        ["parkingbrake", "pickup_pedal_parkingbrake",  "b1l","b1r","b5l",    {"x":158, "y":180, "z":0},   {"x":-25, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        //turn signal stalk
+        ["turnsignal",   "pickup_signalstalk",   "dshl","dsh","int_strw",      {"x":-105 "y":180, "z":0}, {"x":0, "y":-15, "z":-2},     {"x":0, "y":0, "z":0},   -1, 1, -1, 1, {"baseTranslation":{"x":-0.05,"y":0.1,"z":0.0}}],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //interior
+         ["pickup_dash", ["pickup_dash"]],
+         ["pickup_Quadrasteer", ["pickup_dash"]],
+         ["pickup_gauges", ["pickup_dash"]],
+         ["pickup_decals_gauges", ["pickup_dash"]],
+    ],
+    "controller": [
+        ["fileName"],
+        ["gauges/analogOdometer", {"name":"analogOdometer" }],
+    ],
+    "analogOdometer": {
+        "configuration": {
+            "materialName": "@generic_gauges_odo",
+            "htmlPath": "local://local/vehicles/common/analogOdo.html",
+            "displayWidth":512,
+            "displayHeight":32,
+            "odometerDigits":7,
+            "odometerHasDecimalSeparator":true,
+            "tripHasDecimalSeparator":true,
+            "unit":"imperial",
+            "floatStyle":{"color":"black"},
+            "bodyStyle":{
+                "background": "url('/vehicles/common/odometer_analog_b.cef_color.png')",
+                "font-family": "OpenSans",
+                "font-size": "28px",
+                "color": "white",
+                "letter-spacing": "15.5px",
+                "margin": "-4.5px 10.5px",
+                "transform": "scaleX(1.26)",
+                "transform-origin": "left",
+            },
+            "tripDivStyle":{
+                "margin-left": "-3px",
+                "position": "fixed",
+                "letter-spacing": "32px"
+            }
+        },
+    },
+    "triggers2":[
+        ["id", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["hood_int", "dshl","dsh","b1ll", "box", {"x":0.04, "y":0.04, "z":0.04}, {"x":25, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0},{"x":-0.23, "y":0.22, "z":-0.10}],
+    ],
+    "actionsEnabled": [
+        ["id"],
+        ["hoodRelease"],
+    ],
+    "triggerEventLinks2":[
+        ["triggerId:triggers2", "triggerInput", "inputAction"],
+        ["hood_int", "action0", "hoodRelease"],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"collision":true},
+         {"selfCollision":true},
+
+         //dash nodes
+         {"group":["pickup_dash", "pickup_dash_pickup"]},
+         {"nodeWeight":0.752},
+         ["dshr",-0.455, -0.626, 1.090],
+         ["dsh",  0.000, -0.626, 1.090],
+         ["dshl", 0.455, -0.626, 1.090],
+         {"collision":false},
+         {"selfCollision":false},
+         ["int_strw", 0.455, -0.475, 1.172],
+         {"nodeWeight":0.2},
+         //flexbody node
+         ["dsh2",  0.000, -0.716, 1.290],
+         {"group":""},
+         ["int_pbrk", 0.66, -0.93, 0.86],
+         {"group":""},
+    ],
+    "torsionbars":[
+       ["id1:", "id2:", "id3:", "id4:"],
+        //rigify the column
+        {"spring":20000, "damp":1, "deform":18000, "strength":28000},
+        ["int_strw", "dshl", "dsh", "b5l"],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //dash board
+          {"beamSpring":869146.6,"beamDamp":142.73},
+          {"beamDeform":12400,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          ["dshr","b5r"],
+          ["dshl","b5l"],
+          ["dshr","b6r"],
+          ["dshl","b6l"],
+          ["dshr","b1r"],
+          ["dshl","b1l"],
+          ["dshr","b5rr"],
+          ["dshl","b5ll"],
+          ["dshr","b6rr"],
+          ["dshl","b6ll"],
+          ["dshl","dshr"],
+          ["dsh","b5r"],
+          ["dsh","b5l"],
+          ["dsh","b6r"],
+          ["dsh","b6l"],
+          ["dsh","b1r"],
+          ["dsh","b1l"],
+          ["dshl","dsh"],
+          ["dshr","dsh"],
+          ["dsh","int_strw"],
+          ["dshl","int_strw"],
+          {"beamSpring":169146.6,"beamDamp":142.73},
+          ["dsh2","b5r"],
+          ["dsh2","b5l"],
+          ["dsh2","b6r"],
+          ["dsh2","b6l"],
+          ["dsh2","b1r"],
+          ["dsh2","b1l"],
+          ["dshl","dsh2"],
+          ["dshr","dsh2"],
+          {"beamSpring":160100,"beamDamp":142.73},
+          {"beamDeform":70300,"beamStrength":"FLT_MAX"},
+          ["int_pbrk","dshl"],
+          ["int_pbrk","b5ll"],
+          ["int_pbrk","b5l"],
+          ["int_pbrk","b1lll"],
+          //--BLEED DEFORM LIMIT TO OTHER PARTS--
+          {"deformLimitExpansion":1.2},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //sides
+            {"dragCoef":0},
+            {"group":"pickup_dash"},
+            ["dshl", "b6ll", "b5ll"],
+            ["b6ll", "dshl", "b6l"],
+            ["b6l", "dshl", "dsh"],
+            ["dsh", "b6r", "b6l"],
+            ["dsh", "dshr", "b6r"],
+            ["b6r", "dshr", "b6rr"],
+            ["dshr", "b5rr", "b6rr"],
+            ["dshl", "b5ll", "b5l"],
+            ["b5l", "dsh", "dshl"],
+            ["b5l", "b5r", "dsh"],
+            ["dsh", "b5r", "dshr"],
+            ["dshr", "b5r", "b5rr"],
+    ],
+},
+"pickup_interior_Quadrasteer_facelift": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Quadrasteer Late Dashboard",
+        "value":2000,
+    },
+    "slotType" : "pickup_interior",
+    "slots2": [
+        ["name",                           "allowTypes",                       "denyTypes", "default",                   "description"],
+        ["pickup_facelift_shifter",        ["pickup_facelift_shifter"],        [],          "pickup_facelift_shifter_A", "Shifter"],
+        ["pickup_shifter_T",               ["pickup_shifter_T"],               [],          "",                          "Range Selector"],
+        ["pickup_steer",                   ["pickup_steer"],                   [],          "pickup_facelift_steer",     "Steering Wheel"],
+        ["pickup_interior_accessory_late", ["pickup_interior_accessory_late"], [],          "",                          "Interior Accessories"],
+        ["pickup_seat_F", ["pickup_seat_F"], [], "pickup_seat_F_facelift", "Front Seats"],
+    ],
+    "camerasInternal":[
+        ["type", "x", "y", "z", "fov", "id1:", "id2:", "id3:", "id4:", "id5:", "id6:"],
+        {"nodeWeight":2.35},
+        {"beamSpring":846, "beamDamp":94},
+        {"selfCollision":true},
+        {"collision":true},
+        //dash cam
+        ["dash", 0.462, 0.1, 1.53, 55, "b1rr","b1ll","b3rr","b3ll","b6rr","b6ll", {"beamDeform":2800560,"beamStrength":"FLT_MAX"}],
+    ],
+    "soundscape": [
+        ["name", "src"],
+        //indicator7
+        {"node:":"int_strw"},
+        ["indicatorStart", "event:>Vehicle>Interior>Indicator>POL_On"],
+        ["indicatorStop", "event:>Vehicle>Interior>Indicator>POL_Off"],
+        ["indLoop1", "event:>Vehicle>Interior>Indicator>FIPA_Click"],
+        ["indLoop2", "event:>Vehicle>Interior>Indicator>FIPA_Clack"],
+        //lights3
+        ["LightOn", "event:>Vehicle>Interior>Light>AU5_Light_On"],
+        ["LightOff", "event:>Vehicle>Interior>Light>AU5_Light_Off"],
+        //handbrake2
+        {"node:":"int_pbrk"},
+        ["handbrakeDisengaged","event:>Vehicle>Interior>Handbrake_Pedal>Pedal_04_Unlock"],
+        ["handbrakeEngaging","event:>Vehicle>Interior>Handbrake_Pedal>Pedal_04_Lock"],
+        //affects horn location because horn soundscape is loaded after
+        {"node:":"b6l"},
+    ],
+    "props": [
+        ["func",         "mesh",                 "idRef:","idX:","idY:", "baseRotation",           "rotation",                  "translation",           "min", "max", "offset", "multiplier"],
+        //speedometer
+        ["wheelspeed",   "pickup_facelift_needle_speedo", "dshl","dsh","int_strw",       {"x":160 "y":180, "z":0}, {"x":0, "y":0, "z":-4.15},   {"x":0, "y":0, "z":0},   0, 52, -26.1, 1],
+        //tachometer
+        ["rpm",          "pickup_facelift_needle_tacho",  "dshl","dsh","int_strw",       {"x":160 "y":180, "z":0}, {"x":0, "y":0, "z":-0.0335}, {"x":0, "y":0, "z":0},   0, 6000, -4000, 1],
+        //fuel gauge
+        ["fuel",         "pickup_facelift_needle_fuel",   "dshl","dsh","int_strw",       {"x":160 "y":180, "z":0}, {"x":0, "y":0, "z":-70},     {"x":0, "y":0, "z":0},   0, 1, -1, 1],
+        //water temp
+        ["watertemp",    "pickup_facelift_needle_temp",   "dshl","dsh","int_strw",     {"x":160 "y":180, "z":0}, {"x":0, "y":0, "z":-1},      {"x":0, "y":0, "z":0},   60, 120, -90, 1],
+        //pedals
+        ["brake",        "pickup_facelift_brakepedal",         "b1l","b1r","b5l",    {"x":154, "y":180, "z":0},   {"x":-25, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        ["throttle",     "pickup_facelift_gaspedal",           "b1l","b1r","b5l",    {"x":154, "y":180, "z":0},   {"x":-23, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        ["parkingbrake", "pickup_facelift_parkingbrake",  "b1l","b1r","b5l",    {"x":165, "y":180, "z":0},   {"x":-25, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        //turn signal stalk
+        ["turnsignal",   "pickup_signalstalk",   "dshl","dsh","int_strw",      {"x":-105 "y":180, "z":0}, {"x":0, "y":-15, "z":-2},     {"x":0, "y":0, "z":0},   -1, 1, -1, 1, {"baseTranslation":{"x":-0.05,"y":0.045,"z":0.02}}],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //interior
+         ["pickup_facelift_dash", ["pickup_dash"]],
+         ["roamer_Quadrasteer", ["pickup_dash"]],
+         //["pickup_facelift_expletivehandle", ["pickup_body"]],
+         ["pickup_facelift_gauges", ["pickup_dash"]],
+         ["pickup_facelift_decals_gauges", ["pickup_dash"]],
+        ],
+    "controller": [
+        ["fileName"],
+        ["gauges/analogOdometer", {"name":"analogOdometer" }],
+    ],
+    "analogOdometer": {
+        "configuration": {
+            "materialName": "@generic_gauges_odo",
+            "htmlPath": "local://local/vehicles/common/analogOdo.html",
+            "displayWidth":512,
+            "displayHeight":32,
+            "odometerDigits":7,
+            "odometerHasDecimalSeparator":true,
+            "tripHasDecimalSeparator":true,
+            "unit":"imperial",
+            "floatStyle":{"color":"black"},
+            "bodyStyle":{
+                "background": "url('/vehicles/common/odometer_analog_b.cef_color.png')",
+                "font-family": "OpenSans",
+                "font-size": "28px",
+                "color": "white",
+                "letter-spacing": "15.5px",
+                "margin": "-4.5px 10.5px",
+                "transform": "scaleX(1.26)",
+                "transform-origin": "left",
+            },
+            "tripDivStyle":{
+                "margin-left": "-3px",
+                "position": "fixed",
+                "letter-spacing": "32px"
+            }
+        },
+    },
+   "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"collision":true},
+         {"selfCollision":true},
+
+         //dash nodes
+         {"group":["pickup_dash", "pickup_dash_roamer"]},
+         {"nodeWeight":0.752},
+         ["dshr",-0.455, -0.626, 1.090],
+         ["dsh",  0.000, -0.626, 1.090],
+         ["dshl", 0.455, -0.626, 1.090],
+         {"collision":false},
+         {"selfCollision":false},
+         ["int_strw", 0.455, -0.475, 1.172],
+         {"nodeWeight":0.2},
+         //flexbody node
+         ["dsh2",  0.000, -0.716, 1.290],
+         {"group":""},
+         ["int_pbrk", 0.66, -0.93, 0.86],
+         {"group":""},
+    ],
+    "triggers2":[
+        ["id", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["hood_int", "dshl","dsh","b1ll", "box", {"x":0.04, "y":0.04, "z":0.04}, {"x":25, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0},{"x":-0.23, "y":0.22, "z":-0.10}],
+    ],
+    "actionsEnabled": [
+        ["id"],
+        ["hoodRelease"],
+    ],
+    "triggerEventLinks2":[
+        ["triggerId:triggers2", "triggerInput", "inputAction"],
+        ["hood_int", "action0", "hoodRelease"],
+    ],
+    "torsionbars":[
+       ["id1:", "id2:", "id3:", "id4:"],
+        //rigify the column
+        {"spring":20000, "damp":1, "deform":18000, "strength":28000},
+        ["int_strw", "dshl", "dsh", "b5l"],
+
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //dash board
+          {"beamSpring":869146.6,"beamDamp":142.73},
+          {"beamDeform":12400,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          ["dshr","b5r"],
+          ["dshl","b5l"],
+          ["dshr","b6r"],
+          ["dshl","b6l"],
+          ["dshr","b1r"],
+          ["dshl","b1l"],
+          ["dshr","b5rr"],
+          ["dshl","b5ll"],
+          ["dshr","b6rr"],
+          ["dshl","b6ll"],
+          ["dshl","dshr"],
+          ["dsh","b5r"],
+          ["dsh","b5l"],
+          ["dsh","b6r"],
+          ["dsh","b6l"],
+          ["dsh","b1r"],
+          ["dsh","b1l"],
+          ["dshl","dsh"],
+          ["dshr","dsh"],
+          ["dsh","int_strw"],
+          ["dshl","int_strw"],
+          {"beamSpring":169146.6,"beamDamp":142.73},
+          ["dsh2","b5r"],
+          ["dsh2","b5l"],
+          ["dsh2","b6r"],
+          ["dsh2","b6l"],
+          ["dsh2","b1r"],
+          ["dsh2","b1l"],
+          ["dshl","dsh2"],
+          ["dshr","dsh2"],
+          {"beamSpring":160100,"beamDamp":142.73},
+          {"beamDeform":70300,"beamStrength":"FLT_MAX"},
+          ["int_pbrk","dshl"],
+          ["int_pbrk","b5ll"],
+          ["int_pbrk","b5l"],
+          ["int_pbrk","b1lll"],
+          //--BLEED DEFORM LIMIT TO OTHER PARTS--
+          {"deformLimitExpansion":1.2},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //sides
+            {"dragCoef":0},
+            {"group":"pickup_dash"},
+            ["dshl", "b6ll", "b5ll"],
+            ["b6ll", "dshl", "b6l"],
+            ["b6l", "dshl", "dsh"],
+            ["dsh", "b6r", "b6l"],
+            ["dsh", "dshr", "b6r"],
+            ["b6r", "dshr", "b6rr"],
+            ["dshr", "b5rr", "b6rr"],
+            ["dshl", "b5ll", "b5l"],
+            ["b5l", "dsh", "dshl"],
+            ["b5l", "b5r", "dsh"],
+            ["dsh", "b5r", "dshr"],
+            ["dshr", "b5r", "b5rr"],
+    ],
+},
+"pickup_Quadrasteer_interior_alt_facelift": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Quadrasteer Late Dashboard with Console",
+        "value":3000,
+    },
+    "slotType" : "pickup_interior",
+    "slots2": [
+        ["name",                          "allowTypes",                      "denyTypes", "default",                       "description"],
+        ["pickup_steer",                  ["pickup_steer"],                  [],          "roamer_steer",                  "Steering Wheel"],
+        ["pickup_facelift_shifter_alt",   ["pickup_facelift_shifter_alt"],   [],          "pickup_facelift_shifter_A_alt", "Shifter"],
+        ["pickup_facelift_shifter_T_alt", ["pickup_facelift_shifter_T_alt"], [],          "pickup_facelift_ashtray_alt",   "Low Range Selector"],
+        ["pickup_seat_F", ["pickup_seat_F"], [], "pickup_seat_F_facelift", "Front Seats"],
+    ],
+    "controller": [
+        ["fileName"],
+        ["gauges/analogOdometer", {"name":"analogOdometer" }],
+    ],
+    "analogOdometer": {
+        "configuration": {
+            "materialName": "@generic_gauges_odo",
+            "htmlPath": "local://local/vehicles/common/analogOdo.html",
+            "displayWidth":512,
+            "displayHeight":32,
+            "odometerDigits":7,
+            "odometerHasDecimalSeparator":true,
+            "tripHasDecimalSeparator":true,
+            "unit":"imperial",
+            "floatStyle":{"color":"black"},
+            "bodyStyle":{
+                "background": "url('/vehicles/common/odometer_analog_b.cef_color.png')",
+                "font-family": "OpenSans",
+                "font-size": "28px",
+                "color": "white",
+                "letter-spacing": "15.5px",
+                "margin": "-4.5px 10.5px",
+                "transform": "scaleX(1.26)",
+                "transform-origin": "left",
+            },
+            "tripDivStyle":{
+                "margin-left": "-3px",
+                "position": "fixed",
+                "letter-spacing": "32px"
+            }
+        },
+    },
+    "camerasInternal":[
+        ["type", "x", "y", "z", "fov", "id1:", "id2:", "id3:", "id4:", "id5:", "id6:"],
+        {"nodeWeight":2.35},
+        {"beamSpring":846, "beamDamp":94},
+        {"selfCollision":true},
+        {"collision":true},
+        //dash cam
+        ["dash", 0.462, 0.1, 1.53, 55, "b1rr","b1ll","b3rr","b3ll","b6rr","b6ll", {"beamDeform":2800560,"beamStrength":"FLT_MAX"}],
+    ],
+    "soundscape": [
+        ["name", "src"],
+        //indicator7
+        {"node:":"int_strw"},
+        ["indicatorStart", "event:>Vehicle>Interior>Indicator>POL_On"],
+        ["indicatorStop", "event:>Vehicle>Interior>Indicator>POL_Off"],
+        ["indLoop1", "event:>Vehicle>Interior>Indicator>FIPA_Click"],
+        ["indLoop2", "event:>Vehicle>Interior>Indicator>FIPA_Clack"],
+        //lights3
+        ["LightOn", "event:>Vehicle>Interior>Light>AU5_Light_On"],
+        ["LightOff", "event:>Vehicle>Interior>Light>AU5_Light_Off"],
+        //handbrake2
+        {"node:":"int_pbrk"},
+        ["handbrakeDisengaged","event:>Vehicle>Interior>Handbrake_Pedal>Pedal_04_Unlock"],
+        ["handbrakeEngaging","event:>Vehicle>Interior>Handbrake_Pedal>Pedal_04_Lock"],
+        //affects horn location because horn soundscape is loaded after
+        {"node:":"b6l"},
+    ],
+    "props": [
+        ["func",         "mesh",                 "idRef:","idX:","idY:", "baseRotation",           "rotation",                  "translation",           "min", "max", "offset", "multiplier"],
+        //speedometer
+        ["wheelspeed",   "pickup_facelift_needle_speedo", "dshl","dsh","int_strw",       {"x":160 "y":180, "z":0}, {"x":0, "y":0, "z":-4.15},   {"x":0, "y":0, "z":0},   0, 52, -26.1, 1],
+        //tachometer
+        ["rpm",          "pickup_facelift_needle_tacho",  "dshl","dsh","int_strw",       {"x":160 "y":180, "z":0}, {"x":0, "y":0, "z":-0.0335}, {"x":0, "y":0, "z":0},   0, 6000, -4000, 1],
+        //fuel gauge
+        ["fuel",         "pickup_facelift_needle_fuel",   "dshl","dsh","int_strw",       {"x":160 "y":180, "z":0}, {"x":0, "y":0, "z":-70},     {"x":0, "y":0, "z":0},   0, 1, -1, 1],
+        //water temp
+        ["watertemp",    "pickup_facelift_needle_temp",   "dshl","dsh","int_strw",     {"x":160 "y":180, "z":0}, {"x":0, "y":0, "z":-1},      {"x":0, "y":0, "z":0},   60, 120, -90, 1],
+        //pedals
+        ["brake",        "pickup_facelift_brakepedal",         "b1l","b1r","b5l",    {"x":154, "y":180, "z":0},   {"x":-25, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        ["throttle",     "pickup_facelift_gaspedal",           "b1l","b1r","b5l",    {"x":154, "y":180, "z":0},   {"x":-25, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        ["parkingbrake", "pickup_facelift_parkingbrake",  "b1l","b1r","b5l",    {"x":165, "y":180, "z":0},   {"x":-25, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        //turn signal stalk
+        ["turnsignal",   "pickup_signalstalk",   "dshl","dsh","int_strw",      {"x":-105 "y":180, "z":0}, {"x":0, "y":-15, "z":-2},     {"x":0, "y":0, "z":0},   -1, 1, -1, 1, {"baseTranslation":{"x":-0.05,"y":0.045,"z":0.02}}],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //interior
+         ["pickup_facelift_dash", ["pickup_dash"]],
+         ["pickup_facelift_expletivehandle", ["pickup_body"]],
+         ["pickup_facelift_gauges", ["pickup_dash"]],
+         ["roamer_Quadrasteer", ["pickup_dash"]],
+         ["pickup_facelift_decals_gauges", ["pickup_dash"]],
+         ["pickup_facelift_console", ["pickup_floor", "pickup_dash"]],
+        ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"collision":true},
+         {"selfCollision":true},
+
+         //dash nodes
+         {"group":["pickup_dash", "pickup_dash_roamer"]},
+         {"nodeWeight":0.752},
+         ["dshr",-0.455, -0.626, 1.090],
+         ["dsh",  0.000, -0.626, 1.090],
+         ["dshl", 0.455, -0.626, 1.090],
+         {"collision":false},
+         {"selfCollision":false},
+         ["int_strw", 0.455, -0.475, 1.172],
+         {"nodeWeight":0.2},
+         //flexbody node
+         ["dsh2",  0.000, -0.716, 1.290],
+         {"group":""},
+         ["int_pbrk", 0.66, -0.93, 0.86],
+         {"group":""},
+    ],
+    "triggers2":[
+        ["id", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["hood_int", "dshl","dsh","b1ll", "box", {"x":0.04, "y":0.04, "z":0.04}, {"x":25, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0},{"x":-0.23, "y":0.22, "z":-0.10}],
+    ],
+    "actionsEnabled": [
+        ["id"],
+        ["hoodRelease"],
+    ],
+    "triggerEventLinks2":[
+        ["triggerId:triggers2", "triggerInput", "inputAction"],
+        ["hood_int", "action0", "hoodRelease"],
+    ],
+    "torsionbars":[
+       ["id1:", "id2:", "id3:", "id4:"],
+        //rigify the column
+        {"spring":20000, "damp":1, "deform":18000, "strength":28000},
+        ["int_strw", "dshl", "dsh", "b5l"],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //dash board
+          {"beamSpring":869146.6,"beamDamp":142.73},
+          {"beamDeform":12400,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          ["dshr","b5r"],
+          ["dshl","b5l"],
+          ["dshr","b6r"],
+          ["dshl","b6l"],
+          ["dshr","b1r"],
+          ["dshl","b1l"],
+          ["dshr","b5rr"],
+          ["dshl","b5ll"],
+          ["dshr","b6rr"],
+          ["dshl","b6ll"],
+          ["dshl","dshr"],
+          ["dsh","b5r"],
+          ["dsh","b5l"],
+          ["dsh","b6r"],
+          ["dsh","b6l"],
+          ["dsh","b1r"],
+          ["dsh","b1l"],
+          ["dshl","dsh"],
+          ["dshr","dsh"],
+          ["dsh","int_strw"],
+          ["dshl","int_strw"],
+          {"beamSpring":169146.6,"beamDamp":142.73},
+          ["dsh2","b5r"],
+          ["dsh2","b5l"],
+          ["dsh2","b6r"],
+          ["dsh2","b6l"],
+          ["dsh2","b1r"],
+          ["dsh2","b1l"],
+          ["dshl","dsh2"],
+          ["dshr","dsh2"],
+          {"beamSpring":160100,"beamDamp":142.73},
+          {"beamDeform":70300,"beamStrength":"FLT_MAX"},
+          ["int_pbrk","dshl"],
+          ["int_pbrk","b5ll"],
+          ["int_pbrk","b5l"],
+          ["int_pbrk","b1lll"],
+          //--BLEED DEFORM LIMIT TO OTHER PARTS--
+          {"deformLimitExpansion":1.2},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //sides
+            {"dragCoef":0},
+            {"group":"pickup_dash"},
+            ["dshl", "b6ll", "b5ll"],
+            ["b6ll", "dshl", "b6l"],
+            ["b6l", "dshl", "dsh"],
+            ["dsh", "b6r", "b6l"],
+            ["dsh", "dshr", "b6r"],
+            ["b6r", "dshr", "b6rr"],
+            ["dshr", "b5rr", "b6rr"],
+            ["dshl", "b5ll", "b5l"],
+            ["b5l", "dsh", "dshl"],
+            ["b5l", "b5r", "dsh"],
+            ["dsh", "b5r", "dshr"],
+            ["dshr", "b5r", "b5rr"],
+    ],
+},
+"roamer_Quadrasteer_interior": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Quadrasteer Dashboard",
+        "value":1000,
+    },
+    "slotType" : "roamer_interior",
+    "slots": [
+        ["type", "default", "description"],
+        ["pickup_steer","roamer_steer","Steering Wheel"],
+        ["roamer_shifter","roamer_shifter_A","Shifter"],
+        ["roamer_shifter_T","roamer_ashtray","Low Range Selector"],
+        ["roamer_interior_accessory","","Interior Accessory"],
+        ["soundscape_horn", "soundscape_horn_125", "Horn"],
+    ],
+    "camerasInternal":[
+        ["type", "x", "y", "z", "fov", "id1:", "id2:", "id3:", "id4:", "id5:", "id6:"],
+        {"nodeWeight":2.35},
+        {"beamSpring":846, "beamDamp":94},
+        {"selfCollision":true},
+        {"collision":true},
+        //dash cam
+        ["dash", 0.46, 0.22, 1.54, 55, "b1rr","b1ll","b3rr","b3ll","b6rr","b6ll", {"beamDeform":2800560,"beamStrength":"FLT_MAX"}],
+    ],
+    "soundscape": [
+        ["name", "src"],
+        //indicator7
+        {"node:":"int_strw"},
+        ["indicatorStart", "event:>Vehicle>Interior>Indicator>MER_On"],
+        ["indicatorStop", "event:>Vehicle>Interior>Indicator>MER_Off"],
+        ["indLoop1", "event:>Vehicle>Interior>Indicator>FIPA_Click"],
+        ["indLoop2", "event:>Vehicle>Interior>Indicator>FIPA_Clack"],
+        //lights3
+        ["LightOn", "event:>Vehicle>Interior>Light>BM318_Light_On"],
+        ["LightOff", "event:>Vehicle>Interior>Light>BM318_Light_Off"],
+        //handbrake2
+        {"node:":"int_pbrk"},
+        ["handbrakeDisengaged","event:>Vehicle>Interior>Handbrake_Pedal>Pedal_05_Unlock"],
+        ["handbrakeEngaging","event:>Vehicle>Interior>Handbrake_Pedal>Pedal_05_Lock"],
+        //affects horn location because horn soundscape is loaded after
+        {"node:":"b6l"},
+    ],
+    "props": [
+        ["func",         "mesh",                 "idRef:","idX:","idY:", "baseRotation",           "rotation",                  "translation",           "min", "max", "offset", "multiplier"],
+        //speedometer
+        ["wheelspeed",   "roamer_needle_speedo", "dshl","dsh","int_strw",       {"x":165 "y":180, "z":0}, {"x":0, "y":0, "z":-4.15},   {"x":0, "y":0, "z":0},   0, 52, -26.1, 1],
+        //tachometer
+        ["rpm",          "roamer_needle_tacho",  "dshl","dsh","int_strw",       {"x":165 "y":180, "z":0}, {"x":0, "y":0, "z":-0.0335}, {"x":0, "y":0, "z":0},   0, 6000, -4000, 1],
+        //fuel gauge
+        ["fuel",         "roamer_needle_fuel",   "dshl","dsh","int_strw",       {"x":165 "y":180, "z":0}, {"x":0, "y":0, "z":-70},     {"x":0, "y":0, "z":0},   0, 1, -1, 1],
+        //water temp
+        ["watertemp",    "roamer_needle_temp",   "dshl","dsh","int_strw",     {"x":165 "y":180, "z":0}, {"x":0, "y":0, "z":-1},      {"x":0, "y":0, "z":0},   60, 120, -90, 1],
+        //pedals
+        ["brake",        "roamer_brakepedal",    "b1l","b1r","b5l",    {"x":154, "y":180, "z":0},   {"x":-25, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        ["throttle",     "roamer_gaspedal",      "b1l","b1r","b5l",    {"x":154, "y":180, "z":0},   {"x":-25, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        ["parkingbrake", "roamer_parkingbrake",  "b1l","b1r","b5l",    {"x":154, "y":180, "z":0},   {"x":-25, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        //turn signal stalk
+        ["turnsignal",   "roamer_signalstalk",   "dshl","dsh","int_strw",      {"x":180, "y":180, "z":0}, {"x":0, "y":0, "z":-15},     {"x":0, "y":0, "z":0},   -1, 1, -1, 1],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //interior
+         ["roamer_dash", ["roamer_dash"]],
+         ["roamer_sunvisor", ["roamer_body"]],
+         ["roamer_gauges", ["roamer_dash"]],
+         ["roamer_Quadrasteer", ["roamer_dash"],[],{"pos":{"x":0.0, "y":0.073, "z":0.0}}],
+         ["roamer_decals_gauges", ["roamer_dash"]],
+         ["roamer_console", ["roamer_floor", "roamer_dash"]],
+    ],
+    "controller": [
+        ["fileName"],
+        ["gauges/analogOdometer", {"name":"analogOdometer" }],
+    ],
+    "analogOdometer": {
+        "configuration": {
+            "materialName": "@generic_gauges_odo",
+            "htmlPath": "local://local/vehicles/common/analogOdo.html",
+            "displayWidth":512,
+            "displayHeight":32,
+            "odometerDigits":7,
+            "odometerHasDecimalSeparator":true,
+            "tripHasDecimalSeparator":true,
+            "unit":"imperial",
+            "floatStyle":{"color":"black"},
+            "bodyStyle":{
+                "background": "url('/vehicles/common/odometer_analog_b.cef_color.png')",
+                "font-family": "OpenSans",
+                "font-size": "28px",
+                "color": "white",
+                "letter-spacing": "15.5px",
+                "margin": "-4.5px 10.5px",
+                "transform": "scaleX(1.26)",
+                "transform-origin": "left",
+            },
+            "tripDivStyle":{
+                "margin-left": "-3px",
+                "position": "fixed",
+                "letter-spacing": "32px"
+            }
+        },
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"collision":true},
+         {"selfCollision":true},
+
+         //dash nodes
+         {"group":["roamer_dash"]},
+         {"nodeWeight":0.752},
+         ["dshr",-0.46, -0.626, 1.090],
+         ["dsh",  0.000, -0.626, 1.090],
+         ["dshl", 0.46, -0.626, 1.090],
+         ["dsh2", 0.0, -0.57, 0.85],
+         ["dsh3", 0.0, 0.32, 0.96],
+         {"collision":false},
+         {"selfCollision":false},
+         ["int_strw", 0.46, -0.45, 1.168],
+         {"nodeWeight":0.2},
+         {"group":""},
+         ["int_pbrk", 0.66, -0.93, 0.86],
+         {"group":""},
+    ],
+    "triggers2":[
+        ["id", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["hood_int", "dshl","dsh","b1ll", "box", {"x":0.04, "y":0.04, "z":0.04}, {"x":25, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0},{"x":-0.19, "y":0.27, "z":-0.10}],
+    ],
+    "actionsEnabled": [
+        ["id"],
+        ["hoodRelease"],
+    ],
+    "triggerEventLinks2":[
+        ["triggerId:triggers2", "triggerInput", "inputAction"],
+        ["hood_int", "action0", "hoodRelease"],
+    ],
+    "torsionbars":[
+       ["id1:", "id2:", "id3:", "id4:"],
+        //rigify the column
+        {"spring":20000, "damp":1, "deform":18000, "strength":28000},
+        ["int_strw", "dshl", "dsh", "b5l"],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+
+          //dash board
+          {"beamSpring":869146.6,"beamDamp":142.73},
+          {"beamDeform":12400,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          ["dshr","b5r"],
+          ["dshl","b5l"],
+          ["dshr","b6r"],
+          ["dshl","b6l"],
+          ["dshr","b1r"],
+          ["dshl","b1l"],
+          ["dshr","b5rr"],
+          ["dshl","b5ll"],
+          ["dshr","b6rr"],
+          ["dshl","b6ll"],
+          ["dshl","dshr"],
+          ["dsh","b5r"],
+          ["dsh","b5l"],
+          ["dsh","b6r"],
+          ["dsh","b6l"],
+          ["dsh","b1r"],
+          ["dsh","b1l"],
+          ["dshl","dsh"],
+          ["dshr","dsh"],
+          ["dsh","int_strw"],
+          ["dshl","int_strw"],
+          {"beamDeform":4400,"beamStrength":"FLT_MAX"},
+          ["dshl","dsh2"],
+          ["dshr","dsh2"],
+          ["b1l","dsh2"],
+          ["b1r","dsh2"],
+          ["b2l","dsh2"],
+          ["b2r","dsh2"],
+          ["b2l","dsh3"],
+          ["b2r","dsh3"],
+          ["b3l","dsh3"],
+          ["b3r","dsh3"],
+          ["dsh2","dsh3"],
+          {"beamSpring":160100,"beamDamp":142.73},
+          {"beamDeform":70300,"beamStrength":"FLT_MAX"},
+          ["int_pbrk","dshl"],
+          ["int_pbrk","b5ll"],
+          ["int_pbrk","b5l"],
+          ["int_pbrk","b1lll"],
+          //--BLEED DEFORM LIMIT TO OTHER PARTS--
+          {"deformLimitExpansion":1.2},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //sides
+            {"dragCoef":0},
+            {"group":"roamer_dash"},
+            ["b6ll", "dshl", "b6l"],
+            ["dshl", "dsh", "b6l"],
+            ["dsh", "dshr", "b6r"],
+            ["b6r", "b6l", "dsh"],
+            ["dshr", "b6rr", "b6r"],
+            ["dshr", "b5rr", "b6rr"],
+
+            ["dshl", "b6ll", "b5ll"],
+            ["b5ll", "b5l", "dshl"],
+            ["b5rr", "dshr", "b5r"],
+
+            ["dshl", "b5l", "dsh"],
+            ["dsh", "b5r", "dshr"],
+            ["dsh", "dsh2", "b5r"],
+            ["b5l", "dsh2", "dsh"],
+            ["dsh2", "b1r", "b5r"],
+            ["dsh2", "b5l", "b1l"],
+            ["dsh2", "b1l", "b2l"],
+            ["dsh2", "b2r", "b1r"],
+            ["dsh3", "b3r", "b2r"],
+            ["dsh3", "b2r", "dsh2"],
+            ["b2l", "b3l", "dsh3"],
+            ["dsh3", "dsh2", "b2l"],
+            ["dsh3", "b3l", "b3r"],
+    ],
+},
+}
