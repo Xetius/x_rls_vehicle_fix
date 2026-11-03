@@ -1,7 +1,11 @@
-x_rls_dseries_fix
+x_rls_vehicle_fix
 
-Fixes Kodiak D-Series (Gavril D-Series with the Kodiak dashboard, e.g. the "Kodiak Dually Diesel")
-spawning with no front seats in BeamNG 0.40+.
+Fixes vehicles from pre-0.40 repo mods that spawn with no seats (or "Unseated") in BeamNG 0.40+:
+the Kodiak D-Series, the Truck Pulling Parts Pack and Quadrasteer D-Series, and every conventional
+T-Series when the Hot Rod Semi Pulling Parts Pack is installed. Formerly x_rls_dseries_fix.
+
+Kodiak D-Series (Gavril D-Series with the Kodiak dashboard, e.g. the "Kodiak Dually Diesel")
+spawned with no front seats.
 
 The Kodiak parts come from the repo mod brodbattletruck.zip (last updated 2025-03), which predates
 0.40. In 0.40 the front seats hang off the interior part and seats need occupant slots; the Kodiak
@@ -55,4 +59,4 @@ extracted mod):
   node tools/patch_seats.js <extracted mod dir> .
 
 Releasing: push a semver tag without a v prefix (e.g. 1.0.0). GitHub Actions builds
-x_rls_dseries_fix_<version>.zip and publishes it as a release.
+x_rls_vehicle_fix_<version>.zip and publishes it as a release.

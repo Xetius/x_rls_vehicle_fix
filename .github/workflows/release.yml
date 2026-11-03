@@ -1,6 +1,6 @@
 name: Release
 
-# Push a semver tag without a v prefix (e.g. 1.0.0 or 1.1.0-beta.1) to build x_rls_dseries_fix_<version>.zip
+# Push a semver tag without a v prefix (e.g. 1.0.0 or 1.1.0-beta.1) to build x_rls_vehicle_fix_<version>.zip
 # and publish it as a GitHub release. Pre-release tags are published as pre-releases.
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
 
       - name: Build mod zip
         run: |
-          zip_name="x_rls_dseries_fix_${GITHUB_REF_NAME}.zip"
+          zip_name="x_rls_vehicle_fix_${GITHUB_REF_NAME}.zip"
           # Only the mod's own files, at the root of the zip as BeamNG expects.
           zip -r -X "$zip_name" README.txt vehicles
           unzip -l "$zip_name"
@@ -39,5 +39,5 @@ jobs:
           prerelease=""
           [[ "$GITHUB_REF_NAME" == *-* ]] && prerelease="--prerelease"
           gh release create "$GITHUB_REF_NAME" "$ZIP_NAME" \
-            --title "x_rls_dseries_fix $GITHUB_REF_NAME" \
+            --title "x_rls_vehicle_fix $GITHUB_REF_NAME" \
             --generate-notes $prerelease
