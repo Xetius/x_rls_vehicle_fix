@@ -1,0 +1,1141 @@
+{
+"pickup_interior_kodiak": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Kodiak Dashboard with Console",
+        "value":3000,
+    },
+    "slotType" : "pickup_interior",
+    "slots": [
+        ["type", "default", "description"],
+        ["pickup_steer","roamer_steer","Steering Wheel"],
+        ["kodiak_shifter","kodiak_shifter_A","Shifter"],
+		["kodiak_gauges","kodiak_gauges_sport", "Gauge", {"coreSlot":true}],
+        ["pickup_seat_F","pickup_seat_F_bucket_kodiak","Front Seats"],
+    ],
+    "glowMap":{
+        "kodiak_gauges_screen":{"simpleFunction":{"ignitionLevel":0.5}, "off":"screen_off", "on":"kodiak_gauges_screen_accessory", "on_intense":"kodiak_gauges_screen"},
+    },
+
+    "controller": [
+        ["fileName"],
+        ["beamNavigator", {"screenMaterialName": "@kodiak_gps_screen", "htmlFilePath": "local://local/vehicles/common/navi_screen.html", "name":"kodiak_navi"}],
+        ["gauges/genericGauges", {"name":"gauge", }],
+        ["gauges/customModules/environmentData"],
+        ["gauges/customModules/combustionEngineData"],
+        ["gauges/customModules/accelerationData"],
+    ],
+    "gauge": {
+        "configuration": {
+            "materialName": "@kodiak_gauges_screen"
+            "htmlPath": "local://local/vehicles/pickup/gauges_screen/gauge_standard.html"
+            "displayWidth":512
+            "displayHeight":512
+        }
+        "displayData": {
+            "electrics": [
+                "gear",
+                "fuel",
+                "watertemp",
+                "wheelspeed",
+                "linelock",
+                "transbrake",
+                "odometer",
+                "trip"
+            ]
+            "customModules": [
+                ["moduleName", "property"]
+                ["environmentData", "time"],
+                ["accelerationData", "accelerationSmooth"]
+                ["combustionEngineData", "currentPower"]
+            ]
+        },
+    },
+    "camerasInternal":[
+        ["type", "x", "y", "z", "fov", "id1:", "id2:", "id3:", "id4:", "id5:", "id6:"],
+        {"nodeWeight":2.35},
+        {"beamSpring":846, "beamDamp":94},
+        {"selfCollision":true},
+        {"collision":true},
+        //dash cam
+        ["dash", 0.462, 0.1, 1.53, 55, "b1rr","b1ll","b3rr","b3ll","b6rr","b6ll", {"beamDeform":2800560,"beamStrength":"FLT_MAX"}],
+    ],
+    "soundscape": [
+        ["name", "src"],
+        //indicator6,
+        {"node:":"int_strw"},
+        ["indicatorStart", "event:>Vehicle>Interior>Indicator>SUB_On"],
+        ["indicatorStop", "event:>Vehicle>Interior>Indicator>SUB_Off"],
+        ["indLoop1", "event:>Vehicle>Interior>Indicator>POL_Click"],
+        ["indLoop2", "event:>Vehicle>Interior>Indicator>POL_Clack"],
+        //lights11
+        ["LightOn", "event:>Vehicle>Interior>Light>POL_Light_On"],
+        ["LightOff", "event:>Vehicle>Interior>Light>POL_Light_Off"],
+        //handbrake2
+        {"node:":"int_pbrk"},
+        ["handbrakeDisengaged","event:>Vehicle>Interior>Handbrake_Electric>Electric_01_Unlock"],
+        ["handbrakeEngaging","event:>Vehicle>Interior>Handbrake_Electric>Electric_01_Lock"],
+    ],
+    "props": [
+	["func",       "mesh",               "idRef:", "idX:", "idY:",  "baseRotation",            "rotation",               "translation",          "min", "max", "offset", "multiplier"],
+        //pedals
+        ["brake",        "pickup_facelift_brakepedal",         "b1l","b1r","b5l",    {"x":154, "y":180, "z":0},   {"x":-25, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        ["throttle",     "pickup_facelift_gaspedal",           "b1l","b1r","b5l",    {"x":154, "y":180, "z":0},   {"x":-25, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+        //turn signal stalk
+        ["turnsignal",   "kodiak_turn_signal_stalk",   "dshl","dsh","int_strw",      {"x": -90.39, "y":175, "z":9}, {"x":0, "y":-10, "z":0},     {"x":0, "y":0, "z":0},   -1, 1, -1, 1],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         //interior
+         ["kodiak_dash", ["pickup_dash"]],
+         ["kodiak_gps_screen", ["pickup_dash"]],
+         ["kodiak_gauges_screen", ["pickup_dash"]],
+         ["kodiak_console", ["pickup_floor", "pickup_dash"]],
+        ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"collision":true},
+         {"selfCollision":true},
+
+         //dash nodes
+         {"group":["pickup_dash", "pickup_dash_roamer"]},
+         {"nodeWeight":0.752},
+         ["dshr",-0.455, -0.626, 1.090],
+         ["dsh",  0.000, -0.626, 1.090],
+         ["dshl", 0.455, -0.626, 1.090],
+         {"collision":false},
+         {"selfCollision":false},
+         ["int_strw", 0.455, -0.475, 1.172],
+         {"nodeWeight":0.2},
+         //flexbody node
+         ["dsh2",  0.000, -0.716, 1.290],
+         {"group":""},
+         ["int_pbrk", 0.66, -0.93, 0.86],
+         {"group":""},
+    ],
+    "triggers":[
+        ["id", "label", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["hood_int", "Hood Release", "dshl","dsh","b1ll", "box", {"x":0.07, "y":0.07, "z":0.07}, {"x":25, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0},{"x":-0.17, "y":0.20, "z":-0.03}],
+    ],
+    "torsionbars":[
+       ["id1:", "id2:", "id3:", "id4:"],
+        //rigify the column
+        {"spring":20000, "damp":1, "deform":18000, "strength":28000},
+        ["int_strw", "dshl", "dsh", "b5l"],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //dash board
+          {"beamSpring":869146.6,"beamDamp":142.73},
+          {"beamDeform":12400,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          ["dshr","b5r"],
+          ["dshl","b5l"],
+          ["dshr","b6r"],
+          ["dshl","b6l"],
+          ["dshr","b1r"],
+          ["dshl","b1l"],
+          ["dshr","b5rr"],
+          ["dshl","b5ll"],
+          ["dshr","b6rr"],
+          ["dshl","b6ll"],
+          ["dshl","dshr"],
+          ["dsh","b5r"],
+          ["dsh","b5l"],
+          ["dsh","b6r"],
+          ["dsh","b6l"],
+          ["dsh","b1r"],
+          ["dsh","b1l"],
+          ["dshl","dsh"],
+          ["dshr","dsh"],
+          ["dsh","int_strw"],
+          ["dshl","int_strw"],
+          {"beamSpring":169146.6,"beamDamp":142.73},
+          ["dsh2","b5r"],
+          ["dsh2","b5l"],
+          ["dsh2","b6r"],
+          ["dsh2","b6l"],
+          ["dsh2","b1r"],
+          ["dsh2","b1l"],
+          ["dshl","dsh2"],
+          ["dshr","dsh2"],
+          {"beamSpring":160100,"beamDamp":142.73},
+          {"beamDeform":70300,"beamStrength":"FLT_MAX"},
+          ["int_pbrk","dshl"],
+          ["int_pbrk","b5ll"],
+          ["int_pbrk","b5l"],
+          ["int_pbrk","b1lll"],
+          //--BLEED DEFORM LIMIT TO OTHER PARTS--
+          {"deformLimitExpansion":1.2},
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+            ["id1:","id2:","id3:"],
+            //sides
+            {"dragCoef":0},
+            {"group":"pickup_dash"},
+            ["dshl", "b6ll", "b5ll"],
+            ["b6ll", "dshl", "b6l"],
+            ["b6l", "dshl", "dsh"],
+            ["dsh", "b6r", "b6l"],
+            ["dsh", "dshr", "b6r"],
+            ["b6r", "dshr", "b6rr"],
+            ["dshr", "b5rr", "b6rr"],
+            ["dshl", "b5ll", "b5l"],
+            ["b5l", "dsh", "dshl"],
+            ["b5l", "b5r", "dsh"],
+            ["dsh", "b5r", "dshr"],
+            ["dshr", "b5r", "b5rr"],
+    ],
+},
+"kodiak_gauges_sport": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Sport Gauges",
+        "value":400,
+    },
+    "slotType" : "kodiak_gauges",
+
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["kodiak_gauges", ["pickup_dash"]],
+        ["kodiak_decals_gauges_sport", ["pickup_dash"]],
+    ],
+    "glowMap":{
+            "kodiak_gauges":{"simpleFunction":{"lowhighbeam":0.49}, "off":"kodiak_gauges", "on":"kodiak_gauges_on"},
+            "kodiak_gps_screen":{"simpleFunction":{"ignitionLevel":0.5}, "off":"screen_off","on":"kodiak_naviscreen_accessory", "on_intense":"kodiak_gps_screen"},
+            //gauge lights
+            "signal_L":{"simpleFunction":"signal_L", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "signal_R":{"simpleFunction":"signal_R", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "esc":{"simpleFunction":{"esc":0.49,"tcs":0.49}, "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "lights":{"simpleFunction":{"lowbeam":1}, "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "highbeam":{"simpleFunction":"highbeam", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "parkingbrake":{"simpleFunction":"parkingbrakelight", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "checkengine":{"simpleFunction":"checkengine", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+
+            //unused ones
+            "doors":{"simpleFunction":"doors", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "seatbelt":{"simpleFunction":"seatbelt", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            //disabled
+            "abs":{"simpleFunction":"abs", "off":"invis", "on":"invis"},
+    },
+    "props": [
+        ["func",       "mesh",               "idRef:", "idX:", "idY:",  "baseRotation",            "rotation",               "translation",          "min", "max", "offset", "multiplier"],
+        //needles
+        ["wheelspeed",  "kodiak_speedometer_needle", "f5l","f5r","b1l",      {"x":45, "y":180, "z":0}, {"x":0, "y":0, "z":-3.5},  {"x":0, "y":0, "z":0},   0, 75, 41, 0.89],
+        ["rpm",    "kodiak_tachometer_needle",  "f5l","f5r","b1l",      {"x":45, "y":180, "z":0}, {"x":0, "y":0, "z":-0.0215}, {"x":0, "y":0, "z":0},  0, 12000, 6700, 1.67],
+    ],
+},
+	"kodiak_gauges_luxe": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Standard Gauges",
+        "value":400,
+    },
+    "slotType" : "kodiak_gauges",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["kodiak_gauges", ["pickup_dash"]],
+        ["kodiak_decals_gauges_lux", ["pickup_dash"]],
+    ],
+    "glowMap":{
+            "kodiak_gauges":{"simpleFunction":{"lowhighbeam":0.49}, "off":"kodiak_gauges_luxe", "on":"kodiak_gauges_luxe_on"},
+            "kodiak_gps_screen":{"simpleFunction":{"ignitionLevel":0.5}, "off":"screen_off","on":"kodiak_naviscreen_accessory", "on_intense":"kodiak_gps_screen"},
+            //gauge lights
+            "signal_L":{"simpleFunction":"signal_L", "off":"invis", "on":"kodiak_decals_gauges"},
+            "signal_R":{"simpleFunction":"signal_R", "off":"invis", "on":"kodiak_decals_gauges"},
+            "esc":{"simpleFunction":{"esc":0.49,"tcs":0.49}, "off":"invis", "on":"kodiak_decals_gauges"},
+            "lights":{"simpleFunction":{"lowbeam":1}, "off":"invis", "on":"kodiak_decals_gauges"},
+            "highbeam":{"simpleFunction":"highbeam", "off":"invis", "on":"kodiak_decals_gauges"},
+            "parkingbrake":{"simpleFunction":"parkingbrakelight", "off":"invis", "on":"kodiak_decals_gauges"},
+            "checkengine":{"simpleFunction":"checkengine", "off":"invis", "on":"kodiak_decals_gauges"},
+
+            //unused ones
+            "doors":{"simpleFunction":"doors", "off":"invis", "on":"kodiak_decals_gauges"},
+            "seatbelt":{"simpleFunction":"seatbelt", "off":"invis", "on":"kodiak_decals_gauges"},
+            //disabled
+            "abs":{"simpleFunction":"abs", "off":"invis", "on":"invis"},
+    },
+    "props": [
+        ["func",       "mesh",               "idRef:", "idX:", "idY:",  "baseRotation",            "rotation",               "translation",          "min", "max", "offset", "multiplier"],
+        //needles
+        ["wheelspeed",  "kodiak_speedometer_needle", "f5l","f5r","b1l",      {"x":45, "y":180, "z":0}, {"x":0, "y":0, "z":-3.5},  {"x":0, "y":0, "z":0},   0, 85, 25, 0.966],
+        ["rpm",    "kodiak_tachometer_needle",  "f5l","f5r","b1l",      {"x":45, "y":180, "z":0}, {"x":0, "y":0, "z":-0.0215}, {"x":0, "y":0, "z":0},  0, 14000, 4100, 1.8],
+    ],
+},
+"kodiak_gauges_sport_red": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Roadsport Gauges",
+        "value":400,
+    },
+    "slotType" : "kodiak_gauges",
+
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["kodiak_gauges", ["pickup_dash"]],
+        ["kodiak_decals_gauges_sport", ["pickup_dash"]],
+    ],
+    "glowMap":{
+            "kodiak_gauges":{"simpleFunction":{"lowhighbeam":0.49}, "off":"kodiak_gauges_red", "on":"kodiak_gauges_red_on"},
+            "kodiak_gps_screen":{"simpleFunction":{"ignitionLevel":0.5}, "off":"screen_off","on":"kodiak_naviscreen_accessory", "on_intense":"kodiak_gps_screen"},
+            //gauge lights
+            "signal_L":{"simpleFunction":"signal_L", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "signal_R":{"simpleFunction":"signal_R", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "esc":{"simpleFunction":{"esc":0.49,"tcs":0.49}, "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "lights":{"simpleFunction":{"lowbeam":1}, "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "highbeam":{"simpleFunction":"highbeam", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "parkingbrake":{"simpleFunction":"parkingbrakelight", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "checkengine":{"simpleFunction":"checkengine", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+
+            //unused ones
+            "doors":{"simpleFunction":"doors", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "seatbelt":{"simpleFunction":"seatbelt", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            //disabled
+            "abs":{"simpleFunction":"abs", "off":"invis", "on":"invis"},
+    },
+    "props": [
+        ["func",       "mesh",               "idRef:", "idX:", "idY:",  "baseRotation",            "rotation",               "translation",          "min", "max", "offset", "multiplier"],
+        //needles
+        ["wheelspeed",  "kodiak_speedometer_needle", "f5l","f5r","b1l",      {"x":45, "y":180, "z":0}, {"x":0, "y":0, "z":-3.5},  {"x":0, "y":0, "z":0},   0, 80, 37.5, 0.89],
+        ["rpm",    "kodiak_tachometer_needle",  "f5l","f5r","b1l",      {"x":45, "y":180, "z":0}, {"x":0, "y":0, "z":-0.0215}, {"x":0, "y":0, "z":0},  0, 12000, 6700, 1.67],
+    ],
+},
+"kodiak_gauges_sport_white": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Sport GT Gauges",
+        "value":400,
+    },
+    "slotType" : "kodiak_gauges",
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["kodiak_gauges", ["pickup_dash"]],
+        ["kodiak_decals_gauges_sport", ["pickup_dash"]],
+    ],
+    "glowMap":{
+            "kodiak_gauges":{"simpleFunction":{"lowhighbeam":0.49}, "off":"kodiak_gauges_white", "on":"kodiak_gauges_white_on"},
+            "kodiak_gps_screen":{"simpleFunction":{"ignitionLevel":0.5}, "off":"screen_off","on":"kodiak_gt_naviscreen_accessory", "on_intense":"kodiak_gps_screen"},
+            //gauge lights
+            "signal_L":{"simpleFunction":"signal_L", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "signal_R":{"simpleFunction":"signal_R", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "esc":{"simpleFunction":{"esc":0.49,"tcs":0.49}, "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "lights":{"simpleFunction":{"lowbeam":1}, "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "highbeam":{"simpleFunction":"highbeam", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "parkingbrake":{"simpleFunction":"parkingbrakelight", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "checkengine":{"simpleFunction":"checkengine", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+
+            //unused ones
+            "doors":{"simpleFunction":"doors", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "seatbelt":{"simpleFunction":"seatbelt", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            //disabled
+            "abs":{"simpleFunction":"abs", "off":"invis", "on":"invis"},
+    },
+    "props": [
+        ["func",       "mesh",               "idRef:", "idX:", "idY:",  "baseRotation",            "rotation",               "translation",          "min", "max", "offset", "multiplier"],
+        //needles
+        ["wheelspeed",  "kodiak_speedometer_needle", "f5l","f5r","b1l",      {"x":45, "y":180, "z":0}, {"x":0, "y":0, "z":-3.5},  {"x":0, "y":0, "z":0},   0, 75, 41, 0.89],
+        ["rpm",    "kodiak_tachometer_needle",  "f5l","f5r","b1l",      {"x":45, "y":180, "z":0}, {"x":0, "y":0, "z":-0.0215}, {"x":0, "y":0, "z":0},  0, 12000, 6700, 1.67],
+    ],
+},
+"kodiak_gauges_sport_yellow": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Battlehawk Gauges",
+        "value":400,
+    },
+    "slotType" : "kodiak_gauges",
+
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["kodiak_gauges", ["pickup_dash"]],
+        ["kodiak_decals_gauges_sport", ["pickup_dash"]],
+    ],
+    "glowMap":{
+            "kodiak_gauges":{"simpleFunction":{"lowhighbeam":0.49}, "off":"kodiak_gauges_yellow", "on":"kodiak_gauges_yellow_on"},
+            //gauge lights
+            "signal_L":{"simpleFunction":"signal_L", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "signal_R":{"simpleFunction":"signal_R", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "esc":{"simpleFunction":{"esc":0.49,"tcs":0.49}, "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "lights":{"simpleFunction":{"lowbeam":1}, "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "highbeam":{"simpleFunction":"highbeam", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "parkingbrake":{"simpleFunction":"parkingbrakelight", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "checkengine":{"simpleFunction":"checkengine", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+
+            //unused ones
+            "doors":{"simpleFunction":"doors", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            "seatbelt":{"simpleFunction":"seatbelt", "off":"invis", "on":"kodiak_decals_gauges_sport"},
+            //disabled
+            "abs":{"simpleFunction":"abs", "off":"invis", "on":"invis"},
+    },
+    "props": [
+        ["func",       "mesh",               "idRef:", "idX:", "idY:",  "baseRotation",            "rotation",               "translation",          "min", "max", "offset", "multiplier"],
+        //needles
+        ["wheelspeed",  "kodiak_speedometer_needle", "f5l","f5r","b1l",      {"x":45, "y":180, "z":0}, {"x":0, "y":0, "z":-3.5},  {"x":0, "y":0, "z":0},   0, 80, 37.5, 0.89],
+        ["rpm",    "kodiak_tachometer_needle",  "f5l","f5r","b1l",      {"x":45, "y":180, "z":0}, {"x":0, "y":0, "z":-0.0215}, {"x":0, "y":0, "z":0},  0, 12000, 6700, 1.67],
+    ],
+},
+"kodiak_shifter_A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Automatic Shifter",
+        "value":150,
+    },
+    "slotType" : "kodiak_shifter",
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["kodiak_shifter_knob_A", ["kodiak_shifter_knob_A"],[]{"pos":{"x":0,"y":0,"z":0}}],
+        ["kodiak_shifter_boot_A", ["pickup_dash", "kodiak_shifter_A"],[]{"pos":{"x":0,"y":0,"z":0}}],
+        ["kodiak_shifter_base_A", ["pickup_dash", "pickup_body"],[]{"pos":{"x":0,"y":0,"z":0}}],
+    ],
+    "controller": [
+        ["fileName"],
+        ["propAnimation/singleAxisLever", {"name":"singleAxisLever"}],
+
+    ]
+    "singleAxisLever": {
+        "gearCoordinates": [
+            ["gearIndex",   "value"]
+            [1,           -0.6]
+            [2,           -0.2]
+            [3,            0.0]
+            [4,            0.2]
+            [5,            0.4]
+            [6,            0.8]
+        ]
+        "shiftSoundNode:":["sh_l3"]
+        "shiftSoundEventSingleAxisLever": "event:>Vehicle>Interior>Gearshift>automatic_01",
+        "shiftSoundVolumeSingleAxisLever": 0.5,
+    },
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         {"collision":true},
+         {"selfCollision":false},
+         //--SHIFTER---  has to be jbeamed to allow for realistic movement
+         {"group":["kodiak_shifter_A","kodiak_shifterbase_A"]},
+         {"nodeWeight":0.45}
+         ["sh_b1l",  0.095, -0.4259, 0.7827],
+         ["sh_b1r",  0.01, -0.4259, 0.7827],
+         ["sh_b2l",  0.095, -0.2749, 0.7827],
+         ["sh_b2r",  0.01, -0.2749, 0.7827],
+
+         ["sh_b3", 0.05, -0.3589 0.7527],
+         {"selfCollision":true},
+         {"group":["kodiak_shifter_A","kodiak_shifter_knob_A"]},
+         {"nodeWeight":0.5}
+         ["sh_l3", 0.05, -0.3589, 0.9077],
+         {"selfCollision":false},
+         {"nodeWeight":0.30}
+         {"group":"kodiak_shifter_knob_A"},
+         ["sh_l1l", 0.07, -0.3289, 0.8527],
+         ["sh_l1r", 0.03, -0.3289, 0.8527],
+         ["sh_l2l", 0.07, -0.3889, 0.8527],
+         ["sh_l2r", 0.03, -0.3889, 0.8527],
+         {"selfCollision":false},
+         {"collision":true},
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":401000,"beamDamp":55},
+        {"beamDeform":259000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.1},
+        ["sh_b1l", "sh_b1r"],
+        ["sh_b1l", "sh_b2l"],
+        ["sh_b1l", "sh_b2r"],
+        ["sh_b1r", "sh_b2l"],
+        ["sh_b1r", "sh_b2r"],
+        ["sh_b2l", "sh_b2r"],
+
+        ["sh_b1l", "sh_b3"],
+        ["sh_b1r", "sh_b3"],
+        ["sh_b2l", "sh_b3"],
+        ["sh_b2r", "sh_b3"],
+        //lever
+        {"beamSpring":121000,"beamDamp":35},
+        ["sh_l3", "sh_l1l"],
+        ["sh_l3", "sh_l1r"],
+        ["sh_l3", "sh_l2l"],
+        ["sh_l3", "sh_l2r"],
+
+        ["sh_l1l", "sh_l1r"],
+        ["sh_l1l", "sh_l2l"],
+        ["sh_l1l", "sh_l2r"],
+
+        ["sh_l1r", "sh_l2l"],
+        ["sh_l1r", "sh_l2r"],
+        ["sh_l2l", "sh_l2r"],
+        //hinge
+        {"beamSpring":121000,"beamDamp":25},
+        ["sh_b3", "sh_l3"],
+        ["sh_b3", "sh_l1l"],
+        ["sh_b3", "sh_l1r"],
+        ["sh_b3", "sh_l2l"],
+        ["sh_b3", "sh_l2r"],
+
+        //stabilize the shifter
+        {"beamSpring":0,"beamDamp":175},
+        ["sh_b1l", "sh_l3"],
+        ["sh_b1r", "sh_l3"],
+        ["sh_b2l", "sh_l3"],
+        ["sh_b2r", "sh_l3"],
+        {"breakGroup":""},
+        //attach to body
+        {"beamSpring":300000,"beamDamp":70},
+        {"beamDeform":1000,"beamStrength":"FLT_MAX"},
+        ["sh_b1l", "b2l"],
+        ["sh_b1r", "b2l"],
+        ["sh_b2l", "b2l"],
+        ["sh_b2r", "b2l"],
+        ["sh_b3",  "b2l"],
+
+        ["sh_b1l", "f2r"],
+        ["sh_b1r", "f2r"],
+        ["sh_b2l", "f2r"],
+        ["sh_b2r", "f2r"],
+        ["sh_b3", "f2r"],
+
+        ["sh_b1l", "f2l"],
+        ["sh_b1r", "f2l"],
+        ["sh_b2l", "f2l"],
+        ["sh_b2r", "f2l"],
+        ["sh_b3", "f2l"],
+
+        ["sh_b1l", "f1r"],
+        ["sh_b1r", "f1r"],
+        ["sh_b2l", "f1r"],
+        ["sh_b2r", "f1r"],
+        ["sh_b3", "f1r"],
+
+        ["sh_b1l", "f1l"],
+        ["sh_b1r", "f1l"],
+        ["sh_b2l", "f1l"],
+        ["sh_b2r", "f1l"],
+        ["sh_b3", "f1l"],
+        {"beamSpring":200000,"beamDamp":20},
+        ["sh_b1l", "dshr"],
+        ["sh_b1r", "dshr"],
+        ["sh_b2l", "dshr"],
+        ["sh_b2r", "dshr"],
+        ["sh_b3",  "dshr"],
+        ["sh_b1l", "dshl"],
+        ["sh_b1r", "dshl"],
+        ["sh_b2l", "dshl"],
+        ["sh_b2r", "dshl"],
+        ["sh_b3",  "dshl"],
+        //support beams
+        {"beamType":"|SUPPORT","beamPrecompression":0.77,"beamLongBound":2},
+        {"beamSpring":201000,"beamDamp":50},
+        {"beamDeform":16000,"beamStrength":"FLT_MAX"},
+        ["sh_l1r", "sh_b2l"],
+        ["sh_l2r", "sh_b1l"],
+        ["sh_l2l", "sh_b1r"],
+        ["sh_l1l", "sh_b2r"],
+        {"beamPrecompression":0.81}
+        ["sh_l3", "sh_b1l"],
+        ["sh_l3", "sh_b1r"],
+        ["sh_l3", "sh_b2l"],
+        ["sh_l3", "sh_b2r"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "torsionHydros": [
+        ["id1:","id2:","id3:","id4:"],
+        {"spring":200, "damp":1, "deform":"FLT_MAX", "strength":1000},
+        ["sh_b2l","sh_b1l","sh_b1r","sh_l3",  {"inputSource":"gearModeIndex","factor":0.50}],
+        ["sh_b1r","sh_b2r","sh_b2l","sh_l3",  {"inputSource":"gearModeIndex","factor":-0.50}],
+    ],
+    "torsionbars": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        {"spring":100, "damp":0.2, "deform":30000, "strength":1000},
+        ["sh_b1r", "sh_b3", "sh_l3", "sh_l1r"],
+        ["sh_b2r", "sh_b3", "sh_l3", "sh_l2r"],
+        ["sh_b2l", "sh_b3", "sh_l3", "sh_l2l"],
+        ["sh_b1l", "sh_b3", "sh_l3", "sh_l1l"],
+        {"spring":300, "damp":1, "deform":"FLT_MAX", "strength":1000},
+        ["sh_b2l","sh_b2r","sh_b1r","sh_l3"],
+        ["sh_b1r","sh_b1l","sh_b2l","sh_l3"],
+    ],
+},
+"pickup_seat_F_bucket_kodiak":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"Kodiak Front Bucket Seats",
+    },
+    "slotType" : "pickup_seat_F",
+    "slots2":[
+        ["name",           "allowTypes",       "denyTypes", "default",               "description"],
+        ["pickup_seat_FL", ["pickup_seat_FL"], [],          "pickup_kodiak_seat_FL", "Driver Seat",    {"variables":{"$isDriver":"LHD"}}],
+        ["pickup_seat_FR", ["pickup_seat_FR"], [],          "pickup_kodiak_seat_FR", "Passenger Seat"],
+    ],
+},
+"pickup_seat_R_kodiak":{
+    "information":{
+        "authors":"BeamNG",
+        "name":"kodiak Rear Bench Seat",
+        "value":600,
+    },
+    "slotType" : "pickup_seat_R",
+    "slots2": [
+        ["name", "allowTypes", "denyTypes", "default", "description"],
+        ["seat_occupant_RL", ["seat_occupant"], [], "occupant_generic", "Rear Left Occupant", {
+            "coreSlot":true,
+            "nodeMove":{"x":0.54,"y":0.705,"z":0.86},
+            "nodeRotate1":{"x":-8, "y":0, "z":0},
+            "variables": {
+                "$seatID": "RL",
+                "$occupant_camPitch": 8,
+                "$TriggerHighlightMesh": "pickup_kodiak_seats_R",
+                "$occupantDragCoef": 1,
+                "$seatAttachmentStrength": 150000,
+                "$occupant_attachnodeFL": "sr1ll",
+                "$occupant_attachnodeFR": "sr1",
+                "$occupant_attachnodeRL": "sr2ll",
+                "$occupant_attachnodeRR": "sr2",
+                "$occupant_attachnodeTL": "sr3ll",
+                "$occupant_attachnodeTR": "sr3",
+                "$occupant_attachnodeRigifier": "sr4l"
+            }
+        }],
+        ["seat_occupant_RM", ["seat_occupant"], [], "", "Rear Middle Occupant", {
+            "nodeMove":{"x":0.0,"y":0.705,"z":0.86},
+            "nodeRotate1":{"x":-8, "y":0, "z":0},
+            "variables": {
+                "$seatID": "RM",
+                "$occupant_camPitch": 8,
+                "$TriggerHighlightMesh": "pickup_kodiak_seats_R",
+                "$occupantDragCoef": 1,
+                "$seatAttachmentStrength": 150000,
+                "$occupant_attachnodeFL": "sr1ll",
+                "$occupant_attachnodeFR": "sr1rr",
+                "$occupant_attachnodeRL": "sr2",
+                "$occupant_attachnodeRR": "sr2",
+                "$occupant_attachnodeTL": "sr3",
+                "$occupant_attachnodeTR": "sr3",
+                "$occupant_attachnodeRigifier": "sr4"
+            }
+        }],
+        ["seat_occupant_RR", ["seat_occupant"], [], "occupant_generic", "Rear Right Occupant", {
+            "coreSlot":true,
+            "nodeMove":{"x":-0.54,"y":0.705,"z":0.86},
+            "nodeRotate1":{"x":-8, "y":0, "z":0},
+            "variables": {
+                "$seatID": "RR",
+                "$occupant_camPitch": 8,
+                "$TriggerHighlightMesh": "pickup_kodiak_seats_R",
+                "$occupantDragCoef": 1,
+                "$seatAttachmentStrength": 150000,
+                "$occupant_attachnodeFL": "sr1",
+                "$occupant_attachnodeFR": "sr1rr",
+                "$occupant_attachnodeRL": "sr2",
+                "$occupant_attachnodeRR": "sr2rr",
+                "$occupant_attachnodeTL": "sr3",
+                "$occupant_attachnodeTR": "sr3rr",
+                "$occupant_attachnodeRigifier": "sr4r"
+            }
+        }],
+    ],
+    "flexbodies":[
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        ["pickup_kodiak_seats_R", ["pickup_floor","pickup_seats_R"]],
+    ],
+    "nodes":[
+          ["id", "posX", "posY", "posZ"],
+          {"group":"pickup_seats_R"},
+          {"collision":true},
+          {"selfCollision":true},
+          {"nodeWeight":1.8},
+          ["sr1rr", -0.74, 0.36, 0.83],
+          ["sr1", 0.0, 0.36, 0.83],
+          ["sr1ll", 0.74, 0.36, 0.83],
+
+          ["sr2rr", -0.74, 0.86, 0.74],
+          ["sr2", 0.0, 0.86, 0.74],
+          ["sr2ll", 0.74, 0.86, 0.74],
+
+          ["sr3rr", -0.67, 0.96, 1.5],
+          ["sr3", 0.0, 0.96, 1.34],
+          ["sr3ll", 0.67, 0.96, 1.5],
+          //seat back rigifiers for the 0.40 occupants
+          ["sr4l",  0.462,  1.335,  1.273, {"collision":false, "selfCollision":false, "group":"", "nodeWeight":1}],
+          ["sr4",   0.0,    1.335,  1.190, {"collision":false, "selfCollision":false, "group":"", "nodeWeight":1}],
+          ["sr4r", -0.462,  1.335,  1.273, {"collision":false, "selfCollision":false, "group":"", "nodeWeight":1}],
+          {"group":""},
+    ],
+    "beams":[
+          ["id1:", "id2:"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          //main shape
+          {"beamSpring":2350000,"beamDamp":86.95},
+          {"beamDeform":16300,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":1.2},
+          ["sr3rr", "sr3"],
+          ["sr3", "sr3ll"],
+          ["sr2rr", "sr2"],
+          ["sr2", "sr2ll"],
+          ["sr1ll", "sr1"],
+          ["sr1", "sr1rr"],
+          ["sr2rr", "sr3rr"],
+          ["sr3", "sr2"],
+          ["sr3ll", "sr2ll"],
+          ["sr2ll", "sr1ll"],
+          ["sr1", "sr2"],
+          ["sr1rr", "sr2rr"],
+          //crossing
+          {"beamDeform":11750,"beamStrength":"FLT_MAX"},
+          {"deformLimitExpansion":""},
+          ["sr3", "sr2ll"],
+          ["sr2", "sr3ll"],
+          ["sr3", "sr2rr"],
+          ["sr2", "sr3rr"],
+          ["sr1", "sr2rr"],
+          ["sr2", "sr1rr"],
+          ["sr1", "sr2ll"],
+          ["sr2", "sr1ll"],
+          //corner
+          ["sr3rr", "sr1rr"],
+          ["sr3", "sr1"],
+          ["sr3ll", "sr1ll"],
+
+          //damper
+          {"beamSpring":0,"beamDamp":434.75},
+          ["sr3rr", "b1rr"],
+          ["sr3ll", "b1ll"],
+          ["sr3", "b1r"],
+          ["sr3", "b1l"],
+
+          //attach
+          {"beamSpring":2350000,"beamDamp":86.95},
+          {"beamDeform":6850,"beamStrength":"FLT_MAX"},
+          ["sr2", "b4l"],
+          ["sr2", "b3l"],
+          ["sr2", "b4r"],
+          ["sr2", "b3r"],
+          ["sr1", "b3l"],
+          ["sr1", "b3r"],
+          ["sr2ll", "b4l"],
+          ["sr2ll", "b4ll"],
+          ["sr2ll", "b3ll"],
+          ["sr1ll", "b3ll"],
+          ["sr1ll", "b3l"],
+          ["sr2rr", "b4rr"],
+          ["sr2rr", "b4r"],
+          ["sr2rr", "b3rr"],
+          ["sr1rr", "b3rr"],
+          ["sr1rr", "b3r"],
+
+          //limiter
+          {"beamType":"|SUPPORT", "beamLongBound":5},
+          {"beamSpring":2350000,"beamDamp":130.43},
+          {"beamPrecompression":0.85},
+          {"beamDeform":2450,"beamStrength":10500},
+          {"optional":true},
+          ["sr2", "b4ll"],
+          ["sr2", "b3ll"],
+          ["sr1", "b3ll"],
+          ["sr2", "b4rr"],
+          ["sr2", "b3rr"],
+          ["sr1", "b3rr"],
+          //ext
+          ["sr3", "eb8rr"],
+          ["sr3", "eb8ll"],
+          //crew
+          ["sr3", "cb8rr"],
+          ["sr3", "cb8ll"],
+          {"optional":false},
+          {"beamPrecompression":1},
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.2},
+          {"optional":false},
+          {"beamPrecompression":1},
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"deformLimitExpansion":1.2},
+          //seat back rigifier beams: only to seat back nodes
+          {"beamSpring":400000,"beamDamp":86.95},
+          {"beamDeform":20000,"beamStrength":"FLT_MAX"},
+          ["sr4l", "sr2ll"],
+          ["sr4l", "sr2"],
+          ["sr4l", "sr3ll"],
+          ["sr4l", "sr3"],
+          ["sr4",  "sr2"],
+          ["sr4",  "sr3"],
+          ["sr4",  "sr4l"],
+          ["sr4",  "sr4r"],
+          ["sr4r", "sr2"],
+          ["sr4r", "sr2rr"],
+          ["sr4r", "sr3"],
+          ["sr4r", "sr3rr"],
+          {"deformLimitExpansion":""},
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"metal"},
+        {"dragCoef":0},
+        //front seat
+        {"group":"pickup_seat_F"},
+        ["sr3rr", "sr2rr", "sr2"],
+        ["sr2", "sr3", "sr3rr"],
+        ["sr2rr", "sr1rr", "sr1"],
+        ["sr1", "sr2", "sr2rr"],
+        ["sr2", "sr1", "sr1ll"],
+        ["sr1ll", "sr2ll", "sr2"],
+        ["sr2ll", "sr3ll", "sr3"],
+        ["sr3", "sr2", "sr2ll"],
+    ],
+},
+"pickup_kodiak_seat_FL": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Kodiak Driver Seat",
+        "value":500,
+    },
+    "slotType" : "pickup_seat_FL",
+    "slots2": [
+        ["name", "allowTypes", "denyTypes", "default", "description"],
+        ["seat_occupant_FL", ["seat_occupant"], [], "occupant_generic", "Driver Seat Occupant", {
+            "coreSlot":true,
+            "nodeMove":{"x":0.45,"y":0.05,"z":0.86},
+            "nodeRotate1":{"x":-20, "y":0, "z":0},
+            "variables": {
+                "$seatID": "FL",
+                "$occupant_camPitch": 20,
+                "$TriggerHighlightMesh": "pickup_kodiak_seat_FL",
+                "$occupantDragCoef": 1,
+                "$seatAttachmentStrength": 150000,
+                "$occupant_attachnodeFL": "sf1ll",
+                "$occupant_attachnodeFR": "sf1l",
+                "$occupant_attachnodeRL": "sf2ll",
+                "$occupant_attachnodeRR": "sf2l",
+                "$occupant_attachnodeTL": "sf3ll",
+                "$occupant_attachnodeTR": "sf3l",
+                "$occupant_attachnodeRigifier": "sf4l"
+            }
+        }],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["pickup_kodiak_seat_FL", ["pickup_floor","pickup_seat_FL"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":false},
+         {"nodeWeight":1.41},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //seats flexbody
+         {"group":"pickup_seat_FL"},
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":1.88},
+         ["sf1l", 0.2, -0.3, 0.86],
+         ["sf1ll", 0.7, -0.3, 0.86],
+         ["sf2l", 0.2, 0.2, 0.8],
+         ["sf2ll", 0.7, 0.2, 0.8],
+         ["sf3l", 0.3, 0.47, 1.55],
+         ["sf3ll", 0.6, 0.47, 1.55],
+         //seat back rigifier for the 0.40 occupant
+         ["sf4l", 0.45, 0.8, 1.363, {"collision":false, "selfCollision":false, "group":"", "nodeWeight":1}],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":2350940,"beamDamp":282},
+        {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.2},
+        ["sf1l", "sf1ll"],
+        ["sf2l", "sf2ll"],
+        ["sf3l", "sf3ll"],
+        ["sf1l", "sf2l"],
+        ["sf2l", "sf3l"],
+        ["sf1ll", "sf2ll"],
+        ["sf2ll", "sf3ll"],
+        //crossing
+        {"beamDeform":4900,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":""},
+        ["sf1ll", "sf2l"],
+        ["sf2ll", "sf1l"],
+        ["sf2l", "sf3ll"],
+        ["sf3l", "sf2ll"],
+        //corners
+        {"beamDeform":2100},
+        ["sf3l", "sf1l"],
+        ["sf3ll", "sf1ll"],
+
+        //damper
+        {"beamSpring":0,"beamDamp":752},
+        ["sf3ll", "b5l"],
+        ["sf3l", "b5l"],
+
+        //attach
+        {"beamSpring":265080,"beamDamp":35.34},
+        {"beamDeform":4200,"beamStrength":"FLT_MAX"},
+        ["sf2l", "b3l"],
+        ["sf2l", "b2l"],
+        ["sf2l", "b3ll"],
+        ["sf2ll", "b3ll"],
+        ["sf2ll", "b3l"],
+        ["sf2ll", "b2ll"],
+        ["sf1l", "b2l"],
+        ["sf1l", "b2ll"],
+        ["sf1l", "b3l"],
+        ["sf1ll", "b2ll"],
+        ["sf1ll", "b2l"],
+        ["sf1ll", "b3ll"],
+
+        //limiter
+        {"beamType":"|SUPPORT", "beamLongBound":5},
+        {"beamSpring":441800,"beamDamp":132.54},
+        {"beamPrecompression":0.9},
+        {"beamDeform":4200,"beamStrength":"FLT_MAX"},
+        {"optional":true},
+        ["sf3l", "p8l"],
+        ["sf3l", "p7l"],
+        ["sf3l", "rf2l"],
+        ["sf2l", "p3l"],
+        ["sf2l", "b2ll"],
+        ["sf2l", "b1ll"],
+        ["sf1l", "b1ll"],
+
+        //to other seat
+        {"beamPrecompression":0.7},
+        ["sf1rr", "sf1ll"],
+        ["sf2rr", "sf2ll"],
+        ["sf3rr", "sf3ll"],
+        {"optional":false},
+        {"beamPrecompression":1},
+
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":""},
+        {"optional":false},
+        {"beamPrecompression":1},
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":1.2},
+        //seat back rigifier beams: only to seat back nodes
+        {"beamSpring":400000,"beamDamp":282},
+        {"beamDeform":20000,"beamStrength":"FLT_MAX"},
+        ["sf4l", "sf2l"],
+        ["sf4l", "sf2ll"],
+        ["sf4l", "sf3l"],
+        ["sf4l", "sf3ll"],
+        {"deformLimitExpansion":""},
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"metal"},
+        {"dragCoef":0},
+        //front seat
+        ["sf2l",  "sf1l",  "sf1ll"],
+        ["sf1ll", "sf2ll", "sf2l"],
+        ["sf3l",  "sf2l",  "sf2ll"],
+        ["sf2ll", "sf3ll", "sf3l"],
+    ],
+},
+"pickup_kodiak_seat_FR": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Kodiak Passenger Seat",
+        "value":500,
+    },
+    "slotType" : "pickup_seat_FR",
+    "slots2": [
+        ["name", "allowTypes", "denyTypes", "default", "description"],
+        ["seat_occupant_FR", ["seat_occupant"], [], "occupant_generic", "Passenger Seat Occupant", {
+            "coreSlot":true,
+            "nodeMove":{"x":-0.45,"y":0.05,"z":0.86},
+            "nodeRotate1":{"x":-20, "y":0, "z":0},
+            "variables": {
+                "$seatID": "FR",
+                "$occupant_camPitch": 20,
+                "$TriggerHighlightMesh": "pickup_kodiak_seat_FR",
+                "$occupantDragCoef": 1,
+                "$seatAttachmentStrength": 150000,
+                "$occupant_attachnodeFL": "sf1r",
+                "$occupant_attachnodeFR": "sf1rr",
+                "$occupant_attachnodeRL": "sf2r",
+                "$occupant_attachnodeRR": "sf2rr",
+                "$occupant_attachnodeTL": "sf3r",
+                "$occupant_attachnodeTR": "sf3rr",
+                "$occupant_attachnodeRigifier": "sf4r"
+            }
+        }],
+    ],
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["pickup_kodiak_seat_FR", ["pickup_facelift_floor","pickup_seat_FR"]],
+    ],
+    "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":1.41},
+         {"frictionCoef":0.5},
+         {"nodeMaterial":"|NM_METAL"},
+         //seats flexbody
+         {"group":"pickup_seat_FR"},
+         {"collision":true},
+         {"selfCollision":true},
+         {"nodeWeight":1.88},
+         ["sf1r", -0.2, -0.3, 0.86],
+         ["sf1rr", -0.7, -0.3, 0.86],
+         ["sf2r", -0.2, 0.2, 0.8],
+         ["sf2rr", -0.7, 0.2, 0.8],
+         ["sf3r", -0.3, 0.47, 1.55],
+         ["sf3rr", -0.6, 0.47, 1.55],
+         //seat back rigifier for the 0.40 occupant
+         ["sf4r", -0.45, 0.8, 1.363, {"collision":false, "selfCollision":false, "group":"", "nodeWeight":1}],
+         {"group":""},
+    ],
+    "beams":[
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //main shape
+        {"beamSpring":2350940,"beamDamp":282},
+        {"beamDeform":7000,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":1.2},
+        ["sf1r", "sf1rr"],
+        ["sf2r", "sf2rr"],
+        ["sf3r", "sf3rr"],
+        ["sf1r", "sf2r"],
+        ["sf2r", "sf3r"],
+        ["sf1rr", "sf2rr"],
+        ["sf2rr", "sf3rr"],
+        //crossing
+        {"beamDeform":4900,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":""},
+        ["sf1rr", "sf2r"],
+        ["sf2rr", "sf1r"],
+        ["sf2r", "sf3rr"],
+        ["sf3r", "sf2rr"],
+        //corners
+        {"beamDeform":2100},
+        ["sf3r", "sf1r"],
+        ["sf3rr", "sf1rr"],
+
+        //damper
+        {"beamSpring":0,"beamDamp":752},
+        ["sf3rr", "b5r"],
+        ["sf3r", "b5r"],
+
+        //attach
+        {"beamSpring":265080,"beamDamp":35.34},
+        {"beamDeform":4200,"beamStrength":"FLT_MAX"},
+        ["sf2r", "b3r"],
+        ["sf2r", "b2r"],
+        ["sf2r", "b3rr"],
+        ["sf2rr", "b3rr"],
+        ["sf2rr", "b3r"],
+        ["sf2rr", "b2rr"],
+        ["sf1r", "b2r"],
+        ["sf1r", "b2rr"],
+        ["sf1r", "b3r"],
+        ["sf1rr", "b2rr"],
+        ["sf1rr", "b2r"],
+        ["sf1rr", "b3rr"],
+
+        //limiter
+        {"beamType":"|SUPPORT", "beamLongBound":5},
+        {"beamSpring":441800,"beamDamp":132.54},
+        {"beamPrecompression":0.9},
+        {"beamDeform":4200,"beamStrength":"FLT_MAX"},
+        {"optional":true},
+        ["sf3r", "p8r"],
+        ["sf3r", "p7r"],
+        ["sf3r", "rf2r"],
+        ["sf2r", "p3r"],
+        ["sf2r", "b2rr"],
+        ["sf2r", "b1rr"],
+        ["sf1r", "b1rr"],
+        //to other seat
+        {"beamPrecompression":0.7},
+        //["sf1rr", "sf1ll"],
+        //["sf2rr", "sf2ll"],
+        //["sf3rr", "sf3ll"],
+        {"optional":false},
+        {"beamPrecompression":1},
+
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":""},
+        {"optional":false},
+        {"beamPrecompression":1},
+        {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        {"deformLimitExpansion":1.2},
+        //seat back rigifier beams: only to seat back nodes
+        {"beamSpring":400000,"beamDamp":282},
+        {"beamDeform":20000,"beamStrength":"FLT_MAX"},
+        ["sf4r", "sf2r"],
+        ["sf4r", "sf2rr"],
+        ["sf4r", "sf3r"],
+        ["sf4r", "sf3rr"],
+        {"deformLimitExpansion":""},
+    ],
+    "triangles":[
+        ["id1:", "id2:", "id3:"],
+        {"groundModel":"metal"},
+        {"dragCoef":0},
+        //front seat
+        ["sf1r", "sf2r", "sf1rr"],
+        ["sf2rr", "sf1rr", "sf2r"],
+        ["sf2r", "sf3r", "sf2rr"],
+        ["sf3rr", "sf2rr", "sf3r"],
+    ],
+},
+"pickup_facelift_shifter_A": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Automatic Column Shifter",
+        "value":40,
+    },
+    "slotType" : "pickup_facelift_shifter",
+    "controller": [
+        ["fileName"],
+        ["propAnimation/singleAxisLever", {"name":"singleAxisLever"}],
+
+    ]
+    "singleAxisLever": {
+        "gearCoordinates": [
+            ["gearIndex",   "value"]
+            [1,            0.0]
+            [2,             0.2]
+            [3,             0.4]
+            [4,             0.6]
+            [5,             0.8]
+            [6,             1]
+        ]
+        "shiftSoundNode:":["dsh"]
+        "shiftSoundEventSingleAxisLever": "event:>Vehicle>Interior>Gearshift>automatic_lever_02",
+        "shiftSoundVolumeSingleAxisLever": 0.5,
+    },
+    "props": [
+        ["func",   "mesh",               "idRef:","idX:","idY:", "baseRotation",           "rotation",              "translation",            "min", "max", "offset", "multiplier"],
+        //automatic transmission
+        ["gearModeIndex", "pickup_facelift_needle_gear", "dshl","dsh","int_strw",       {"x":160 "y":180, "z":0}, {"x":0, "y":0, "z":0},   {"x":0.16, "y":0, "z":0}, 0, 1, 0, 1],
+        //shifter
+        ["gearModeIndex", "pickup_facelift_shifter_A",   "dshl","dsh","int_strw",      {"x":160 "y":180, "z":0}, {"x":0, "y":0, "z":-25}, {"x":0, "y":0, "z":0},    0, 1, -0.5, 1],
+    ],
+},
+"pickup_steer_kodiak": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Kodiak Steering Wheel",
+        "value":450,
+    },
+    "slotType" : "pickup_steer",
+    "props": [
+        ["func",     "mesh",         "idRef:","idX:","idY:", "baseRotation",           "rotation",            "translation",         "min", "max", "offset", "multiplier"],
+        //steering wheel
+        ["steering", "kodiak_steeringwheel",  "int_strw","dshl","dsh",       {"x":-180 "y":-90, "z":0}, {"x":0, "y":0, "z":1}, {"x":0, "y":0, "z":0}, -1000, 1000, 0, 1],
+     ],
+},
+}
