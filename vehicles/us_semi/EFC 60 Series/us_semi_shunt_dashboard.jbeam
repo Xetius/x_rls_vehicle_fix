@@ -1,0 +1,618 @@
+{
+"us_semi_shunt_dashboard": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Dashboard",
+        "value":1000,
+    },
+    "slotType" : "us_semi_shunt_dashboard",
+    "slots": [
+        ["type", "default", "description"],
+        ["cabover_lowAirWarning","cabover_lowAirBuzzer","Low Air Warning", {"nodeMove":{"x":0.05, "y":1.84, "z":0.07}}],
+        ["cabover_shunt_interior_pto","cabover_shunt_interior_pto","PTO Controls"],
+        //["cabover_interior_compression_brake","cabover_interior_compression_brake","Compression Brake Controls"],
+        //["cabover_interior_difflock","","Interaxle Differential Lock Switch"],
+        //["cabover_interior_fifthwheel","","Fifth Wheel Slider Lock Switch"],
+        //["cabover_interior_airsusp","","Air Suspension Gauge"],
+        ["cabover_interior_boostgauge","cabover_interior_boostgauge_alt","Boost Gauge", {"coreSlot":true, "nodeMove":{"x":0.0, "y":1.896, "z":-0.083}}],
+        //["cabover_interior_highidle","","High Idle Controls"],
+        ["cabover_shunt_dash_trim","cabover_shunt_dash_trim_brushed","Dashboard Material", {"coreSlot":true}],
+    ],
+    "camerasInternal":[
+        ["type", "x", "y", "z", "fov", "id1:", "id2:", "id3:", "id4:", "id5:", "id6:"],
+        {"nodeWeight":2.35},
+        {"beamSpring":1500, "beamDamp":200},
+        {"selfCollision":true},
+        {"collision":true},
+        //dash cam
+        //["driver", 0.786, -1.2, 2.4, 55, "cab12ll","cab12r","cab14","cab53l","cab53ll","cab52rr", {"beamDeform":2800560,"beamStrength":"FLT_MAX", "idBack:":"drefback", "idUp:":"cab33l", "idLeft:":"cab32ll", "idRef:":"cab32l"}],
+    ],
+    "soundscape": [
+        ["name", "src"],
+        //indicator7
+        {"node:":"int_strw"},
+        ["indicatorStart", "event:>Vehicle>Interior>Indicator>POL_On"],
+        ["indicatorStop", "event:>Vehicle>Interior>Indicator>POL_Off"],
+        ["indLoop1", "event:>Vehicle>Interior>Indicator>FIPA_Click"],
+        ["indLoop2", "event:>Vehicle>Interior>Indicator>FIPA_Clack"],
+        //lights3
+        ["LightOn", "event:>Vehicle>Interior>Light>AU5_Light_On"],
+        ["LightOff", "event:>Vehicle>Interior>Light>AU5_Light_Off"],
+        //handbrake2
+        {"node:":"int_strw"},
+        ["handbrakeDisengaged","event:>Vehicle>Interior>Handbrake_Pedal>Pedal_04_Unlock"],
+        ["handbrakeEngaging","event:>Vehicle>Interior>Handbrake_Pedal>Pedal_04_Lock"],
+        //affects horn location because horn soundscape is loaded after
+        {"node:":"cab11"},
+    ],
+    "props": [
+        ["func",         "mesh",                 "idRef:","idX:","idY:", "baseRotation",           "rotation",                  "translation",           "min", "max", "offset", "multiplier"],
+        //speedometer
+        ["wheelspeed",   "cabover_needle_speedo", "dshl","dshr","dsh",       {"x":0 "y":-90, "z":-10}, {"x":6, "y":0, "z":0},   {"x":0, "y":0, "z":0},   0, 40, -22, 1, {"baseTranslation":{"x":0.331, "y":-0.224, "z":0.209}}],
+        //tachometer
+        ["rpm",          "cabover_needle_tach", "dshl","dshr","dsh",       {"x":0 "y":-90, "z":-10}, {"x":0.09, "y":0, "z":0}, {"x":0, "y":0, "z":0},   0, 3000, -1500, 1, {"baseTranslation":{"x":0.088, "y":-0.223, "z":0.209}}],
+        //fuel gauge
+        ["fuel",         "cabover_needle_fuel",   "dshl","dshr","dsh",        {"x":0 "y":-90, "z":-10}, {"x":270, "y":0, "z":0},     {"x":0, "y":0, "z":0},   0, 1, -0.5, 1, {"baseTranslation":{"x":-0.024, "y":-0.234, "z":0.233}}],
+        //water temp
+        ["watertemp",    "cabover_needle_water",   "dshl","dshr","dsh",         {"x":0 "y":-90, "z":-10}, {"x":2.2, "y":0, "z":0},     {"x":0, "y":0, "z":0},   26, 115, -75, 1, {"baseTranslation":{"x":-0.059, "y":-0.196, "z":0.151}}],
+        //oil pressure
+        ["oilPressure",    "cabover_needle_oil",   "dshl","dshr","dsh",         {"x":0 "y":-90, "z":-10}, {"x":0, "y":0, "z":0},     {"x":0, "y":0, "z":0},   26, 115, -75, 1, {"baseTranslation":{"x":-0.094, "y":-0.157, "z":0.067}}],
+        //air pressure p
+        ["mainAirTank_pressureRelative", "cabover_needle_airp",   "dshl","dshr","dsh",    {"x":0 "y":-90, "z":-10},   {"x":0.2088, "y":0, "z":0},       {"x":0, "y":0, "z":0 },  0, 1034, -517, 0.001, {"baseTranslation":{"x":-0.012, "y":-0.157, "z":0.067}}],
+        //air pressure A
+        ["mainAirTank_pressureRelative", "cabover_needle_aira",   "dshl","dshr","dsh",    {"x":0 "y":-90, "z":-10},   {"x":0.2088, "y":0, "z":0},       {"x":0, "y":0, "z":0 },  0, 1034, -517, 0.001, {"baseTranslation":{"x":0.070, "y":-0.157, "z":0.067}}],
+        //air pressure s
+        ["airbrakes_R_pressure_service"  "cabover_needle_airS",   "dshl","dshr","dsh",  {"x":0 "y":-90, "z":-10}, {"x":0.00031, "y":0, "z":0},     {"x":0, "y":0, "z":0},   842, 689912, -344956, 1, {"baseTranslation":{"x":0.309, "y":-0.157, "z":0.067}}],
+        //amps
+        ["amps",    "cabover_needle_amps",   "dshl","dshr","dsh",         {"x":0 "y":-90, "z":-10}, {"x":0, "y":0, "z":0},     {"x":0, "y":0, "z":0},   26, 115, -75, 1, {"baseTranslation":{"x":0.392, "y":-0.157, "z":0.067}}],
+        //volts
+        ["volts",    "cabover_needle_volts",   "dshl","dshr","dsh",         {"x":0 "y":-90, "z":-10}, {"x":0, "y":0, "z":0},     {"x":0, "y":0, "z":0},   26, 115, -75, 1, {"baseTranslation":{"x":0.427, "y":-0.196, "z":0.151}}],
+        //pedals
+        ["brake",        "cabover_brake_pedal",         "cab12ll","cab12l","cab32ll",    {"x":-110.000, "y":-180, "z":0},   {"x":25, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1, {"baseTranslation":{"x":0.431, "y":0.387, "z":0.064}}],
+        ["throttle",     "cabover_throttle",           "cab12ll","cab12l","cab32ll",    {"x":0, "y":90, "z":-30},   {"x":0, "y":0, "z":30},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1, {"baseTranslation":{"x":0.494, "y":0.323, "z":0.077}}],
+        //["clutch", "cabover_clutch_pedal",  "cab12ll","cab12l","cab32ll",    {"x":0, "y":90, "z":0},   {"x":0, "y":0, "z":-25},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1, {"baseTranslation":{"x":0.139, "y":0.199, "z":0.394}}],
+        //turn signal stalk
+        ["turnsignal",   "cabover_turnsignal_stalk",   "int_strw","dshl","dshr",      {"x":180 "y":-90, "z":-05}, {"x":0, "y":0, "z":-20},     {"x":0, "y":0, "z":0},   -1, 1, -1, 1, {"baseTranslation":{"x":0.021, "y":-0.060, "z":-0.045}}],
+        //parking brake stalk
+        ["nop",   "cabover_parking_brake_stalk",   "int_strw","dshl","dshr",      {"x":180 "y":-90, "z":-40}, {"x":0, "y":0, "z":40},     {"x":0, "y":0, "z":0},   -1, 1, -1, 1, {"baseTranslation":{"x":-0.008, "y":0.063, "z":-0.037}}],
+        //steering shafts
+        ["steering",        "cabover_steering_shaft_a",         "dshl","dshr","int_strw",    {"x":0, "y":0, "z":0},   {"x":0, "y":0, "z":1},     {"x":0.0, "y":0, "z":0}, -1000, 1000, 0, 1, {"baseTranslation":{"x":0.000, "y":-0.423, "z":0.002}}],
+        ["steering",        "cabover_steering_shaft_b",         "cab12ll","cab12l","cab13ll",    {"x":0, "y":0, "z":0},   {"x":0, "y":0, "z":1},     {"x":0.0, "y":0, "z":0}, -1000, 1000, 0, 1, {"baseTranslation":{"x":0.383, "y":0.148, "z":-0.218}}],
+        ["steering",        "us_semi_steering_shaft_cabover_top",         "clm1","cab22ll","dshl",    {"x":33.444, "y":18.633, "z":58.136},   {"x":0, "y":0, "z":1},     {"x":0.0, "y":0, "z":0}, -1000, 1000, 0, 1, {"baseTranslation":{"x":0, "y":0, "z":0}}],
+        ["steering",        "us_semi_steering_shaft_cabover_center_a",         "clm1","clm2","cab22ll",    {"x":0, "y":90, "z":45},    {"x":0, "y":0, "z":1},     {"x":0.0, "y":0, "z":0}, -1000, 1000, 0, 1, {"baseTranslation":{"x":0, "y":0, "z":0}, "breakGroup":"steeringShaft_break"}],
+        ["steering",        "us_semi_steering_shaft_cabover_center_b",         "clm2","clm1","stbx1r",    {"x":180, "y":90, "z":45},   {"x":0, "y":0, "z":1},     {"x":0.0, "y":0, "z":0}, -1000, 1000, 0, 1, {"baseTranslation":{"x":0, "y":0, "z":0}, "breakGroup":"steeringShaft_break"}],
+        ["steering",        "us_semi_steering_shaft_cabover_bottom",         "clm2","stbx1r","stbx1l",    {"x":15, "y":90, "z":0},   {"x":0, "y":0, "z":1},     {"x":0.0, "y":0, "z":0}, -1000, 1000, 0, 1, {"baseTranslation":{"x":0, "y":0, "z":0}}],
+        //ignition key
+        ["ignition",        "cabover_ignition_key",         "dsh","dshl","dsh2",    {"x":-70, "y":-15, "z":50},    {"x":90, "y":-10, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 3, 0, 1, {"baseTranslation":{"x":0.218, "y":0.115, "z":-0.002}}],
+        //starter switch
+        ["ignitionLevel",        "cabover_ignition_switch",         "dsh","dshl","dsh2",    {"x":-20, "y":-15, "z":55},   {"x":-40, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 2, 3, -2, 1, {"baseTranslation":{"x":0.218, "y":0.223, "z":0.02}}],
+        //parking brake switch
+        ["parkingbrake",        "cabover_parking_brake_switch",         "dsh","dshl","dsh2",    {"x":-5, "y":15.585, "z":-33.833},   {"x":0, "y":0, "z":0},     {"x":0.014, "y":0.0, "z":0.014}, -1, 1, -0.3, 1, {"baseTranslation":{"x":0.442, "y":-0.063, "z":-0.220}}],
+        //trailer air switch
+        ["mainAirTank_pressureConsumerCoef",        "cabover_trailer_air_supply_switch",         "dsh","dshl","dsh2",    {"x":-5, "y":15.585, "z":-33.833},   {"x":0, "y":0, "z":0},     {"x":0.007, "y":0.0, "z":0.014}, -1, 1, -0.3, 1, {"baseTranslation":{"x":0.368, "y":-0.071, "z":-0.164}}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //interior
+        ["cabover_dash_shunt", ["cabover_dash"], [],{"pos":{"x":0.0, "y":1.70, "z":0.0}}],
+        ["cabover_steering_column", ["cabover_dash","cabover_column"]],
+        ["cabover_shunt_parking_brake_switch_panel", ["cabover_dash"], [],{"pos":{"x":0.0, "y":1.70, "z":0.0}}],
+        {"deformGroup":"us_semi_gauges_break", "deformMaterialBase":"us_semi_interior_glass", "deformMaterialDamaged":"us_semi_interior_glass_dmg"},
+        ["cabover_shunt_gauges_glass", ["cabover_dash"], [],{"pos":{"x":0.0, "y":-0.042, "z":-0.081}}],
+        {"deformGroup":""},
+    ],
+    "triggers2": [
+        ["id", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["sw_ignition", "dsh","dshr","dsh2", "box", {"x":0.05, "y":0.02, "z":0.02}, {"x":17, "y":-5, "z":8}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.19, "y":0.135, "z":0.149}, {"deformGroup":"", "color": [0, 0, 1, 0.4]}],
+        ["sw_starter", "dsh","dshr","dsh2", "box", {"x":0.05, "y":0.05, "z":0.05}, {"x":17, "y":-5, "z":8}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.18, "y":0.22, "z":0.124}, {"deformGroup":"", "color": [0, 0, 1, 0.4]}],
+        //["trailerAir",  "dsh","dshr","dsh2", "box", {"x":0.07, "y":0.03, "z":0.07}, {"x":8, "y":-8, "z":-24}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.025, "y":0.053, "z":-0.036}, {"deformGroup":"", "color": [0, 0, 1, 0.4]}],
+		["trailerAir",  "dsh","dshr","dsh2", "box", {"x":-0.07, "y":0.03, "z":0.07}, {"x":0, "y":-16, "z":-85}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.181, "y":-0.057, "z":0.340}, {"deformGroup":"", "color": [0, 0, 1, 0.4]}],
+        ["parkingBrake",  "dsh","dshr","dsh2", "box", {"x":-0.07, "y":0.03, "z":0.07}, {"x":0, "y":-16, "z":-85}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.181, "y":-0.057, "z":0.440}, {"deformGroup":"", "color": [0, 0, 1, 0.4]}],
+    ],
+    "triggerEventLinks2": [
+        ["triggerId:triggers2", "triggerInput", "inputAction"],
+        ["sw_ignition", "action0", "common:activateStarterMotor"],
+        ["sw_starter", "action0", "common:setIgnitionLevel3Momentary"],
+        ["parkingBrake", "action0", "common:parkingbrake"],
+        ["trailerAir", "action0", "toggleTrailerAirSupply"],
+    ],
+    "actionsEnabled": [
+        ["id"],
+        ["toggleTrailerAirSupply"],
+    ],
+    "controller": [
+        ["fileName"],
+        ["gauges/analogOdometer", {"name":"analogOdometer" }],
+    ],
+    "analogOdometer": {
+        "configuration": {
+            "materialName": "@us_semi_gauges_odo",
+            "htmlPath": "local://local/vehicles/common/analogOdo.html",
+            "displayWidth":512,
+            "displayHeight":32,
+            "odometerDigits":7,
+            "odometerHasDecimalSeparator":true,
+            "tripHasDecimalSeparator":true,
+            "unit":"imperial",
+            "floatStyle":{"color":"black"},
+            "bodyStyle":{
+                "background": "url('/vehicles/common/odometer_analog_b.cef_color.png')",
+                "font-family": "OpenSans",
+                "font-size": "28px",
+                "color": "white",
+                "letter-spacing": "15.5px",
+                "margin": "-4.5px 10.5px",
+                "transform": "scaleX(1.26)",
+                "transform-origin": "left",
+            },
+            "tripDivStyle":{
+                "margin-left": "-3px",
+                "position": "fixed",
+                "letter-spacing": "32px"
+            }
+        },
+    },
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        {"frictionCoef":0.5},
+        {"nodeMaterial":"|NM_METAL"},
+        {"collision":true},
+        {"selfCollision":true},
+
+        //dash nodes
+        {"group":"cabover_dash"},
+        {"nodeWeight":0.752}, 
+        ["dsh",  0.000, -1.542, 1.76554],
+        ["dshl", 0.786, -1.90757, 1.76554],
+		{"collision":false},
+        {"selfCollision":false},
+		["dshr",-0.786, -1.90757, 1.76554],
+        {"collision":false},
+        {"selfCollision":false},
+        {"group":"cabover_column"},
+        ["int_strw", 0.786, -1.7603, 2.0723],
+        {"group":"cabover_dash"},
+        //flexbody node
+        ["dsh2",  0.000, -1.6, 2.15],
+        {"group":""},
+        ["clm1", 0.785809, -2.07062, 1.17222],
+        ["clm2", 0.502545, -1.60445, 0.902786],
+        //cameraref node
+        ["drefback",  0.4304, -1.30, 1.2406],
+    ],
+    "torsionbars":[
+       ["id1:", "id2:", "id3:", "id4:"],
+        //rigify the column
+        {"spring":20000, "damp":1, "deform":18000, "strength":28000},
+        ["int_strw", "dshl", "dsh", "cab12l"],
+    ],
+    "beams": [
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //dash board
+        {"beamSpring":869146.6,"beamDamp":142.73},
+        {"beamDeform":12400,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":""},
+        ["dshr","cab14r"],
+        ["dshl","cab14"],
+        ["dshr","cab13r"],
+        ["dshl","cab13l"],
+        ["dshr","cab13"],
+        ["dshl","cab13"],
+        ["dshr","cab14rr"],
+        ["dshl","cab14ll"],
+        ["dshr","cab13rr"],
+        ["dshl","cab13ll"],
+        ["dshl","dshr"],
+        ["dsh","cab14r"],
+        ["dsh","cab14"],
+        ["dsh","cab13r"],
+        ["dsh","cab13l"],
+        ["dsh","cab13"],
+        ["dshl","dsh"],
+        ["dshr","dsh"],
+        ["dsh","int_strw"],
+        ["dshl","int_strw"],
+        ["dshl","cab12l"],
+        {"beamSpring":169146.6,"beamDamp":142.73},
+        ["dsh2","cab14r"],
+        ["dsh2","cab14l"],
+        ["dsh2","cab13r"],
+        ["dsh2","cab13l"],
+        ["dsh2","cab14"],
+        ["dsh","dsh2"],
+        ["dshl","dsh2"],
+        ["dshr","dsh2"],
+		
+		
+		["dshr","cab14"],
+		
+		["dsh","cab33l"],
+		["dsh","cab33r"],
+        //lower steering column
+        ["clm1","cab21ll"],
+        ["clm1","cab12ll"],
+        ["clm1","cab12l"],
+        ["clm1","cab32l"],
+
+        ["clm2","ff2l"],
+        ["clm2","ff3l"],
+        ["clm2","stbx1l"],
+
+        //camera refback
+        {"beamSpring":700100,"beamDamp":150},
+        ["drefback","cab32l"],
+        ["drefback","cab32ll"],
+        ["drefback","cab52l"],
+        ["drefback","cab33l"],
+        ["drefback","cab53l"],
+        ["drefback","cab32r"],
+
+        //break gauges
+        {"beamSpring":195830,"beamDamp":122.2},
+        {"deformGroup":"us_semi_gauges_break", "deformationTriggerRatio":0.03},
+        {"beamDeform":14700,"beamStrength":5460},
+        {"breakGroup":"us_semi_gauges_break"},
+        {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+        {"deformLimitExpansion":""},
+        ["int_strw", "cab14ll"],
+        ["int_strw", "cab14l"],
+        ["int_strw", "cab23ll"],
+        ["int_strw", "cab24ll"],
+        ["int_strw", "dsh"],
+        ["int_strw", "dsh2"],
+        {"breakGroup":""},
+        {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+        {"deformGroup":""},
+
+        //steering shaft support beam
+        {"beamType":"|SUPPORT","beamLongBound":0.5},
+        {"beamSpring":2001000,"beamDamp":50},
+        {"beamDeform":9000,"beamStrength":90000},
+        {"beamPrecompression":0.99},
+        {"breakGroup":"steeringShaft_break"},
+        ["clm1","clm2"],
+        {"breakGroup":""},
+        //--BLEED DEFORM LIMIT TO OTHER PARTS--
+        {"deformLimitExpansion":1.2},
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+        ["id1:","id2:","id3:"],
+        //sides
+        {"dragCoef":0},
+        {"group":"cabover_dash"},
+        ["cab14l", "dsh2", "cab14"],
+        ["cab24ll", "dsh2", "cab14l"],
+        ["cab14l", "cab14ll", "cab24ll"],
+        ["cab24ll", "cab23ll", "dshl"],
+        ["cab24ll", "dshl", "dsh2"],
+        ["dshl", "dsh", "dsh2"],
+        ["dshl", "cab23ll", "cab13ll"],
+        ["dshl", "cab13ll", "cab13l"],
+        ["dshl", "cab13l", "cab13"],
+        ["dshl", "cab13", "dsh"],
+
+        ["cab14", "dsh2", "cab14r"],
+        ["cab14r", "dsh2", "cab24rr"],
+        ["cab14r", "cab24rr", "cab14rr"],
+        //["cab23rr", "cab24rr", "dshr"],
+        //["cab24rr", "dsh2", "dshr"],
+        //["dshr", "dsh2", "dsh"],
+        //["dshr", "cab13rr", "cab23rr"],
+        //["dshr", "cab13r", "cab13rr"],
+        //["dshr", "cab13", "cab13r"],
+        //["dsh", "cab13", "dshr"],
+    ],
+},
+"us_semi_shunt_dashboard_V8": {
+    "information":{
+        "authors":"BeamNG",
+        "name":"Dashboard(V8 Tach)",
+        "value":1000,
+    },
+    "slotType" : "us_semi_shunt_dashboard",
+    "slots": [
+        ["type", "default", "description"],
+        ["cabover_lowAirWarning","cabover_lowAirBuzzer","Low Air Warning"],
+        ["cabover_shunt_interior_pto","cabover_shunt_interior_pto","PTO Controls"],
+        //["cabover_interior_compression_brake","cabover_interior_compression_brake","Compression Brake Controls"],
+        //["cabover_interior_difflock","","Interaxle Differential Lock Switch"],
+        //["cabover_interior_fifthwheel","","Fifth Wheel Slider Lock Switch"],
+        //["cabover_interior_airsusp","","Air Suspension Gauge"],
+        ["cabover_interior_boostgauge","cabover_interior_boostgauge_alt","Boost Gauge", {"coreSlot":true, "nodeMove":{"x":0.0, "y":1.896, "z":-0.083}}],
+        //["cabover_interior_highidle","","High Idle Controls"],
+        ["cabover_shunt_dash_trim","cabover_shunt_dash_trim_brushed","Dashboard Material", {"coreSlot":true}],
+    ],
+    "camerasInternal":[
+        ["type", "x", "y", "z", "fov", "id1:", "id2:", "id3:", "id4:", "id5:", "id6:"],
+        {"nodeWeight":2.35},
+        {"beamSpring":1500, "beamDamp":200},
+        {"selfCollision":true},
+        {"collision":true},
+        //dash cam
+        //["driver", 0.786, -1.2, 2.4, 55, "cab12ll","cab12r","cab14","cab53l","cab53ll","cab52rr", {"beamDeform":2800560,"beamStrength":"FLT_MAX", "idBack:":"drefback", "idUp:":"cab33l", "idLeft:":"cab32ll", "idRef:":"cab32l"}],
+    ],
+    "soundscape": [
+        ["name", "src"],
+        //indicator7
+        {"node:":"int_strw"},
+        ["indicatorStart", "event:>Vehicle>Interior>Indicator>POL_On"],
+        ["indicatorStop", "event:>Vehicle>Interior>Indicator>POL_Off"],
+        ["indLoop1", "event:>Vehicle>Interior>Indicator>FIPA_Click"],
+        ["indLoop2", "event:>Vehicle>Interior>Indicator>FIPA_Clack"],
+        //lights3
+        ["LightOn", "event:>Vehicle>Interior>Light>AU5_Light_On"],
+        ["LightOff", "event:>Vehicle>Interior>Light>AU5_Light_Off"],
+        //handbrake2
+        {"node:":"int_strw"},
+        ["handbrakeDisengaged","event:>Vehicle>Interior>Handbrake_Pedal>Pedal_04_Unlock"],
+        ["handbrakeEngaging","event:>Vehicle>Interior>Handbrake_Pedal>Pedal_04_Lock"],
+        //affects horn location because horn soundscape is loaded after
+        {"node:":"cab11"},
+    ],
+    "props": [
+        ["func",         "mesh",                 "idRef:","idX:","idY:", "baseRotation",           "rotation",                  "translation",           "min", "max", "offset", "multiplier"],
+        //speedometer
+        ["wheelspeed",   "cabover_needle_speedo", "dshl","dshr","dsh",       {"x":0 "y":-90, "z":-10}, {"x":6, "y":0, "z":0},   {"x":0, "y":0, "z":0},   0, 40, -22, 1, {"baseTranslation":{"x":0.331, "y":-0.224, "z":0.209}}],
+        //tachometer
+        ["rpm",          "cabover_needle_tach", "dshl","dshr","dsh",       {"x":0 "y":-90, "z":-10}, {"x":0.09, "y":0, "z":0}, {"x":0, "y":0, "z":0},   0, 3000, -1500, 0.5, {"baseTranslation":{"x":0.088, "y":-0.223, "z":0.209}}],
+        //fuel gauge
+        ["fuel",         "cabover_needle_fuel",   "dshl","dshr","dsh",        {"x":0 "y":-90, "z":-10}, {"x":270, "y":0, "z":0},     {"x":0, "y":0, "z":0},   0, 1, -0.5, 1, {"baseTranslation":{"x":-0.024, "y":-0.234, "z":0.233}}],
+        //water temp
+        ["watertemp",    "cabover_needle_water",   "dshl","dshr","dsh",         {"x":0 "y":-90, "z":-10}, {"x":2.2, "y":0, "z":0},     {"x":0, "y":0, "z":0},   26, 115, -75, 1, {"baseTranslation":{"x":-0.059, "y":-0.196, "z":0.151}}],
+        //oil pressure
+        ["oilPressure",    "cabover_needle_oil",   "dshl","dshr","dsh",         {"x":0 "y":-90, "z":-10}, {"x":0, "y":0, "z":0},     {"x":0, "y":0, "z":0},   26, 115, -75, 1, {"baseTranslation":{"x":-0.094, "y":-0.157, "z":0.067}}],
+        //air pressure p
+        ["mainAirTank_pressureRelative", "cabover_needle_airp",   "dshl","dshr","dsh",    {"x":0 "y":-90, "z":-10},   {"x":0.2088, "y":0, "z":0},       {"x":0, "y":0, "z":0 },  0, 1034, -517, 0.001, {"baseTranslation":{"x":-0.012, "y":-0.157, "z":0.067}}],
+        //air pressure A
+        ["mainAirTank_pressureRelative", "cabover_needle_aira",   "dshl","dshr","dsh",    {"x":0 "y":-90, "z":-10},   {"x":0.2088, "y":0, "z":0},       {"x":0, "y":0, "z":0 },  0, 1034, -517, 0.001, {"baseTranslation":{"x":0.070, "y":-0.157, "z":0.067}}],
+        //air pressure s
+        ["airbrakes_R_pressure_service"  "cabover_needle_airS",   "dshl","dshr","dsh",  {"x":0 "y":-90, "z":-10}, {"x":0.00031, "y":0, "z":0},     {"x":0, "y":0, "z":0},   842, 689912, -344956, 1, {"baseTranslation":{"x":0.309, "y":-0.157, "z":0.067}}],
+        //amps
+        ["amps",    "cabover_needle_amps",   "dshl","dshr","dsh",         {"x":0 "y":-90, "z":-10}, {"x":0, "y":0, "z":0},     {"x":0, "y":0, "z":0},   26, 115, -75, 1, {"baseTranslation":{"x":0.392, "y":-0.157, "z":0.067}}],
+        //volts
+        ["volts",    "cabover_needle_volts",   "dshl","dshr","dsh",         {"x":0 "y":-90, "z":-10}, {"x":0, "y":0, "z":0},     {"x":0, "y":0, "z":0},   26, 115, -75, 1, {"baseTranslation":{"x":0.427, "y":-0.196, "z":0.151}}],
+        //pedals
+        ["brake",        "cabover_brake_pedal",         "cab12ll","cab12l","cab32ll",    {"x":-110.000, "y":-180, "z":0},   {"x":25, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1, {"baseTranslation":{"x":0.431, "y":0.387, "z":0.064}}],
+        ["throttle",     "cabover_throttle",           "cab12ll","cab12l","cab32ll",    {"x":0, "y":90, "z":-30},   {"x":0, "y":0, "z":30},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1, {"baseTranslation":{"x":0.494, "y":0.323, "z":0.077}}],
+        //["clutch", "cabover_clutch_pedal",  "cab12ll","cab12l","cab32ll",    {"x":0, "y":90, "z":0},   {"x":0, "y":0, "z":-25},     {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1, {"baseTranslation":{"x":0.139, "y":0.199, "z":0.394}}],
+        //turn signal stalk
+        ["turnsignal",   "cabover_turnsignal_stalk",   "int_strw","dshl","dshr",      {"x":180 "y":-90, "z":-05}, {"x":0, "y":0, "z":-20},     {"x":0, "y":0, "z":0},   -1, 1, -1, 1, {"baseTranslation":{"x":0.021, "y":-0.060, "z":-0.045}}],
+        //parking brake stalk
+        ["nop",   "cabover_parking_brake_stalk",   "int_strw","dshl","dshr",      {"x":180 "y":-90, "z":-40}, {"x":0, "y":0, "z":40},     {"x":0, "y":0, "z":0},   -1, 1, -1, 1, {"baseTranslation":{"x":-0.008, "y":0.063, "z":-0.037}}],
+        //steering shafts
+        ["steering",        "cabover_steering_shaft_a",         "dshl","dshr","int_strw",    {"x":0, "y":0, "z":0},   {"x":0, "y":0, "z":1},     {"x":0.0, "y":0, "z":0}, -1000, 1000, 0, 1, {"baseTranslation":{"x":0.000, "y":-0.423, "z":0.002}}],
+        ["steering",        "cabover_steering_shaft_b",         "cab12ll","cab12l","cab13ll",    {"x":0, "y":0, "z":0},   {"x":0, "y":0, "z":1},     {"x":0.0, "y":0, "z":0}, -1000, 1000, 0, 1, {"baseTranslation":{"x":0.383, "y":0.148, "z":-0.218}}],
+        ["steering",        "us_semi_steering_shaft_cabover_top",         "clm1","cab22ll","dshl",    {"x":33.444, "y":18.633, "z":58.136},   {"x":0, "y":0, "z":1},     {"x":0.0, "y":0, "z":0}, -1000, 1000, 0, 1, {"baseTranslation":{"x":0, "y":0, "z":0}}],
+        ["steering",        "us_semi_steering_shaft_cabover_center_a",         "clm1","clm2","cab22ll",    {"x":0, "y":90, "z":45},    {"x":0, "y":0, "z":1},     {"x":0.0, "y":0, "z":0}, -1000, 1000, 0, 1, {"baseTranslation":{"x":0, "y":0, "z":0}, "breakGroup":"steeringShaft_break"}],
+        ["steering",        "us_semi_steering_shaft_cabover_center_b",         "clm2","clm1","stbx1r",    {"x":180, "y":90, "z":45},   {"x":0, "y":0, "z":1},     {"x":0.0, "y":0, "z":0}, -1000, 1000, 0, 1, {"baseTranslation":{"x":0, "y":0, "z":0}, "breakGroup":"steeringShaft_break"}],
+        ["steering",        "us_semi_steering_shaft_cabover_bottom",         "clm2","stbx1r","stbx1l",    {"x":15, "y":90, "z":0},   {"x":0, "y":0, "z":1},     {"x":0.0, "y":0, "z":0}, -1000, 1000, 0, 1, {"baseTranslation":{"x":0, "y":0, "z":0}}],
+        //ignition key
+        ["ignition",        "cabover_ignition_key",         "dsh","dshl","dsh2",    {"x":-70, "y":-15, "z":50},    {"x":90, "y":-10, "z":0},     {"x":0.0, "y":0, "z":0}, 0, 3, 0, 1, {"baseTranslation":{"x":0.218, "y":0.115, "z":-0.002}}],
+        //starter switch
+        ["ignitionLevel",        "cabover_ignition_switch",         "dsh","dshl","dsh2",    {"x":-20, "y":-15, "z":55},   {"x":-40, "y":0, "z":0},     {"x":0.0, "y":0, "z":0}, 2, 3, -2, 1, {"baseTranslation":{"x":0.218, "y":0.223, "z":0.02}}],
+        //parking brake switch
+        ["parkingbrake",        "cabover_parking_brake_switch",         "dsh","dshl","dsh2",    {"x":-5, "y":15.585, "z":-33.833},   {"x":0, "y":0, "z":0},     {"x":0.014, "y":0.0, "z":0.014}, -1, 1, -0.3, 1, {"baseTranslation":{"x":0.442, "y":-0.063, "z":-0.220}}],
+        //trailer air switch
+        ["mainAirTank_pressureConsumerCoef",        "cabover_trailer_air_supply_switch",         "dsh","dshl","dsh2",    {"x":-5, "y":15.585, "z":-33.833},   {"x":0, "y":0, "z":0},     {"x":0.007, "y":0.0, "z":0.014}, -1, 1, -0.3, 1, {"baseTranslation":{"x":0.368, "y":-0.071, "z":-0.164}}],
+    ],
+    "flexbodies": [
+        ["mesh", "[group]:", "nonFlexMaterials"],
+        //interior
+        //["cabover_dash_shunt_V8", ["cabover_dash"], [],{"pos":{"x":0.0, "y":1.70, "z":0.0}}],
+		["cabover_dash_shunt", ["cabover_dash"], [], {,"materialOverride":[["us_semi_gauges","us_semi_gauges_V8"]], "pos":{"x":0.0, "y":1.70, "z":0.0}}],
+        ["cabover_steering_column", ["cabover_dash","cabover_column"]],
+        ["cabover_shunt_parking_brake_switch_panel", ["cabover_dash"], [],{"pos":{"x":0.0, "y":1.70, "z":0.0}}],
+        {"deformGroup":"us_semi_gauges_break", "deformMaterialBase":"us_semi_interior_glass", "deformMaterialDamaged":"us_semi_interior_glass_dmg"},
+        ["cabover_shunt_gauges_glass", ["cabover_dash"], [],{"pos":{"x":0.0, "y":-0.042, "z":-0.081}}],
+        {"deformGroup":""},
+    ],
+    "triggers2": [
+        ["id", "idRef:", "idX:", "idY:", "type", "size", "baseRotation", "rotation", "translation", "baseTranslation"],
+        ["sw_ignition", "dsh","dshr","dsh2", "box", {"x":0.05, "y":0.02, "z":0.02}, {"x":17, "y":-5, "z":8}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.19, "y":0.135, "z":0.149}, {"deformGroup":"", "color": [0, 0, 1, 0.4]}],
+        ["sw_starter", "dsh","dshr","dsh2", "box", {"x":0.05, "y":0.05, "z":0.05}, {"x":17, "y":-5, "z":8}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.18, "y":0.22, "z":0.124}, {"deformGroup":"", "color": [0, 0, 1, 0.4]}],
+        //["trailerAir",  "dsh","dshr","dsh2", "box", {"x":0.07, "y":0.03, "z":0.07}, {"x":8, "y":-8, "z":-24}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":0.025, "y":0.053, "z":-0.036}, {"deformGroup":"", "color": [0, 0, 1, 0.4]}],
+		["trailerAir",  "dsh","dshr","dsh2", "box", {"x":-0.07, "y":0.03, "z":0.07}, {"x":0, "y":-16, "z":-85}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.181, "y":-0.057, "z":0.340}, {"deformGroup":"", "color": [0, 0, 1, 0.4]}],
+        ["parkingBrake",  "dsh","dshr","dsh2", "box", {"x":-0.07, "y":0.03, "z":0.07}, {"x":0, "y":-16, "z":-85}, {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, {"x":-0.181, "y":-0.057, "z":0.440}, {"deformGroup":"", "color": [0, 0, 1, 0.4]}],
+    ],
+    "triggerEventLinks2": [
+        ["triggerId:triggers2", "triggerInput", "inputAction"],
+        ["sw_ignition", "action0", "common:activateStarterMotor"],
+        ["sw_starter", "action0", "common:setIgnitionLevel3Momentary"],
+        ["parkingBrake", "action0", "common:parkingbrake"],
+        ["trailerAir", "action0", "toggleTrailerAirSupply"],
+    ],
+    "actionsEnabled": [
+        ["id"],
+        ["toggleTrailerAirSupply"],
+    ],
+	"glowMap":{
+        //misc
+        "us_semi_gauges_V8":{"simpleFunction":{"lowhighbeam":0.49}, "off":"us_semi_gauges_V8", "on":"us_semi_gauges_V8_on", "on_intense":"us_semi_gauges_V8_on"},
+    },
+    "controller": [
+        ["fileName"],
+        ["gauges/analogOdometer", {"name":"analogOdometer" }],
+    ],
+    "analogOdometer": {
+        "configuration": {
+            "materialName": "@us_semi_gauges_odo",
+            "htmlPath": "local://local/vehicles/common/analogOdo.html",
+            "displayWidth":512,
+            "displayHeight":32,
+            "odometerDigits":7,
+            "odometerHasDecimalSeparator":true,
+            "tripHasDecimalSeparator":true,
+            "unit":"imperial",
+            "floatStyle":{"color":"black"},
+            "bodyStyle":{
+                "background": "url('/vehicles/common/odometer_analog_b.cef_color.png')",
+                "font-family": "OpenSans",
+                "font-size": "28px",
+                "color": "white",
+                "letter-spacing": "15.5px",
+                "margin": "-4.5px 10.5px",
+                "transform": "scaleX(1.26)",
+                "transform-origin": "left",
+            },
+            "tripDivStyle":{
+                "margin-left": "-3px",
+                "position": "fixed",
+                "letter-spacing": "32px"
+            }
+        },
+    },
+    "nodes": [
+        ["id", "posX", "posY", "posZ"],
+        {"frictionCoef":0.5},
+        {"nodeMaterial":"|NM_METAL"},
+        {"collision":true},
+        {"selfCollision":true},
+
+        //dash nodes
+        {"group":"cabover_dash"},
+        {"nodeWeight":0.752}, 
+        ["dsh",  0.000, -1.542, 1.76554],
+        ["dshl", 0.786, -1.90757, 1.76554],
+		{"collision":false},
+        {"selfCollision":false},
+		["dshr",-0.786, -1.90757, 1.76554],
+        {"collision":false},
+        {"selfCollision":false},
+        {"group":"cabover_column"},
+        ["int_strw", 0.786, -1.7603, 2.0723],
+        {"group":"cabover_dash"},
+        //flexbody node
+        ["dsh2",  0.000, -1.6, 2.15],
+        {"group":""},
+        ["clm1", 0.785809, -2.07062, 1.17222],
+        ["clm2", 0.502545, -1.60445, 0.902786],
+        //cameraref node
+        ["drefback",  0.4304, -1.30, 1.2406],
+    ],
+    "torsionbars":[
+       ["id1:", "id2:", "id3:", "id4:"],
+        //rigify the column
+        {"spring":20000, "damp":1, "deform":18000, "strength":28000},
+        ["int_strw", "dshl", "dsh", "cab12l"],
+    ],
+    "beams": [
+        ["id1:", "id2:"],
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+        //dash board
+        {"beamSpring":869146.6,"beamDamp":142.73},
+        {"beamDeform":12400,"beamStrength":"FLT_MAX"},
+        {"deformLimitExpansion":""},
+        ["dshr","cab14r"],
+        ["dshl","cab14"],
+        ["dshr","cab13r"],
+        ["dshl","cab13l"],
+        ["dshr","cab13"],
+        ["dshl","cab13"],
+        ["dshr","cab14rr"],
+        ["dshl","cab14ll"],
+        ["dshr","cab13rr"],
+        ["dshl","cab13ll"],
+        ["dshl","dshr"],
+        ["dsh","cab14r"],
+        ["dsh","cab14"],
+        ["dsh","cab13r"],
+        ["dsh","cab13l"],
+        ["dsh","cab13"],
+        ["dshl","dsh"],
+        ["dshr","dsh"],
+        ["dsh","int_strw"],
+        ["dshl","int_strw"],
+        ["dshl","cab12l"],
+        {"beamSpring":169146.6,"beamDamp":142.73},
+        ["dsh2","cab14r"],
+        ["dsh2","cab14"],
+        ["dsh2","cab13r"],
+        ["dsh2","cab13l"],
+        ["dsh2","cab14"],
+        ["dsh","dsh2"],
+        ["dshl","dsh2"],
+        ["dshr","dsh2"],
+		
+		["dshr","cab14"],
+		
+		["dsh","cab33l"],
+		["dsh","cab33r"],
+        //lower steering column
+        ["clm1","cab21ll"],
+        ["clm1","cab12ll"],
+        ["clm1","cab12l"],
+        ["clm1","cab32l"],
+
+        ["clm2","ff2l"],
+        ["clm2","ff3l"],
+        ["clm2","stbx1l"],
+
+        //camera refback
+        {"beamSpring":700100,"beamDamp":150},
+        ["drefback","cab32l"],
+        ["drefback","cab32ll"],
+        ["drefback","cab52l"],
+        ["drefback","cab33l"],
+        ["drefback","cab53l"],
+        ["drefback","cab32r"],
+
+        //break gauges
+        {"beamSpring":195830,"beamDamp":122.2},
+        {"deformGroup":"us_semi_gauges_break", "deformationTriggerRatio":0.03},
+        {"beamDeform":14700,"beamStrength":5460},
+        {"breakGroup":"us_semi_gauges_break"},
+        {"disableMeshBreaking":true,"disableTriangleBreaking":true},
+        {"deformLimitExpansion":""},
+        ["int_strw", "cab14ll"],
+        ["int_strw", "cab14l"],
+        ["int_strw", "cab23ll"],
+        ["int_strw", "cab24ll"],
+        ["int_strw", "dsh"],
+        ["int_strw", "dsh2"],
+        {"breakGroup":""},
+        {"disableMeshBreaking":false,"disableTriangleBreaking":false},
+        {"deformGroup":""},
+
+        //steering shaft support beam
+        {"beamType":"|SUPPORT","beamLongBound":0.5},
+        {"beamSpring":2001000,"beamDamp":50},
+        {"beamDeform":9000,"beamStrength":90000},
+        {"beamPrecompression":0.99},
+        {"breakGroup":"steeringShaft_break"},
+        ["clm1","clm2"],
+        {"breakGroup":""},
+        //--BLEED DEFORM LIMIT TO OTHER PARTS--
+        {"deformLimitExpansion":1.2},
+        {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+    "triangles": [
+        ["id1:","id2:","id3:"],
+        //sides
+        {"dragCoef":0},
+        {"group":"cabover_dash"},
+        ["cab14l", "dsh2", "cab14"],
+        ["cab24ll", "dsh2", "cab14l"],
+        ["cab14l", "cab14ll", "cab24ll"],
+        ["cab24ll", "cab23ll", "dshl"],
+        ["cab24ll", "dshl", "dsh2"],
+        ["dshl", "dsh", "dsh2"],
+        ["dshl", "cab23ll", "cab13ll"],
+        ["dshl", "cab13ll", "cab13l"],
+        ["dshl", "cab13l", "cab13"],
+        ["dshl", "cab13", "dsh"],
+
+        ["cab14", "dsh2", "cab14r"],
+        ["cab14r", "dsh2", "cab24rr"],
+        ["cab14r", "cab24rr", "cab14rr"],
+        //["cab23rr", "cab24rr", "dshr"],
+        //["cab24rr", "dsh2", "dshr"],
+        //["dshr", "dsh2", "dsh"],
+        //["dshr", "cab13rr", "cab23rr"],
+        //["dshr", "cab13r", "cab13rr"],
+        //["dshr", "cab13", "cab13r"],
+        //["dsh", "cab13", "dshr"],
+    ],
+},
+}

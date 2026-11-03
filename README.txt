@@ -48,7 +48,23 @@ configs across vanilla and a dozen mods):
     vehicles/us_semi/us_semi_conventional_interior_yb_empty.jbeam
   That file redefines the vanilla driver and passenger seats (us_semi_conventional_seat_L/_R) with
   pre-0.40 copies that have no seat occupants, and the game used them for every T-Series. They're
-  removed, so vanilla's are used. The pack's Empty Dashboard is unchanged.
+  removed, so vanilla's are used.
+
+Legacy driver cameras: pre-0.40 dashboards define the driver camera themselves. In 0.40 it comes
+from the seat occupant, and vanilla's dashboards have theirs commented out ("driver cam comes from
+the seat occupant now"). A dashboard that still has one gets an extra driver camera with no seat.
+These dashboards have it commented out the same way:
+- Hot Rod Semi Pulling Parts Pack: the Empty Dashboard (in the file above, all the pullers)
+- Bella's Semi Add-on (bella_semipack.zip): the chopped and custom dashboards
+    vehicles/us_semi/chopped_semi/chopped_conventional_interior.jbeam
+    vehicles/us_semi/interior_stuff/custom_interior_accessories.jbeam
+- T-Series Drivetrain Expansion (efc_us_semi_drive_exp.zip): the 60 Series shunt, Edison and V8
+  dashboards
+    vehicles/us_semi/EFC 60 Series/us_semi_shunt_dashboard.jbeam
+    vehicles/us_semi/EFC Edison/us_semi_edison_interior.jbeam
+    vehicles/us_semi/EFC V8/us_semi_interior_V8.jbeam
+- ra66_tseries.zip: the SBA dashboard
+    vehicles/us_semi/sba/us_semi_conventional_interior_sba.jbeam
 
 Smaller fixes:
 - Bella's Semi Add-on (bella_semipack.zip): its vintage seats (long nose and cabover, both sides)
@@ -68,8 +84,8 @@ updated for 0.40.
 
 Regenerating after a brodbattletruck update (if it still needs the fix):
   node tools/patch_kodiak.js <extracted brodbattletruck dir> .
-Regenerating after a D-Series pulling pack, Quadrasteer, semi pulling pack or Bella's update (run once per
-extracted mod):
+Regenerating after a D-Series pulling pack, Quadrasteer, semi pulling pack, Bella's, Drivetrain
+Expansion or ra66_tseries update (run once per extracted mod):
   node tools/patch_seats.js <extracted mod dir> .
 
 Releasing: push a semver tag without a v prefix (e.g. 1.0.0). GitHub Actions builds

@@ -10,6 +10,14 @@
 //   - bella_semipack.zip (Bella's Semi Add-on), seat highlight only:
 //       vehicles/us_semi/interior_stuff/us_semi_conventional_seatss.jbeam
 //       vehicles/us_semi/interior_stuff/us_semi_cabover_seatss.jbeam
+//   - legacy driver cameras only:
+//       bella_semipack.zip: vehicles/us_semi/chopped_semi/chopped_conventional_interior.jbeam
+//                           vehicles/us_semi/interior_stuff/custom_interior_accessories.jbeam
+//       efc_us_semi_drive_exp.zip (T-Series Drivetrain Expansion):
+//                           vehicles/us_semi/EFC 60 Series/us_semi_shunt_dashboard.jbeam
+//                           vehicles/us_semi/EFC Edison/us_semi_edison_interior.jbeam
+//                           vehicles/us_semi/EFC V8/us_semi_interior_V8.jbeam
+//       ra66_tseries.zip:   vehicles/us_semi/sba/us_semi_conventional_interior_sba.jbeam
 const fs = require('fs');
 const path = require('path');
 const [srcDir, outDir] = process.argv.slice(2);
@@ -64,6 +72,7 @@ function patchSemiPulling() {
   // included. They're the old vanilla seats otherwise, so drop them and let vanilla's be used.
   removePart('us_semi_conventional_seat_L');
   removePart('us_semi_conventional_seat_R');
+  disableLegacyDriverCameras();
 }
 
 // The seat highlight (the outline shown when you look at a seat to get in) is drawn on the mesh named
@@ -74,6 +83,15 @@ const setHighlightMesh = (name, mesh) => {
   const i = lines.findIndex((l, j) => j > s && j < e && /"\$TriggerHighlightMesh"/.test(l));
   if (i < 0) throw new Error(`$TriggerHighlightMesh not found in ${name}`);
   lines[i] = lines[i].replace(/("\$TriggerHighlightMesh"\s*:\s*")[^"]*"/, `$1${mesh}"`);
+};
+
+// Pre-0.40 dashboards define the driver camera themselves (a "dash" or "driver" camerasInternal entry).
+// In 0.40 it comes from the seat occupant, and the old one is turned into a separate camera with no
+// seat, so vanilla comments it out ("driver cam comes from the seat occupant now"). Do the same.
+const disableLegacyDriverCameras = () => {
+  let n = 0;
+  lines = lines.map((l) => (/^\s*\["(dash|driver)",/.test(l) ? (n++, l.replace(/^(\s*)/, '$1//')) : l));
+  if (!n) throw new Error('no legacy driver camera found');
 };
 
 function patchBellaSeats() {
@@ -92,6 +110,12 @@ const files = {
   'vehicles/us_semi/us_semi_conventional_interior_yb_empty.jbeam': patchSemiPulling,
   'vehicles/us_semi/interior_stuff/us_semi_conventional_seatss.jbeam': patchBellaSeats,
   'vehicles/us_semi/interior_stuff/us_semi_cabover_seatss.jbeam': patchBellaSeats,
+  'vehicles/us_semi/chopped_semi/chopped_conventional_interior.jbeam': disableLegacyDriverCameras,
+  'vehicles/us_semi/interior_stuff/custom_interior_accessories.jbeam': disableLegacyDriverCameras,
+  'vehicles/us_semi/EFC 60 Series/us_semi_shunt_dashboard.jbeam': disableLegacyDriverCameras,
+  'vehicles/us_semi/EFC Edison/us_semi_edison_interior.jbeam': disableLegacyDriverCameras,
+  'vehicles/us_semi/EFC V8/us_semi_interior_V8.jbeam': disableLegacyDriverCameras,
+  'vehicles/us_semi/sba/us_semi_conventional_interior_sba.jbeam': disableLegacyDriverCameras,
 };
 let found = 0;
 for (const [rel, patch] of Object.entries(files)) {

@@ -167,7 +167,7 @@
         {"beamSpring":400,"beamDamp":120},
         {"nodeWeight":2.5},
         //dash cam
-        ["dash", 0.48, -1.2, 2.35, 55, "b7rr","b7ll","b9rr","b9ll","b20rr","b20ll", {"beamDeform":5001000,"beamStrength":"FLT_MAX","rotation":{"x":-50,"y":0,"z":0}, "idBack:":"b8l", "idUp:":"dcmrf1", "idLeft:":"b7ll", "idRef:":"b7l"}],
+        //["dash", 0.48, -1.2, 2.35, 55, "b7rr","b7ll","b9rr","b9ll","b20rr","b20ll", {"beamDeform":5001000,"beamStrength":"FLT_MAX","rotation":{"x":-50,"y":0,"z":0}, "idBack:":"b8l", "idUp:":"dcmrf1", "idLeft:":"b7ll", "idRef:":"b7l"}],
     ],
     "nodes": [
          ["id", "posX", "posY", "posZ"],
