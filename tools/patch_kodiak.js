@@ -1,9 +1,12 @@
-// Adds 0.40 seat support to brodbattletruck's pickup_interior_kodiak.jbeam.
-// Usage: node patch_kodiak.js <original jbeam> <output jbeam>
+// Adds BeamNG 0.40 seat support to brodbattletruck's Kodiak D-Series parts.
+// Usage: node patch_kodiak.js <brodbattletruck dir> <output dir>
+//   reads vehicles/pickup/body/*.jbeam from the extracted brodbattletruck mod and writes the patched
+//   copies to the same paths under <output dir>
 const fs = require('fs');
-const [src, out] = process.argv.slice(2);
+const path = require('path');
+const [srcDir, outDir] = process.argv.slice(2);
 const NL = '\r\n';
-let lines = fs.readFileSync(src, 'utf8').split(/\r?\n/);
+let lines;
 
 const block = (s) => s.replace(/^\n/, '').replace(/\n$/, '').split('\n');
 const partStart = (name) => {
@@ -12,10 +15,14 @@ const partStart = (name) => {
   return i;
 };
 const partEnd = (start) => lines.findIndex((l, i) => i > start && /^},?\s*$/.test(l));
-const findIn = (name, re, from) => {
+const findIn = (name, re) => {
   const s = partStart(name), e = partEnd(s);
-  for (let i = from === 'end' ? e : s; from === 'end' ? i > s : i < e; from === 'end' ? i-- : i++) if (re.test(lines[i])) return i;
+  for (let i = s; i < e; i++) if (re.test(lines[i])) return i;
   throw new Error(`${re} not found in ${name}`);
+};
+const beamsEnd = (name) => {
+  const s = findIn(name, /"beams"/);
+  return lines.findIndex((l, i) => i > s && /^    \],/.test(l));
 };
 const insertAfter = (i, text) => lines.splice(i + 1, 0, ...block(text));
 const insertBefore = (i, text) => lines.splice(i, 0, ...block(text));
@@ -41,10 +48,11 @@ const slots2 = (rows) => `
         ["name", "allowTypes", "denyTypes", "default", "description"],${rows.join('')}
     ],`;
 
-// 1. the dashboard hosts the front seats in 0.40; default to Kodiak buckets, as the Kodiak configs intend
-insertAfter(findIn('pickup_interior_kodiak', /\["kodiak_gauges"/), `
+function patchInterior() {
+  // 1. the dashboard hosts the front seats in 0.40; default to Kodiak buckets, as the Kodiak configs intend
+  insertAfter(findIn('pickup_interior_kodiak', /\["kodiak_gauges"/), `
         ["pickup_seat_F","pickup_seat_F_bucket_kodiak","Front Seats"],`);
-insertBefore(partStart('pickup_seat_R_kodiak'), `
+  insertBefore(partStart('pickup_seat_R_kodiak'), `
 "pickup_seat_F_bucket_kodiak":{
     "information":{
         "authors":"BeamNG",
@@ -58,23 +66,22 @@ insertBefore(partStart('pickup_seat_R_kodiak'), `
     ],
 },`);
 
-// 2. Kodiak bucket seats: vanilla facelift buckets moved 0.15m back to match the Kodiak seat nodes
-for (const side of ['L', 'R']) {
-  const name = `pickup_kodiak_seat_F${side}`;
-  const x = side === 'L' ? 0.45 : -0.45;
-  const nodes = side === 'L'
-    ? ['sf1ll', 'sf1l', 'sf2ll', 'sf2l', 'sf3ll', 'sf3l', 'sf4l']
-    : ['sf1r', 'sf1rr', 'sf2r', 'sf2rr', 'sf3r', 'sf3rr', 'sf4r'];
-  const rig = nodes[6];
-  insertAfter(findIn(name, /"slotType"/), slots2([occupant(`seat_occupant_F${side}`,
-    side === 'L' ? 'Driver Seat Occupant' : 'Passenger Seat Occupant', true,
-    `{"x":${x},"y":0.05,"z":0.86}`, -20, attach(name, 20, `F${side}`, nodes))]));
-  insertBefore(findIn(name, /\{"group":""\}/), `
+  // 2. Kodiak bucket seats: vanilla facelift buckets moved 0.15m back to match the Kodiak seat nodes
+  for (const side of ['L', 'R']) {
+    const name = `pickup_kodiak_seat_F${side}`;
+    const x = side === 'L' ? 0.45 : -0.45;
+    const nodes = side === 'L'
+      ? ['sf1ll', 'sf1l', 'sf2ll', 'sf2l', 'sf3ll', 'sf3l', 'sf4l']
+      : ['sf1r', 'sf1rr', 'sf2r', 'sf2rr', 'sf3r', 'sf3rr', 'sf4r'];
+    const rig = nodes[6];
+    insertAfter(findIn(name, /"slotType"/), slots2([occupant(`seat_occupant_F${side}`,
+      side === 'L' ? 'Driver Seat Occupant' : 'Passenger Seat Occupant', true,
+      `{"x":${x},"y":0.05,"z":0.86}`, -20, attach(name, 20, `F${side}`, nodes))]));
+    insertBefore(findIn(name, /\{"group":""\}/), `
          //seat back rigifier for the 0.40 occupant
          ["${rig}", ${x.toFixed(2)}, 0.8, 1.363, {"collision":false, "selfCollision":false, "group":"", "nodeWeight":1}],`);
-  const beamsEnd = (() => { const s = findIn(name, /"beams"/); return lines.findIndex((l, i) => i > s && /^    \],/.test(l)); })();
-  const n = side === 'L' ? ['sf2l', 'sf2ll', 'sf3l', 'sf3ll'] : ['sf2r', 'sf2rr', 'sf3r', 'sf3rr'];
-  insertBefore(beamsEnd, `
+    const n = side === 'L' ? ['sf2l', 'sf2ll', 'sf3l', 'sf3ll'] : ['sf2r', 'sf2rr', 'sf3r', 'sf3rr'];
+    insertBefore(beamsEnd(name), `
         {"optional":false},
         {"beamPrecompression":1},
         {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
@@ -84,10 +91,9 @@ for (const side of ['L', 'R']) {
         {"beamDeform":20000,"beamStrength":"FLT_MAX"},
 ${n.map((m) => `        ["${rig}", "${m}"],`).join('\n')}
         {"deformLimitExpansion":""},`);
-}
+  }
 
-// 3. Kodiak rear bench: same nodes as the vanilla facelift bench, so its occupants copy across unchanged
-{
+  // 3. Kodiak rear bench: same nodes as the vanilla facelift bench, so its occupants copy across unchanged
   const name = 'pickup_seat_R_kodiak';
   const mesh = 'pickup_kodiak_seats_R';
   insertAfter(findIn(name, /"slotType"/), slots2([
@@ -103,9 +109,7 @@ ${n.map((m) => `        ["${rig}", "${m}"],`).join('\n')}
           ["sr4l",  0.462,  1.335,  1.273, {"collision":false, "selfCollision":false, "group":"", "nodeWeight":1}],
           ["sr4",   0.0,    1.335,  1.190, {"collision":false, "selfCollision":false, "group":"", "nodeWeight":1}],
           ["sr4r", -0.462,  1.335,  1.273, {"collision":false, "selfCollision":false, "group":"", "nodeWeight":1}],`);
-  const s = findIn(name, /"beams"/);
-  const beamsEnd = lines.findIndex((l, i) => i > s && /^    \],/.test(l));
-  insertBefore(beamsEnd, `
+  insertBefore(beamsEnd(name), `
           {"optional":false},
           {"beamPrecompression":1},
           {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
@@ -128,5 +132,25 @@ ${n.map((m) => `        ["${rig}", "${m}"],`).join('\n')}
           {"deformLimitExpansion":""},`);
 }
 
-fs.writeFileSync(out, lines.join(NL));
-console.log(`wrote ${out}`);
+function patchCrewSunroof() {
+  // the sunroof crew cab predates 0.40: it still hosts the front seats itself, so with any 0.40 dashboard
+  // (which also hosts them) two overlapping seat sets spawn and the truck goes unstable. Match vanilla's
+  // pickup_body_crew: no front seat slot, and the rear seat placed with nodeOffset so its occupants move too.
+  const name = 'pickup_body_crew_sunroof';
+  lines.splice(findIn(name, /\["pickup_seat_F",/), 1);
+  const rear = findIn(name, /\["pickup_seat_R",/);
+  lines[rear] = lines[rear].replace('"nodeMove"', '"nodeOffset"');
+}
+
+const files = {
+  'vehicles/pickup/body/pickup_interior_kodiak.jbeam': patchInterior,
+  'vehicles/pickup/body/pickup_body_crew_sunroof.jbeam': patchCrewSunroof,
+};
+for (const [rel, patch] of Object.entries(files)) {
+  lines = fs.readFileSync(path.join(srcDir, rel), 'utf8').split(/\r?\n/);
+  patch();
+  const out = path.join(outDir, rel);
+  fs.mkdirSync(path.dirname(out), { recursive: true });
+  fs.writeFileSync(out, lines.join(NL));
+  console.log(`wrote ${out}`);
+}
