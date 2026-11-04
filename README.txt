@@ -50,6 +50,17 @@ configs across vanilla and a dozen mods):
   pre-0.40 copies that have no seat occupants, and the game used them for every T-Series. They're
   removed, so vanilla's are used.
 
+And the Bastion Coupe (bastion_coupe_mth_repo_v27.zip), including RLS As Seen On TV's "FDRP S0 R2
+Winning Car": its body still hosts the front seats and horn, which 0.40's dash hosts too, so they
+were fitted twice, and the dash also fitted the 4 door rear seats on top of the coupe's own. The
+doubled seats are the likely cause of the car going unstable as it spawned.
+    vehicles/bastion/jbeam/body/bastion_coupe_body_repo.jbeam
+  The body loses those slots and gets a slot of its own for a new part, bastion_coupe_dash: a copy
+  of vanilla's bastion_dash without the rear seats slot. The coupe's own rear seats are unchanged.
+  Regenerating this one needs vanilla's interior file as well, and should be repeated if BeamNG
+  changes bastion_dash:
+    node tools/patch_seats.js <extracted mod dir> . <vanilla vehicles/bastion/bastion_interior.jbeam>
+
 Legacy driver cameras: pre-0.40 dashboards define the driver camera themselves. In 0.40 it comes
 from the seat occupant, and vanilla's dashboards have theirs commented out ("driver cam comes from
 the seat occupant now"). A dashboard that still has one gets an extra driver camera with no seat.

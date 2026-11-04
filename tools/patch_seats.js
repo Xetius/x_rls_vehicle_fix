@@ -1,6 +1,6 @@
 // Fixes BeamNG 0.40 seats in D-Series and T-Series parts from other mods: adds the Front Seats slot
 // pre-0.40 dashboards lack, and drops pre-0.40 copies of vanilla seat parts that replace the real ones.
-// Usage: node patch_seats.js <extracted mod dir> <output dir>
+// Usage: node patch_seats.js <extracted mod dir> <output dir> [vanilla bastion_interior.jbeam, for the coupe]
 //   patches whichever of the known files below exist in the extracted mod (run it once per mod) and
 //   writes the patched copies to the same paths under <output dir>
 //   - dseries_pulling_v1.zip (Truck Pulling Parts Pack): vehicles/pickup/yb_propull_pickup_interior.jbeam
@@ -13,6 +13,8 @@
 //   - bella_semipack.zip, driver seat ($isDriver) for the custom and chopped interiors:
 //       vehicles/us_semi/interior_stuff/us_semi_custom_conventional_interiors.jbeam
 //       vehicles/us_semi/chopped_semi/chopped_conventional_interior.jbeam (also its legacy camera)
+//   - bastion_coupe_mth_repo_v27.zip (Bastion Coupe), doubled seats:
+//       vehicles/bastion/jbeam/body/bastion_coupe_body_repo.jbeam
 //   - legacy driver cameras only:
 //       bella_semipack.zip: vehicles/us_semi/chopped_semi/chopped_conventional_interior.jbeam
 //                           vehicles/us_semi/interior_stuff/custom_interior_accessories.jbeam
@@ -26,7 +28,7 @@
 //     (the D-Series pulling and Quadrasteer files above get the same)
 const fs = require('fs');
 const path = require('path');
-const [srcDir, outDir] = process.argv.slice(2);
+const [srcDir, outDir, vanillaInterior] = process.argv.slice(2);
 const NL = '\r\n';
 let lines;
 
@@ -114,6 +116,39 @@ const markDriverSeats = () => {
   if (!n) throw new Error('no driver seat slot without $isDriver found');
 };
 
+// The coupe body still hosts the front seats and horn, and in 0.40 vanilla's dash hosts them as well, so
+// they're fitted twice. The dash also always fits the 4 door rear seats, whose nodes clash with the
+// coupe's own. Doubled seats make the car go unstable as soon as it spawns. Nothing can empty a slot of
+// the dash from outside it, and configs name the dash part, so the coupe gets a slot of its own holding
+// a copy of the dash without the rear seats. The copy comes from vanilla's bastion_interior.jbeam.
+function patchCoupeBody() {
+  if (!vanillaInterior) throw new Error('the coupe needs vanilla vehicles/bastion/bastion_interior.jbeam as the third argument');
+  const removeSlot = (name) => {
+    const i = lines.findIndex((l) => l.startsWith(`        ["${name}",`));
+    if (i < 0) throw new Error(`slot ${name} not found`);
+    lines.splice(i, 1);
+  };
+  for (const name of ['bastion_seat_FR', 'bastion_seat_FL', 'soundscape_horn']) removeSlot(name);
+  const dash = lines.findIndex((l) => l.startsWith('        ["bastion_dash",'));
+  if (dash < 0) throw new Error('slot bastion_dash not found');
+  lines[dash] = lines[dash].replace('["bastion_dash","bastion_dash",', '["bastion_coupe_dash","bastion_coupe_dash",');
+
+  const coupeLines = lines;
+  lines = fs.readFileSync(vanillaInterior, 'utf8').split(/\r?\n/);
+  const s = partStart('bastion_dash');
+  const part = lines.slice(s, partEnd(s) + 1).filter((l) => !/^\s*\["bastion_seats_R",/.test(l));
+  if (part.length !== partEnd(s) - s) throw new Error('rear seats slot not found in the dash');
+  part[0] = part[0].replace('"bastion_dash"', '"bastion_coupe_dash"');
+  const type = part.findIndex((l) => /"slotType"/.test(l));
+  part[type] = part[type].replace('"bastion_dash"', '"bastion_coupe_dash"');
+  part[part.length - 1] = '},';
+
+  lines = coupeLines;
+  const end = partEnd(0);
+  lines[end] = '},';
+  lines.splice(end + 1, 0, ...part);
+}
+
 function patchBellaChopped() {
   markDriverSeats();
   disableLegacyDriverCameras();
@@ -144,6 +179,7 @@ const files = {
   'vehicles/us_semi/sba/us_semi_conventional_interior_sba.jbeam': disableLegacyDriverCameras,
   'vehicles/pickup/pickup_junk_interior_early.jbeam': disableLegacyDriverCameras,
   'vehicles/pickup/pickup_junk_interior_facelift.jbeam': disableLegacyDriverCameras,
+  'vehicles/bastion/jbeam/body/bastion_coupe_body_repo.jbeam': patchCoupeBody,
 };
 let found = 0;
 for (const [rel, patch] of Object.entries(files)) {
