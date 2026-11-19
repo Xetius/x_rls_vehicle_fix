@@ -99,17 +99,6 @@ Smaller fixes:
     vehicles/common/pickup/x_rls_vehicle_fix.materials.json
   defines it with the belasco_diesel textures from the Classic Engine Expansion Pack
   (classic_engine_expansion_pack.zip), which must be installed.
-- Gamers Ultimate Pickup Parts (gamers_ultimate_pickup_parts.zip): trailers with both the hydraulic
-  feet (Gooseneck Hitch or Heavy Duty Tongue Hitch) and a vanilla rollback pump (the D55 Three Car
-  Hauler's lift ramps, the D45 Rollback) couldn't move their feet, so they stayed down when
-  coupled. Both pumps were called pump1, with motor hydraulicsMotor and throttle pumpThrottle, and
-  the rollback pump's controller set that throttle back to 0 whenever its own controls were idle.
-  The feet pump and the two feet rams now use their own names (trailerFeetPump, trailerFeetMotor,
-  trailerFeetPumpThrottle):
-    vehicles/pickup/new parts/trailer frames/G_pickup_tiltdeck_hydraulicPump.jbeam
-    vehicles/pickup/new parts/trailer frames/G_pickup_tiltdeck_gooseneck.jbeam
-    vehicles/pickup/new parts/trailer frames/G_pickup_tiltdeck_tongue.jbeam
-  Copies of GUP's files with only those names changed, so regenerate them if GUP updates.
 
 These are whole-file overrides at the same paths, so they also rely on the x_ prefix to mount after
 the originals. They're meant to be used with those mods installed. Drop each file once its mod is
